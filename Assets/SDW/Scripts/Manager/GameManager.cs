@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     //# 싱글턴
     private static GameManager m_instance;
     public static GameManager Instance => m_instance;
+    
+    public InputManager Input;
 
     //# 게임 Time Attack에 사용할 Event
     [NonSerialized] public UnityEvent OnGameStart;
@@ -28,6 +30,10 @@ public class GameManager : MonoBehaviour
     //# GameOver 관련 필드와 프로퍼티
     private bool m_isGameOver;
     public bool IsGameOver => m_isGameOver;
+
+    private void Awake()
+    {
+    }
 
     public static void CreateInstance()
     {
