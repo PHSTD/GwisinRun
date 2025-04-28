@@ -36,11 +36,14 @@ public class PlayerMove : MonoBehaviour
 
     void Move()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+        Vector2 m_moveInput = GameManager.Instance.Input.MoveInput;
+        float moveX = m_moveInput.x;
+        float moveZ = m_moveInput.y;
 
         // 달리기 - Shift키 누르면 runSpeed 적용
-        float speed = Input.GetKey(KeyCode.LeftShift) ? RunSpeed : WalkSpeed;
+        // float speed = Input.GetKey(KeyCode.LeftShift) ? RunSpeed : WalkSpeed;
+        float speed = GameManager.Instance.Input.RunKeyBeingHeld ? RunSpeed : WalkSpeed;
+        
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
         m_controller.Move(move * speed * Time.deltaTime);
@@ -56,6 +59,7 @@ public class PlayerMove : MonoBehaviour
 
     void RotateView()
     {
+        // TODO: 마우스 기능 추가시 수정 필요
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
@@ -71,6 +75,7 @@ public class PlayerMove : MonoBehaviour
     
     void ZoomView()
     {
+        // TODO: 마우스 기능 추가시 수정 필요
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
@@ -81,4 +86,3 @@ public class PlayerMove : MonoBehaviour
         m_playerCamera.fieldOfView = Mathf.Lerp(m_playerCamera.fieldOfView, NormalFOV, Time.deltaTime * 10f);
     }
 }
-
