@@ -118,7 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6ec18baf4b00740bf49e0dcf325234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerDetected2: 0
 --- !u!1 &3178054533353444082
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f37e5bed22d8dd4899edf93cd8c367c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerDetected1: 0
 --- !u!1 &6279412420975068074
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,9 +422,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_doorAnimator: {fileID: 7714928513154169501}
-  doortrigger1: {fileID: 1205915788983128543}
-  doortrigger2: {fileID: 8888799577439940331}
-  player: {fileID: 0}
+  m_doortrigger1: {fileID: 1205915788983128543}
+  m_doortrigger2: {fileID: 8888799577439940331}
 --- !u!95 &7714928513154169501
 Animator:
   serializedVersion: 5

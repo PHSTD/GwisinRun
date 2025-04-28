@@ -21,23 +21,12 @@ public class LHWPlayerController : MonoBehaviour
 
         m_Movement = new Vector3(horizontal, 0, vertical).normalized;
 
-        // 이동
         transform.position += m_Movement * moveSpeed * Time.deltaTime;
 
-        // 회전
         if (m_Movement != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(m_Movement, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, turnSpeed * Time.deltaTime);
-        }
-        Interact();
-    }
-
-    public void Interact()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            GameObject.Find("DoorPrefeb").GetComponent<DoorController>().Interact();
-        }
-    }
+        }        
+    }    
 }

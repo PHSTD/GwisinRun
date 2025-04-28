@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoorTrigger1 : MonoBehaviour
 {
-    public bool m_playerDetected1 = false;
+    private bool m_playerDetected1 = false;
 
     private void OnTriggerEnter(Collider other)
     {
