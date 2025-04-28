@@ -17,7 +17,7 @@ public class PlayerHide : MonoBehaviour
 
     void Update()
     {
-        if (m_canHide && Input.GetKeyDown(KeyCode.E))
+        if (m_canHide && GameManager.Instance.Input.InteractionKeyPressed)
         {
             if (!m_isHiding) Hide();
             else Unhide();
