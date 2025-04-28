@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => m_instance;
     
     public InputManager Input;
+    public AudioSetting Audio;
 
     //# 게임 Time Attack에 사용할 Event
     [NonSerialized] public UnityEvent OnGameStart;
