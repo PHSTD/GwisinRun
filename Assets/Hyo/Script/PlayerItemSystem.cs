@@ -9,24 +9,24 @@ public class PlayerItemSystem : MonoBehaviour
     {
         if (other.CompareTag("Item"))
         {
-            Item item = other.GetComponent<Item>();
+            ItemPickup pickup = other.GetComponent<ItemPickup>();
+            if (pickup == null) return;
+
             bool added = false;
 
-            switch (item.type)
+            Item newItem = new Item(pickup.type.ToString());
+            newItem.type = pickup.type;
+            newItem.value = pickup.value;
+
+            switch (pickup.type)
             {
                 case Item.ItemType.Key:
-                    added = Inventory.Instance.AddItem(new Item("Key"));
-                    break;
                 case Item.ItemType.HeartPotion:
-                    added = Inventory.Instance.AddItem(new Item("HeartPotion"));
-                    break;
                 case Item.ItemType.SpeedPotion:
-                    added = Inventory.Instance.AddItem(new Item("SpeedPotion"));
-                    break;
                 case Item.ItemType.Repellent:
-                    added = Inventory.Instance.AddItem(new Item("Repellent"));
+                    added = Inventory.Instance.AddItem(newItem);
                     break;
-                    // 아이템 종류 추가
+                    // 필요하면 여기서 더 추가
             }
 
             if (added)
