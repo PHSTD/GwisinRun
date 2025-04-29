@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerItemSystem : MonoBehaviour
 {
+    // æ∆¿Ã≈€ »πµÊ
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))

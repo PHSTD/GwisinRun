@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
+    public int maxSlots = 6;
+    public List<Item> items = new List<Item>();
 
     private void Awake()
     {
@@ -13,35 +17,46 @@ public class Inventory : MonoBehaviour
             Instance = this;
     }
 
-    public int maxSlots = 6;
-    public List<string> items = new List<string>();
+    void Update()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                Debug.Log($"{i + 1}번 슬롯 아이템 사용 시도");
+                UseItem(i);
+            }
+        }
+    }
 
-    public bool AddItem(Item newItem)
+    public bool AddItem(Item item)
     {
         if (items.Count >= maxSlots)
         {
-            return false; // 인벤토리 꽉 찼으면 추가 실패
+            return false;
         }
 
-        items.Add(newItem.itemName);
+        items.Add(item);
         UpdateInventoryUI();
         return true;
     }
 
-    void UpdateInventoryUI() // 여기에 UI 코드 넣으면 됨
+    void UpdateInventoryUI() // 여기서 UI 구현
     {
         Debug.Log("인벤토리 상태: " + string.Join(", ", items));
     }
 
-    public void UseItem(int slot)
+    public void UseItem(int slotIndex)
     {
-        if (slot < 0 || slot >= items.Count)
+        if (slotIndex < 0 || slotIndex >= items.Count)
+        {
+            Debug.Log("해당 슬롯에 아이템이 없습니다.");
             return;
+        }
 
-        Debug.Log("아이템 사용: " + items[slot]);
-        // 여기에 실제 아이템 사용 로직 구현
-        items.RemoveAt(slot);
+        var item = items[slotIndex];
+        Debug.Log($"{item.itemName} 아이템을 사용했습니다.");
+        items.RemoveAt(slotIndex);
         UpdateInventoryUI();
     }
-
 }

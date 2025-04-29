@@ -8,11 +8,14 @@ public class Item
     public enum ItemType { Key, HeartPotion, SpeedPotion, Repellent }
     public ItemType type;
     public int value = 1;
-
     public string itemName;
 
     public Item(string name)
     {
         itemName = name;
+    }
+    public override string ToString()
+    {
+        return itemName;
     }
 }
