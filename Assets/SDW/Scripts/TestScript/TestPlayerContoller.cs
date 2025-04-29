@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class TestPlayerContoller : MonoBehaviour
 {
     private Vector2 m_moveInput;
     [SerializeField] private Rigidbody m_rigidbody;
     [SerializeField] private float m_moveSpeed;
-    [SerializeField] private GameObject m_levelCanvas;
+    [SerializeField] private GameObject m_pausedMenu;
 
     private void Start()
     {
@@ -83,7 +84,7 @@ public class TestPlayerContoller : MonoBehaviour
         //# Pause
         if (GameManager.Instance.Input.PauseKeyPressed)
         {
-            m_levelCanvas.SetActive(true);
+            m_pausedMenu.SetActive(true);
         }
     }
 }
