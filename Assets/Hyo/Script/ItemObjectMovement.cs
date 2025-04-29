@@ -5,6 +5,8 @@ using UnityEngine;
 public class ItemObjectMovement : MonoBehaviour
 {
     private Vector3 startPos;
+    [SerializeField] private float verticalSpeed;
+    [SerializeField] private float rotationSpeed;
 
     void Start()
     {
@@ -13,9 +15,9 @@ public class ItemObjectMovement : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.up * 25 * Time.deltaTime);
+        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
 
-        float newY = Mathf.Sin(1 * Time.time) * 0.2f;
+        float newY = Mathf.Sin(verticalSpeed * Time.time) * 0.2f;
         transform.position = startPos + new Vector3(0, newY, 0);
     }
 }

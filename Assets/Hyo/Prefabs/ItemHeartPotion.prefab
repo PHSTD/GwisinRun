@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4980266784122696706}
   - component: {fileID: 1488259401282357629}
   - component: {fileID: 4327741683704725345}
+  - component: {fileID: 6689874730446492762}
   m_Layer: 0
   m_Name: ItemHeartPotion
   m_TagString: Item
@@ -206,6 +207,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   value: 1
+--- !u!114 &6689874730446492762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357889660688583978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d620abc4bd805143ac0dbe320c62848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verticalSpeed: 2
+  rotationSpeed: 25
 --- !u!1 &4756936342764435642
 GameObject:
   m_ObjectHideFlags: 0
