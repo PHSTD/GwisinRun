@@ -1219,7 +1219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1450863548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1261,7 +1261,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 679f5bf0afe99de4caea7703c6901c5e, type: 2}
+  - {fileID: 2100000, guid: 1a67eeddd2d4bac48b394e13951ff7e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1880,6 +1880,10 @@ PrefabInstance:
     - target: {fileID: 2530654805304250639, guid: be16c7e2326be4f468222eba96521db6, type: 3}
       propertyPath: m_Name
       value: Switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530654805304250639, guid: be16c7e2326be4f468222eba96521db6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7153842504909668905, guid: be16c7e2326be4f468222eba96521db6, type: 3}
       propertyPath: m_cageAnimator
