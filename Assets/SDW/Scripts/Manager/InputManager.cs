@@ -16,20 +16,17 @@ public class InputManager : MonoBehaviour
     public bool InteractionKeyPressed { get; private set; }
 
     private PlayerInput m_playerInput;
+    
     private InputAction m_moveAction;
     private InputAction m_runAction;
     private InputAction m_sitAction;
     private InputAction m_interactionAction;
-
-    private void Awake()
-    {
-        m_playerInput = GetComponent<PlayerInput>();
-        SetupInputActions();
-    }
+    private bool m_isUpdateable;
 
     private void Update()
     {
-        UpdateInputs();
+        if(m_isUpdateable == true)
+            UpdateInputs();
     }
 
     private void SetupInputActions()
@@ -38,6 +35,13 @@ public class InputManager : MonoBehaviour
         m_runAction = m_playerInput.actions["Run"];
         m_sitAction = m_playerInput.actions["Sit"];
         m_interactionAction = m_playerInput.actions["Interaction"];
+    }
+
+    public void SetPlayerInput(PlayerInput playerInput)
+    {
+        m_playerInput = playerInput;
+        SetupInputActions();
+        m_isUpdateable = true;
     }
 
     private void UpdateInputs()
