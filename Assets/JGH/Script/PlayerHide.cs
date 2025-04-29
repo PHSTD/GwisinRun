@@ -22,6 +22,15 @@ public class PlayerHide : MonoBehaviour
             if (!m_isHiding) Hide();
             else Unhide();
         }
+        
+        // 렌더링 제어 추가
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        bool shouldHide = m_canHide && m_isHiding;
+
+        foreach (Renderer renderer in renderers)
+        {
+            renderer.enabled = !shouldHide;
+        }
     }
 
     void Hide()
@@ -36,6 +45,7 @@ public class PlayerHide : MonoBehaviour
         m_isHiding = false;
         m_playerCamera.backgroundColor = m_originalColor;
         // 플레이어 이동, 상호작용 등 다시 활성화(필요시)
+        
     }
 
     // 트리거로 HideObject 감지
