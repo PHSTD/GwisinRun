@@ -19,7 +19,6 @@ public class AudioSetting : MonoBehaviour
     private AudioModel m_initVolume = new AudioModel(0.5f, 0.5f);
     private AudioModel m_currentVolumeDB;
 
-
     private void Start()
     {
         VolumeInit();

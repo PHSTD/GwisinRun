@@ -21,19 +21,12 @@ public class InputManager : MonoBehaviour
     private InputAction m_runAction;
     private InputAction m_sitAction;
     private InputAction m_interactionAction;
-
-    private void Awake()
-    {
-        m_playerInput = GetComponent<PlayerInput>();
-    }
-
-    private void Start()
-    {
-    }
+    private bool m_isUpdateable;
 
     private void Update()
     {
-        UpdateInputs();
+        if(m_isUpdateable == true)
+            UpdateInputs();
     }
 
     private void SetupInputActions()
@@ -47,12 +40,8 @@ public class InputManager : MonoBehaviour
     public void SetPlayerInput(PlayerInput playerInput)
     {
         m_playerInput = playerInput;
-    }
-
-    public void SetPlayerInputActionAsset(InputActionAsset inputActionAsset)
-    {
-        m_playerInput.actions = inputActionAsset ;
         SetupInputActions();
+        m_isUpdateable = true;
     }
 
     private void UpdateInputs()

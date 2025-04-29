@@ -269,7 +269,6 @@ GameObject:
   - component: {fileID: -8836289289814120754}
   - component: {fileID: -3610262973815887109}
   - component: {fileID: 3755818551790341460}
-  - component: {fileID: -2915093615100504099}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -353,36 +352,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_brightness: {fileID: 11400000, guid: ae188c600f100d94da96818d8ce2129d, type: 2}
   m_postProcessLayer: {fileID: 0}
---- !u!114 &-2915093615100504099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7328943208720696621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
-  m_NotificationBehavior: 3
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &8360031530557093322
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,9 +34,6 @@ public class GameManager : MonoBehaviour
     private bool m_isGameOver;
     public bool IsGameOver => m_isGameOver;
 
-    private void Awake()
-    {
-    }
 
     public static void CreateInstance()
     {
