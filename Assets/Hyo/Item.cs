@@ -2,14 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Item : MonoBehaviour
 {
-    public enum ItemType { Coin, HeartPotion, SpeedPotion }
+    public enum ItemType { Key, HeartPotion, SpeedPotion, Repellent }
     public ItemType type;
-    public int value;
+    public int value = 1;
 
     private Vector3 startPos;
 
+    public string itemName;
+
+    public Item(string name)
+    {
+        itemName = name;
+    }
     void Start()
     {
         startPos = transform.position; 
