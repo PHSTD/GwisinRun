@@ -7,8 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/SDW/Scenes/TitleScene.unity
-    guid: 920323004499b534c805c49442c62d08
+    guid: 740c62f5e553f0b4fadd5b4948a1ad00
   - enabled: 1
+    path: Assets/SDW/Scenes/LevelScene.unity
+    guid: 920323004499b534c805c49442c62d08
+  - enabled: 0
     path: Assets/SDW/Scenes/[Test] PlayerControlScene.unity
     guid: e1f730e21169b934297b3ba38175f443
   m_configObjects: {}

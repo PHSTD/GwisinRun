@@ -8,6 +8,7 @@ public class TestPlayerContoller : MonoBehaviour
     private Vector2 m_moveInput;
     [SerializeField] private Rigidbody m_rigidbody;
     [SerializeField] private float m_moveSpeed;
+    [SerializeField] private GameObject m_levelCanvas;
 
     private void Start()
     {
@@ -82,7 +83,7 @@ public class TestPlayerContoller : MonoBehaviour
         //# Pause
         if (GameManager.Instance.Input.PauseKeyPressed)
         {
-            Debug.Log("Pause 키");
+            m_levelCanvas.SetActive(true);
         }
     }
 }
