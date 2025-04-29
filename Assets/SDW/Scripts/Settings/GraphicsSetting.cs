@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
@@ -13,18 +14,22 @@ public class GraphicsSetting : MonoBehaviour
     private GraphicsModel m_defaultSetting;
     public GraphicsModel DefaultSetting => m_defaultSetting;
     private GraphicsModel m_setting;
+    public GraphicsModel CurrentSetting => m_setting;
     
     private AutoExposure exposure;
     
     private Resolution[] m_resolutions;
+
+    private bool m_isFirstTime = true;
+    public bool IsFirstTime => m_isFirstTime;
 
     private void Awake()
     {
         m_defaultSetting = new GraphicsModel()
         {
             Brightness = 1f,
-            Quaility = 1,
-            IsFullScreen = Screen.fullScreen
+            Quality = 1,
+            IsFullScreen = true
         };
     }
 
@@ -34,7 +39,9 @@ public class GraphicsSetting : MonoBehaviour
 
         m_postProcessLayer = Camera.main.GetComponent<PostProcessLayer>();
 
-        SetBrightness(exposure.keyValue.value);
+        // SetBrightness(m_defaultSetting.Brightness);
+        // SetFullScreen(m_defaultSetting.IsFullScreen);
+        // SetQuality(m_defaultSetting.Quaility);
     }
     
     
@@ -59,7 +66,7 @@ public class GraphicsSetting : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
-        m_setting.Quaility = qualityIndex;
+        m_setting.Quality = qualityIndex;
     }
 
     public void SetResolution(int resolutionIndex)
@@ -70,16 +77,21 @@ public class GraphicsSetting : MonoBehaviour
 
     public void Reset()
     {
-        QualitySettings.SetQualityLevel(m_defaultSetting.Quaility);
+        SetBrightness(m_defaultSetting.Brightness);
+        SetFullScreen(m_defaultSetting.IsFullScreen);
+        SetQuality(m_defaultSetting.Quality);
+        
+        QualitySettings.SetQualityLevel(m_defaultSetting.Quality);
         Screen.fullScreen = m_defaultSetting.IsFullScreen;
 
         var currentResolution = Screen.currentResolution;
         Screen.SetResolution(currentResolution.width, currentResolution.height, Screen.fullScreen);
+        m_isFirstTime = false;
     }
 
     public void Apply()
     {
-        QualitySettings.SetQualityLevel(m_setting.Quaility);
+        QualitySettings.SetQualityLevel(m_setting.Quality);
         Screen.fullScreen = m_setting.IsFullScreen;
     }
 

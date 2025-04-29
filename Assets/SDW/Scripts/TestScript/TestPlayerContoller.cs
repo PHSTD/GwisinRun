@@ -8,6 +8,7 @@ public class TestPlayerContoller : MonoBehaviour
     private Vector2 m_moveInput;
     [SerializeField] private Rigidbody m_rigidbody;
     [SerializeField] private float m_moveSpeed;
+    [SerializeField] private GameObject m_levelCanvas;
 
     private void Start()
     {
@@ -59,6 +60,30 @@ public class TestPlayerContoller : MonoBehaviour
         if (GameManager.Instance.Input.InteractionKeyPressed)
         {
             Debug.Log("상호작용 키");
+        }
+        
+        //# Drop
+        if (GameManager.Instance.Input.DropKeyPressed)
+        {
+            Debug.Log("Drop 키");
+        }
+        
+        //# Items
+        for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
+        {
+            if (GameManager.Instance.Input.ItemKeyPressed[i])
+            {
+                Debug.Log($"{i+1} 아이템 키");
+                //# 현재 방법을 찾지 못해 읽은 후 수동으로 clear 해야 합니다.
+                //# 추후 리팩토링 예정
+                GameManager.Instance.Input.ItemKeyPressed[i] = false;
+            }
+        }
+        
+        //# Pause
+        if (GameManager.Instance.Input.PauseKeyPressed)
+        {
+            m_levelCanvas.SetActive(true);
         }
     }
 }

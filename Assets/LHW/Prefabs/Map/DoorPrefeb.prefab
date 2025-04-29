@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2338588646697444060}
   - component: {fileID: 4427253448240665928}
   - component: {fileID: 8888799577439940331}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DoorTrigger2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 7710020592336622076}
   - component: {fileID: 1093970106379483302}
   - component: {fileID: 1205915788983128543}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DoorTrigger1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

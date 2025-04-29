@@ -28,10 +28,10 @@ public class LHWPlayerController : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(m_Movement, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, turnSpeed * Time.deltaTime);
         }
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetKeyDown(KeyCode.V))
         {
             Interact();
-        }        
+        }
     }
     public void Interact()
     {
