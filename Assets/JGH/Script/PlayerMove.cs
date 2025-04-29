@@ -30,10 +30,10 @@ public class PlayerMove : MonoBehaviour
 
     private Camera m_playerCamera;      // 카메라 컴포넌트
     
-    private float timer = 0f;
+    private float m_timer = 0f;
     
     [SerializeField]
-    private float speed;
+    private float m_speed;
     
     void Start()
     {
@@ -64,7 +64,7 @@ public class PlayerMove : MonoBehaviour
         // 달리기 - Shift키 누르면 m_runSpeed 적용
         if (GameManager.Instance.Input.RunKeyBeingHeld)
         {
-           speed = m_runSpeed;
+           m_speed = m_runSpeed;
            if ((GameManager.Instance.Input.MoveInput.x != 0 || GameManager.Instance.Input.MoveInput.y != 0))
            {
                StaminaMinus();
@@ -77,12 +77,12 @@ public class PlayerMove : MonoBehaviour
         // 걷기
         else
         {
-           speed = m_walkSpeed;
+           m_speed = m_walkSpeed;
            
            StaminaPlus();
         }
         
-        m_controller.Move(move * speed * Time.deltaTime);
+        m_controller.Move(move * m_speed * Time.deltaTime);
 
         // 중력 적용
         m_velocity.y += m_gravity * Time.deltaTime;
@@ -95,11 +95,11 @@ public class PlayerMove : MonoBehaviour
     
     void StaminaPlus()
     {
-           timer += Time.deltaTime; // 프레임마다 시간 누적
-           if (timer >= 0.05f)
+           m_timer += Time.deltaTime; // 프레임마다 시간 누적
+           if (m_timer >= 0.05f)
            {
                m_stamina++;
-               timer = 0f;
+               m_timer = 0f;
            }
            
            if (m_stamina >= 100)
@@ -110,17 +110,17 @@ public class PlayerMove : MonoBehaviour
 
     void StaminaMinus()
     {
-           timer += Time.deltaTime; // 프레임마다 시간 누적
-           if (timer >= 0.05f)
+           m_timer += Time.deltaTime; // 프레임마다 시간 누적
+           if (m_timer >= 0.05f)
            {
                m_stamina--;
-               timer = 0f;
+               m_timer = 0f;
            }
            
            if (m_stamina <= 0)
            {
                m_stamina = 0;
-               speed = m_walkSpeed;
+               m_speed = m_walkSpeed;
            }
     }
 
