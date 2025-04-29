@@ -17,7 +17,7 @@ public class GraphicsSettingUI : MonoBehaviour
     
     private Resolution[] m_resolutions;
 
-    private void Start()
+    private void OnEnable()
     {
         m_brightnessSlider.onValueChanged.AddListener(GameManager.Instance.Graphics.SetBrightness);
         m_brightnessSlider.onValueChanged.AddListener(GraphicsDialogSetBrightness);
@@ -28,25 +28,41 @@ public class GraphicsSettingUI : MonoBehaviour
         
         m_qualityDropdown.onValueChanged.AddListener(GameManager.Instance.Graphics.SetQuality);
         
-        
         m_resetButton.onClick.AddListener(GameManager.Instance.Graphics.Reset);
         m_resetButton.onClick.AddListener(GraphicsDialogResetButton);
         
-        m_applyButton.onClick.AddListener((GameManager.Instance.Graphics.Apply));
-        
+        m_applyButton.onClick.AddListener(GameManager.Instance.Graphics.Apply);
+    }
 
+    private void OnDisable()
+    {
+        m_brightnessSlider.onValueChanged.RemoveAllListeners();
+        m_fullscreenToggle.onValueChanged.RemoveAllListeners();
+        m_resolutionDropdown.onValueChanged.RemoveAllListeners();
+        m_qualityDropdown.onValueChanged.RemoveAllListeners();
+        m_resetButton.onClick.RemoveAllListeners();
+        m_applyButton.onClick.RemoveAllListeners();
+        
+    }
+
+    private void Start()
+    {
+        if (GameManager.Instance.Graphics.IsFirstTime)
+        {
+            GameManager.Instance.Graphics.Reset();
+        }
         InitUISetting();
     }
 
     private void InitUISetting()
     {
-        GraphicsModel defaultSetting = GameManager.Instance.Graphics.DefaultSetting;
-        m_brightnessSlider.value = defaultSetting.Brightness;
-        m_brightnessTextValue.text = defaultSetting.Brightness.ToString("0,0");
+        GraphicsModel currentSetting = GameManager.Instance.Graphics.CurrentSetting;
+        m_brightnessSlider.value = currentSetting.Brightness;
+        m_brightnessTextValue.text = (currentSetting.Brightness * 20).ToString("0");
 
-        m_qualityDropdown.value = defaultSetting.Quaility;
+        m_qualityDropdown.value = currentSetting.Quality;
 
-        m_fullscreenToggle.isOn = defaultSetting.IsFullScreen;
+        m_fullscreenToggle.isOn = currentSetting.IsFullScreen;
 
         GetResolution();
     }
