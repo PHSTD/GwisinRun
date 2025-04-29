@@ -355,8 +355,8 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             if (m_RebindText != null)
             {
                 string text = !string.IsNullOrEmpty(m_RebindOperation.expectedControlType)
-                    ? $"{partName}\n{m_RebindOperation.expectedControlType} 입력을 기다립니다...\n<ESC> : 취소"
-                    : $"{partName}\n입력을 기다립니다...\n<ESC> : 취소";
+                    ? $"{partName}\n{m_RebindOperation.expectedControlType} 입력을 기다립니다...\n<esc> : 취소"
+                    : $"{partName}\n입력을 기다립니다...\n<esc> : 취소";
                 m_RebindText.text = text;
             }
 
