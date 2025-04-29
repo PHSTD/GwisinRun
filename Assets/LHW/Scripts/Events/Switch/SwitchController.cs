@@ -37,6 +37,4 @@ public class SwitchController : MonoBehaviour, IInteractable
         m_switchOn = !m_switchOn;
         animator.SetBool("IsOpen", m_switchOn);
     }
-      
-
 }
