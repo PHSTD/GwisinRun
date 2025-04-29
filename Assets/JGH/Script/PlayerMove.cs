@@ -86,4 +86,3 @@ public class PlayerMove : MonoBehaviour
         m_playerCamera.fieldOfView = Mathf.Lerp(m_playerCamera.fieldOfView, NormalFOV, Time.deltaTime * 10f);
     }
 }
-
