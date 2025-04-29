@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     
     public InputManager Input;
     public AudioSetting Audio;
+    public GraphicsSetting Graphics;
 
     //# 게임 Time Attack에 사용할 Event
     [NonSerialized] public UnityEvent OnGameStart;
@@ -100,5 +102,15 @@ public class GameManager : MonoBehaviour
             m_highestTime = m_currentTime;
         }
         m_isGameOver = true;
+    }
+
+    public void SceneLoader(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }
