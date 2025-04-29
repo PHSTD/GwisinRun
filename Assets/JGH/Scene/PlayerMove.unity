@@ -1078,13 +1078,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe482324bb239455d94f5754111ac7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed: 5
-  RunSpeed: 10
-  Gravity: -9.81
+  m_walkSpeed: 5
+  m_runSpeed: 10
+  m_gravity: -9.81
   m_cameraTransform: {fileID: 944722383}
-  ZoomFOV: 30
-  NormalFOV: 60
-  ZoomSpeed: 10
+  m_controller: {fileID: 0}
+  m_velocity: {x: 0, y: 0, z: 0}
+  m_zoomFOV: 30
+  m_normalFOV: 60
+  m_zoomSpeed: 10
+  m_stamina: 100
+  m_speed: 0
 --- !u!54 &1162256383
 Rigidbody:
   m_ObjectHideFlags: 0
