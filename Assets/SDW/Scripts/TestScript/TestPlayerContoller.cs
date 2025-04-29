@@ -74,6 +74,7 @@ public class TestPlayerContoller : MonoBehaviour
             {
                 Debug.Log($"{i+1} 아이템 키");
                 //# 현재 방법을 찾지 못해 읽은 후 수동으로 clear 해야 합니다.
+                //# 추후 리팩토링 예정
                 GameManager.Instance.Input.ItemKeyPressed[i] = false;
             }
         }

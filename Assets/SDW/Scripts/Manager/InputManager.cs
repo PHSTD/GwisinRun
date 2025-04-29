@@ -57,7 +57,7 @@ public class InputManager : MonoBehaviour
         //# BeingHeld
         // m_itemsAction.performed
         //# Released
-        m_itemsAction.canceled += OnInteractionCanceled;
+        // m_itemsAction.canceled
     }
 
     public void SetPlayerInput(PlayerInput playerInput)
@@ -87,13 +87,5 @@ public class InputManager : MonoBehaviour
 
         int index = int.Parse(control.name) - 1;
         ItemKeyPressed[index] = true;
-    }
-
-    private void OnInteractionCanceled(InputAction.CallbackContext context)
-    {
-        var control = context.control;
-
-        int index = int.Parse(control.name) - 1;
-        ItemKeyPressed[index] = false;
     }
 }
