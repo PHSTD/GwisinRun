@@ -4,27 +4,44 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float WalkSpeed = 5f;        // 걷는 속도
-    public float RunSpeed = 10f;        // 달리는 속도
-    public float Gravity = -9.81f;      // 중력
-    public Transform m_cameraTransform;   // 1인칭 카메라
+    [SerializeField]
+    private float m_walkSpeed = 5f;        // 걷는 속도
+    [SerializeField]
+    private float m_runSpeed = 10f;        // 달리는 속도
+    [SerializeField]
+    private float m_gravity = -9.81f;      // 중력
+    [SerializeField]
+    private Transform m_cameraTransform;   // 1인칭 카메라
 
+    [SerializeField]
     private CharacterController m_controller;
+    [SerializeField]
     private Vector3 m_velocity;
     
-    public float ZoomFOV = 30f;      // 최대 줌 인(좁은 시야각)
-    public float NormalFOV = 60f;    // 기본 시야각
-    public float ZoomSpeed = 10f;    // 줌 속도
+    [SerializeField]
+    private float m_zoomFOV = 30f;      // 최대 줌 인(좁은 시야각)
+    [SerializeField]
+    private float m_normalFOV = 60f;    // 기본 시야각
+    [SerializeField]
+    private float m_zoomSpeed = 10f;    // 줌 속도
+    
+    [SerializeField]
+    private int m_stamina = 100;    // 스태미너
 
     private Camera m_playerCamera;      // 카메라 컴포넌트
-
+    
+    private float timer = 0f;
+    
+    [SerializeField]
+    private float speed;
+    
     void Start()
     {
         m_controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 고정
         
         m_playerCamera = m_cameraTransform.GetComponent<Camera>();
-        m_playerCamera.fieldOfView = NormalFOV; // 처음 시야각
+        m_playerCamera.fieldOfView = m_normalFOV; // 처음 시야각
     }
 
     void Update()
@@ -39,22 +56,72 @@ public class PlayerMove : MonoBehaviour
         Vector2 m_moveInput = GameManager.Instance.Input.MoveInput;
         float moveX = m_moveInput.x;
         float moveZ = m_moveInput.y;
-
-        // 달리기 - Shift키 누르면 runSpeed 적용
-        // float speed = Input.GetKey(KeyCode.LeftShift) ? RunSpeed : WalkSpeed;
-        float speed = GameManager.Instance.Input.RunKeyBeingHeld ? RunSpeed : WalkSpeed;
         
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        
+        
+        // 달리기 - Shift키 누르면 m_runSpeed 적용
+        if (GameManager.Instance.Input.RunKeyBeingHeld)
+        {
+           speed = m_runSpeed;
+           if ((GameManager.Instance.Input.MoveInput.x != 0 || GameManager.Instance.Input.MoveInput.y != 0))
+           {
+               StaminaMinus();
+           }
+           else
+           {
+               StaminaPlus();
+           }
+        }
+        // 걷기
+        else
+        {
+           speed = m_walkSpeed;
+           
+           StaminaPlus();
+        }
+        
         m_controller.Move(move * speed * Time.deltaTime);
 
         // 중력 적용
-        m_velocity.y += Gravity * Time.deltaTime;
+        m_velocity.y += m_gravity * Time.deltaTime;
         m_controller.Move(m_velocity * Time.deltaTime);
 
         // 바닥에 있으면 중력 초기화
         if (m_controller.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
+    }
+    
+    void StaminaPlus()
+    {
+           timer += Time.deltaTime; // 프레임마다 시간 누적
+           if (timer >= 0.05f)
+           {
+               m_stamina++;
+               timer = 0f;
+           }
+           
+           if (m_stamina >= 100)
+           {
+               m_stamina = 100;
+           }
+    }
+
+    void StaminaMinus()
+    {
+           timer += Time.deltaTime; // 프레임마다 시간 누적
+           if (timer >= 0.05f)
+           {
+               m_stamina--;
+               timer = 0f;
+           }
+           
+           if (m_stamina <= 0)
+           {
+               m_stamina = 0;
+               speed = m_walkSpeed;
+           }
     }
 
     void RotateView()
@@ -80,9 +147,9 @@ public class PlayerMove : MonoBehaviour
         if (scroll != 0)
         {
             // 마우스 휠 위/아래로 줌 인/아웃
-            NormalFOV -= scroll * ZoomSpeed;
-            NormalFOV = Mathf.Clamp(NormalFOV, ZoomFOV, 60f); // 60은 기본값, 조정 가능
+            m_normalFOV -= scroll * m_zoomSpeed;
+            m_normalFOV = Mathf.Clamp(m_normalFOV, m_zoomFOV, 60f); // 60은 기본값, 조정 가능
         }
-        m_playerCamera.fieldOfView = Mathf.Lerp(m_playerCamera.fieldOfView, NormalFOV, Time.deltaTime * 10f);
+        m_playerCamera.fieldOfView = Mathf.Lerp(m_playerCamera.fieldOfView, m_normalFOV, Time.deltaTime * 10f);
     }
 }
