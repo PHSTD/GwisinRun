@@ -72,12 +72,17 @@ public class PlayerItemController : MonoBehaviour, IInteractable
         {
             if (m_itemSlots[i] == null)
             {
+                // 만약 현재 장착 중인 아이템이 이 아이템이면 먼저 해제
+                if (m_equippedItem != null && m_equippedItem.name == item.name)
+                {
+                    UnequipItem();
+                }
+
                 m_itemSlots[i] = item;
                 item.SetActive(false); // 씬에서 숨김
-                
                 m_itemSlots[i].name = m_itemSlots[i].name.Replace("(Clone)", "").Trim();
-                
-                Debug.Log($"{i+1}번 슬롯에 {item.name} 저장!");
+
+                Debug.Log($"{i + 1}번 슬롯에 {item.name} 저장!");
                 return true;
             }
         }
@@ -85,7 +90,6 @@ public class PlayerItemController : MonoBehaviour, IInteractable
         return false;
     }
 
-    // 슬롯의 아이템을 장착
     public void EquipItem(int slotIndex)
     {
         if (m_itemSlots[slotIndex] == null)
@@ -94,17 +98,16 @@ public class PlayerItemController : MonoBehaviour, IInteractable
             return;
         }
 
-        // 이미 같은 슬롯 아이템을 장착 중이면 해제
+        // 같은 슬롯을 다시 누르면 탈착만 하고 끝내기
         if (m_equippedSlotIndex == slotIndex)
         {
             UnequipItem();
             return;
         }
-
-        // 기존 장착 해제
+        
+        // 다른 슬롯을 누른 경우에는 기존 아이템 해제 후 새로 장착
         UnequipItem();
 
-        // Player 태그 가진 오브젝트 찾기
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
@@ -112,7 +115,6 @@ public class PlayerItemController : MonoBehaviour, IInteractable
             return;
         }
 
-        // 슬롯 아이템 복제해서 Player에 붙이기
         m_equippedItem = Instantiate(m_itemSlots[slotIndex], player.transform);
         m_equippedItem.SetActive(true);
         m_equippedItem.transform.localPosition = Vector3.zero;
