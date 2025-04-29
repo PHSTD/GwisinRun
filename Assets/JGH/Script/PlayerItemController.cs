@@ -34,6 +34,7 @@ public class PlayerItemController : MonoBehaviour, IInteractable
         // 슬롯 번호(1~6) 키 입력 체크하여 장착
         for (int i = 0; i < 6; i++)
         {
+            // TODO: 추후 GameManager.Instance.Input.ItemKeyPressed[i]로 변경 필요
             if (Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)))
             {
                 EquipItem(i);
