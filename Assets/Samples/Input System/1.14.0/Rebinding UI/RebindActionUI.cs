@@ -423,6 +423,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 InputSystem.onActionChange += OnActionChange;
             if (m_DefaultInputActions != null && m_UIInputActionMap == null)
                 m_UIInputActionMap = m_DefaultInputActions.FindActionMap("UI");
+            UpdateBindingDisplay();
         }
 
         protected void OnDisable()

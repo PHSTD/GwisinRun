@@ -14,4 +14,5 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/SDW/Scenes/[Test] PlayerControlScene.unity
     guid: e1f730e21169b934297b3ba38175f443
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 4398f008affba3e469ccaa77a7b02b68, type: 3}

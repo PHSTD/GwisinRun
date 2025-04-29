@@ -12,5 +12,6 @@ public class MainMenuUI : MonoBehaviour
     void Start()
     {
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
+        // Debug.LogError("temp");
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
@@ -28,7 +29,7 @@ public class GraphicsSetting : MonoBehaviour
         {
             Brightness = 1f,
             Quality = 1,
-            IsFullScreen = Screen.fullScreen
+            IsFullScreen = true
         };
     }
 
@@ -77,6 +78,8 @@ public class GraphicsSetting : MonoBehaviour
     public void Reset()
     {
         SetBrightness(m_defaultSetting.Brightness);
+        SetFullScreen(m_defaultSetting.IsFullScreen);
+        SetQuality(m_defaultSetting.Quality);
         
         QualitySettings.SetQualityLevel(m_defaultSetting.Quality);
         Screen.fullScreen = m_defaultSetting.IsFullScreen;

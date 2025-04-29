@@ -1306,6 +1306,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1572023935}
+        m_TargetAssemblyTypeName: InputSetting, Assembly-CSharp
+        m_MethodName: LoadBinding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &455621254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2699,6 +2711,7 @@ GameObject:
   - component: {fileID: 1191323530}
   - component: {fileID: 1191323529}
   - component: {fileID: 1191323528}
+  - component: {fileID: 1191323531}
   m_Layer: 5
   m_Name: Controls Setting Dialog Menu
   m_TagString: Untagged
@@ -2768,6 +2781,19 @@ RectTransform:
   m_AnchoredPosition: {x: 960.00006, y: 0}
   m_SizeDelta: {x: 1051.5, y: 921.4855}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1191323531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191323527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6c2da2db9374dada6761b5e35121c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: {fileID: -944628639613478452, guid: 4398f008affba3e469ccaa77a7b02b68, type: 3}
 --- !u!114 &1256112183 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1789526401842862718, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}

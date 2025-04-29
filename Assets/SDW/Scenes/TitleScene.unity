@@ -691,8 +691,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1993112099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.000000042876493}
+  m_AnchorMax: {x: 1, y: 0.44959262}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 280621693}
   m_Direction: 2
   m_Value: 0.00000007789956
-  m_Size: 0.4495715
+  m_Size: 0.4495926
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2508,6 +2508,7 @@ GameObject:
   - component: {fileID: 1191323530}
   - component: {fileID: 1191323529}
   - component: {fileID: 1191323528}
+  - component: {fileID: 1191323531}
   m_Layer: 5
   m_Name: Controls Setting Dialog Menu
   m_TagString: Untagged
@@ -2577,6 +2578,19 @@ RectTransform:
   m_AnchoredPosition: {x: 960.00006, y: 0}
   m_SizeDelta: {x: 1051.5, y: 921.4855}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1191323531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191323527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6c2da2db9374dada6761b5e35121c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: {fileID: -944628639613478452, guid: 4398f008affba3e469ccaa77a7b02b68, type: 3}
 --- !u!114 &1256112183 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1789526401842862718, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -12855,7 +12869,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3685496331163338262}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e68a6ebaadc9c414698a067b7ad63b1d, type: 3}
   m_Name: 
