@@ -32,18 +32,17 @@ public class PlayerItemController : MonoBehaviour, IInteractable
         }
         
         // 슬롯 번호(1~6) 키 입력 체크하여 장착
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
         {
-            // TODO: 추후 GameManager.Instance.Input.ItemKeyPressed[i]로 변경 필요
-            if (Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)))
+            if (GameManager.Instance.Input.ItemKeyPressed[i])
             {
+                Debug.Log($"{i+1} 아이템 키");
                 EquipItem(i);
+                GameManager.Instance.Input.ItemKeyPressed[i] = false;
             }
         }
 
-        // 버리기 (예: Backspace 키)
-        // TODO: 버리기 버튼 인터페이스 변경 필요
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (GameManager.Instance.Input.DropKeyPressed)
         {
             DropItem();
         }
