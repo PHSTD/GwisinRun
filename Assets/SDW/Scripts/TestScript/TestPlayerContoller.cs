@@ -91,5 +91,10 @@ public class TestPlayerContoller : MonoBehaviour
         {
             m_pausedMenu.SetActive(true);
         }
+
+        if (GameManager.Instance.Input.JumpKeyPressed)
+        {
+            Debug.Log("Jump 키");
+        }
     }
 }
