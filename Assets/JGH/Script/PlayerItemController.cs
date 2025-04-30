@@ -21,6 +21,8 @@ public class PlayerItemController : MonoBehaviour, IInteractable
 
     void Update()
     {
+        DetectItemByRay();
+        
         if (m_riggerItem != null && GameManager.Instance.Input.InteractionKeyPressed)
         {
             bool result = StoreItem(m_riggerItem.gameObject);
@@ -49,21 +51,38 @@ public class PlayerItemController : MonoBehaviour, IInteractable
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Items"))
-        {
-            m_riggerItem = other;
-        }
-        else
-        {
-            m_riggerItem = null;
-        }
-    }
+    // private void OnTriggerStay(Collider other)
+    // {
+    //     if (other.CompareTag("Item"))
+    //     {
+    //         m_riggerItem = other;
+    //     }
+    //     else
+    //     {
+    //         m_riggerItem = null;
+    //     }
+    // }
 
-    private void OnTriggerExit(Collider other)
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     m_riggerItem = null;
+    // }
+    
+    // 아이템이 낮으면 안 먹어지는 현상이 있어 레이케스트 방식으로 전환
+    void DetectItemByRay()
     {
-        m_riggerItem = null;
+        Ray ray = new Ray(transform.position + Vector3.up * 0.5f, transform.forward);
+        if (Physics.SphereCast(ray, 0.4f, out RaycastHit hit, 1.5f))
+        {
+            if (hit.collider.CompareTag("Item"))
+            {
+                m_riggerItem = hit.collider;
+            }
+            else
+            {
+                m_riggerItem = null;
+            }
+        }
     }
 
     // 아이템을 슬롯에 저장 (외부에서 호출, 예: 아이템 상호작용시)
