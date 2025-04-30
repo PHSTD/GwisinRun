@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class DeskDrawerController : MonoBehaviour, IInteractable
 {
-    [SerializeField] Animator m_drawerAnimator1;
-    [SerializeField] Animator m_drawerAnimator2;
     private bool m_interactable = false;
 
     private void OnTriggerEnter(Collider other)
