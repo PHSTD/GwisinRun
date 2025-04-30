@@ -22,7 +22,6 @@ public class SwitchController : MonoBehaviour, IInteractable
     {
         if (m_interactable)
         {
-            m_switchOn = !m_switchOn;
             for (int i = 0; i < m_objectAnimator.Count; i++)
             {
                 boolAnimator(m_objectAnimator[i]);
@@ -30,8 +29,6 @@ public class SwitchController : MonoBehaviour, IInteractable
         }
     }
 
-    // 현 단계에선 번갈아가면서 bool값이 번갈아가게 되어 있으나,
-    // bool 변수 세부 값을 조정할 수 있도록 세팅할 건지도 고민중
     private void boolAnimator(Animator animator)
     {
         m_switchOn = !m_switchOn;
