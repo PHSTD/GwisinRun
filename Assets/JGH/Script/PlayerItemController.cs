@@ -1,98 +1,77 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerItemController : MonoBehaviour, IInteractable
 {
-    // 슬롯 6개
+    [Header("아이템 슬롯")]
     [SerializeField]
-    private GameObject[] m_itemSlots = new GameObject[6];
-    
-    private int m_equippedSlotIndex = -1; // 현재 장착 중인 슬롯 번호 (없으면 -1)
+    private GameObject[] m_itemSlots = new GameObject[6]; // 총 6개의 슬롯
 
-    // 현재 장착된 아이템
+    private int m_equippedSlotIndex = -1;                 // 현재 장착 중인 슬롯 인덱스 (-1: 없음)
     [SerializeField]
-    private GameObject m_equippedItem;
+    private GameObject m_equippedItem;                    // 현재 장착된 아이템
 
-    [SerializeField]
-    private Collider m_riggerItem;
+    private Collider m_riggerItem;                        // 현재 감지된 아이템 콜라이더
 
     void Update()
     {
-        DetectItemByRay();
-        
+        DetectItemByRay(); // 아이템 탐지 (Ray 방식으로 교체)
+
+        // 상호작용 키로 아이템 저장 시도
         if (m_riggerItem != null && GameManager.Instance.Input.InteractionKeyPressed)
         {
-            bool result = StoreItem(m_riggerItem.gameObject);
-
-            if (result)
+            if (StoreItem(m_riggerItem.gameObject))
             {
-                m_riggerItem = null;
+                m_riggerItem = null; // 성공 시 감지 초기화
             }
         }
-        
-        // 슬롯 번호(1~6) 키 입력 체크하여 장착
+
+        // 1~6번 키 입력으로 장착 시도
         for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
         {
             if (GameManager.Instance.Input.ItemKeyPressed[i])
             {
-                Debug.Log($"{i+1} 아이템 키");
                 EquipItem(i);
-                GameManager.Instance.Input.ItemKeyPressed[i] = false;
+                GameManager.Instance.Input.ItemKeyPressed[i] = false; // 키 입력 초기화
             }
         }
 
-        // 버리기
+        // 버리기 키 입력
         if (GameManager.Instance.Input.DropKeyPressed)
         {
             DropItem();
         }
     }
 
-    // private void OnTriggerStay(Collider other)
-    // {
-    //     if (other.CompareTag("Item"))
-    //     {
-    //         m_riggerItem = other;
-    //     }
-    //     else
-    //     {
-    //         m_riggerItem = null;
-    //     }
-    // }
-
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     m_riggerItem = null;
-    // }
-    
-    // 아이템이 낮으면 안 먹어지는 현상이 있어 레이케스트 방식으로 전환
+    // Ray + SphereCast 방식으로 정면 아래 아이템 감지
     void DetectItemByRay()
     {
-        Ray ray = new Ray(transform.position + Vector3.up * 0.5f, transform.forward);
-        if (Physics.SphereCast(ray, 0.4f, out RaycastHit hit, 1.5f))
+        Vector3 rayOrigin = transform.position + Vector3.up * 0.5f;
+        Vector3 rayDirection = transform.forward;
+
+        if (Physics.SphereCast(rayOrigin, 0.4f, rayDirection, out RaycastHit hit, 1.5f))
         {
             if (hit.collider.CompareTag("Item"))
             {
                 m_riggerItem = hit.collider;
-            }
-            else
-            {
-                m_riggerItem = null;
+                return;
             }
         }
+
+        // 감지 실패 시 초기화
+        m_riggerItem = null;
     }
 
-    // 아이템을 슬롯에 저장 (외부에서 호출, 예: 아이템 상호작용시)
+    // 아이템을 슬롯에 저장
     public bool StoreItem(GameObject item)
     {
         for (int i = 0; i < m_itemSlots.Length; i++)
         {
             if (m_itemSlots[i] == null)
             {
-                // 만약 현재 장착 중인 아이템이 이 아이템이면 먼저 해제
+                // 같은 이름의 아이템이 장착되어 있으면 해제
                 if (m_equippedItem != null && m_equippedItem.name == item.name)
                 {
                     UnequipItem();
@@ -100,16 +79,18 @@ public class PlayerItemController : MonoBehaviour, IInteractable
 
                 m_itemSlots[i] = item;
                 item.SetActive(false); // 씬에서 숨김
-                m_itemSlots[i].name = m_itemSlots[i].name.Replace("(Clone)", "").Trim();
+                m_itemSlots[i].name = m_itemSlots[i].name.Replace("(Clone)", "").Trim(); // 이름 정리
 
                 Debug.Log($"{i + 1}번 슬롯에 {item.name} 저장!");
                 return true;
             }
         }
+
         Debug.Log("슬롯이 모두 찼음!");
         return false;
     }
 
+    // 슬롯 인덱스로 아이템 장착
     public void EquipItem(int slotIndex)
     {
         if (m_itemSlots[slotIndex] == null)
@@ -118,15 +99,14 @@ public class PlayerItemController : MonoBehaviour, IInteractable
             return;
         }
 
-        // 같은 슬롯을 다시 누르면 탈착만 하고 끝내기
+        // 같은 슬롯을 다시 누른 경우: 해제만
         if (m_equippedSlotIndex == slotIndex)
         {
             UnequipItem();
             return;
         }
-        
-        // 다른 슬롯을 누른 경우에는 기존 아이템 해제 후 새로 장착
-        UnequipItem();
+
+        UnequipItem(); // 기존 장착 해제
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -135,6 +115,7 @@ public class PlayerItemController : MonoBehaviour, IInteractable
             return;
         }
 
+        // 아이템 인스턴스 생성 및 장착
         m_equippedItem = Instantiate(m_itemSlots[slotIndex], player.transform);
         m_equippedItem.SetActive(true);
         m_equippedItem.transform.localPosition = Vector3.zero;
@@ -144,7 +125,8 @@ public class PlayerItemController : MonoBehaviour, IInteractable
 
         Debug.Log($"{slotIndex + 1}번 슬롯의 {m_equippedItem.name} 장착 완료");
     }
-    
+
+    // 현재 장착 아이템 해제
     private void UnequipItem()
     {
         if (m_equippedItem != null)
@@ -157,48 +139,41 @@ public class PlayerItemController : MonoBehaviour, IInteractable
         }
     }
 
-    // 장착된 아이템을 버림
+    // 현재 장착 아이템을 버림
     public void DropItem()
     {
-        if (m_equippedItem != null)
-        {
-            // 부모 끊기
-            m_equippedItem.transform.SetParent(null);
-
-            // 활성화
-            m_equippedItem.SetActive(true);
-
-            // 위치 이동 (플레이어 오른쪽 1m)
-            m_equippedItem.transform.position = this.transform.position + this.transform.right * 1f;
-
-            // Rigidbody 물리 적용
-            Rigidbody rb = m_equippedItem.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.useGravity = true;
-            }
-
-            Debug.Log($"{m_equippedItem.name}을(를) 버림!");
-
-            // 슬롯에서 정확히 비우기
-            if (m_equippedSlotIndex != -1)
-            {
-                m_itemSlots[m_equippedSlotIndex] = null;
-                Debug.Log($"{m_equippedSlotIndex + 1}번 슬롯 비웠음");
-            }
-
-            // 장착 초기화
-            m_equippedItem = null;
-            m_equippedSlotIndex = -1;
-        }
-        else
+        if (m_equippedItem == null)
         {
             Debug.Log("버릴 아이템이 없음");
+            return;
         }
+
+        m_equippedItem.transform.SetParent(null);
+        m_equippedItem.SetActive(true);
+        m_equippedItem.transform.position = transform.position + transform.right * 1f;
+
+        // 물리 활성화
+        Rigidbody rb = m_equippedItem.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
+
+        Debug.Log($"{m_equippedItem.name}을(를) 버림!");
+
+        // 슬롯 비우기
+        if (m_equippedSlotIndex != -1)
+        {
+            m_itemSlots[m_equippedSlotIndex] = null;
+            Debug.Log($"{m_equippedSlotIndex + 1}번 슬롯 비웠음");
+        }
+
+        // 상태 초기화
+        m_equippedItem = null;
+        m_equippedSlotIndex = -1;
     }
 
-    public void Interact()
-    {
-    }
+    // 인터페이스용 (필수 구현, 기능 없음)
+    public void Interact() { }
 }
