@@ -16,14 +16,21 @@ public class PauseMenuUI : MonoBehaviour
     [Header("Background")]
     [SerializeField] private Image m_titleBackground;
     [SerializeField] private Image m_blackBackground;
+
+    [Header("Current Time in Game")]
+    [SerializeField] private GameObject m_currentTimeContainer;
     
     private void OnEnable()
     {
-        m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
-        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_sceneName));
+        GameManager.Instance.IsPaused = true;
         
         m_titleBackground.gameObject.SetActive(true);
         m_blackBackground.gameObject.SetActive(true);
+        m_currentTimeContainer.SetActive(false);
+        
+        m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
+        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_sceneName));
+
     }
 
     public void Close()
@@ -33,5 +40,8 @@ public class PauseMenuUI : MonoBehaviour
         
         m_titleBackground.gameObject.SetActive(false);
         m_blackBackground.gameObject.SetActive(false);
+        m_currentTimeContainer.SetActive(true);
+        
+        GameManager.Instance.IsPaused = false;
     }
 }

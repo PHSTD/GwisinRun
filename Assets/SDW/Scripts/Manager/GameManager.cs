@@ -31,13 +31,13 @@ public class GameManager : MonoBehaviour
     private float m_bestTime;
     public float BestTime => m_bestTime;
 
-    //# GameOver 관련 필드와 프로퍼티
+    //# GameOver 관련 필드와 프로퍼티, 추후 Event 방식으로 동작 여부 검토
     private bool m_isGameOver;
-    public bool IsGameOver => m_isGameOver;
-    private bool m_isPaused;
-    public bool IsPaused => m_isPaused;
+    public bool IsGameOver { get => m_isGameOver; set => m_isGameOver = value; }
+    private bool m_isPaused = true;
+    public bool IsPaused { get => m_isPaused; set => m_isPaused = value; }
     private bool m_isCleared;
-    public bool IsCleared => m_isCleared;
+    public bool IsCleared { get => m_isCleared; set => m_isCleared = value; }
 
 
     public static void CreateInstance()
@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //# 현재는 GameOver만 등록
         // OnGameOver = new UnityEvent();
         // OnGameOver.AddListener(GameOver);
         // OnGameStart = new UnityEvent();
@@ -77,37 +76,46 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!m_isGameOver && !m_isPaused && !m_isCleared)
+        if (m_isGameOver || m_isPaused || m_isCleared)
+            return;
+        
+        m_currentTime += Time.deltaTime;
+        
+        if (m_currentTime - m_previousTime >= 0.1f)
         {
-            m_currentTime += Time.deltaTime;
-            if (m_currentTime - m_previousTime >= 0.1f)
-            {
-                OnTimeChanged?.Invoke();
-                m_previousTime = m_currentTime;
-            }
+            OnTimeChanged?.Invoke();
+            m_previousTime = m_currentTime;
         }
     }
 
-    public void GameStart()
+    public void GameStart(string sceneName)
     {
         m_currentTime = 0;
         m_previousTime = 0;
         m_isGameOver = false;
-        // OnGameStart?.Invoke();
+        m_isCleared = false;
+        //# m_isPaused는 플레이어의 첫 키 입력이 있을 때 false
+        m_isPaused = true;
+        
+        //# Read
+        m_bestTime = PlayerPrefs.GetFloat(sceneName);
+        
+        if (m_bestTime <= 1.0f)
+        {
+            m_bestTime = float.MaxValue;
+        }
     }
 
-    //todo GameOver는 Level에서 호출
-    private void GameOver()
+    public void GameOver()
     {
         m_isGameOver = true;
     }
 
-    //todo GameClear는 Level에서 호출
     public void GameClear(string sceneName)
     {
+        m_isCleared = true;
         if (m_currentTime < m_bestTime)
         {
-            //todo PlayerPrefs 에 best score를 맵별로 저장해서 활용?
             m_bestTime = m_currentTime;
             
             //# Write
@@ -115,18 +123,10 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    //todo GameRestart는 Level에서 호출
-    public void GameRestart(string sceneName)
-    { 
-        //# Read
-        m_bestTime= PlayerPrefs.GetFloat(sceneName);
-        
-        GameStart();
-    }
-
     public void SceneLoader(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        GameStart(sceneName);
     }
 
     public void Exit()

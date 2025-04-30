@@ -6,14 +6,13 @@ using UnityEngine.Serialization;
 
 public class TestPlayerContoller : MonoBehaviour
 {
-    private Vector2 m_moveInput;
     [SerializeField] private Rigidbody m_rigidbody;
     [SerializeField] private float m_moveSpeed;
     [SerializeField] private GameObject m_pausedMenu;
-
-    private void Start()
-    {
-    }
+    
+    private Vector2 m_moveInput;
+    private bool m_isFirstMove = true;
+    
 
     private void Update()
     {
@@ -25,6 +24,12 @@ public class TestPlayerContoller : MonoBehaviour
     {
         m_moveInput = GameManager.Instance.Input.MoveInput;
         m_rigidbody.velocity = new Vector3(m_moveInput.x * m_moveSpeed, 0, m_moveInput.y * m_moveSpeed);
+
+        if (m_rigidbody.velocity.magnitude != 0 && m_isFirstMove)
+        {
+            GameManager.Instance.IsPaused = false;
+            m_isFirstMove = false;
+        }
     }
 
     private void ActionKeys()

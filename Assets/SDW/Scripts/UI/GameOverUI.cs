@@ -20,12 +20,31 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private Image m_titleBackground;
     [SerializeField] private Image m_blackBackground;
     
+    [Header("Current Time in Game")]
+    [SerializeField] private GameObject m_currentTimeContainer;
+    
     private void OnEnable()
     {
+        GameManager.Instance.GameOver();
+        
         m_titleBackground.gameObject.SetActive(false);
         m_blackBackground.gameObject.SetActive(false);
-        m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
-        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_titleSceneName));
+        m_currentTimeContainer.SetActive(false);
+        
         m_restartButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_levelSceneName));
+        m_restartButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_levelSceneName));
+        
+        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_titleSceneName));
+        
+        m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
+    }
+
+    private void OnDisable()
+    {
+        m_mainMenuButton.onClick.RemoveAllListeners();
+        m_restartButton.onClick.RemoveAllListeners();
+        m_exitButton.onClick.RemoveAllListeners();
+        
+        m_currentTimeContainer.SetActive(true);
     }
 }

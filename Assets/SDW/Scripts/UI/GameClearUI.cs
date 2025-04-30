@@ -27,16 +27,42 @@ public class GameClearUI : MonoBehaviour
     [SerializeField] private Image m_titleBackground;
     [SerializeField] private Image m_blackBackground;
     
+    [Header("Current Time in Game")]
+    [SerializeField] private GameObject m_currentTimeContainer;
+    
     private void OnEnable()
     {
-        //todo GameManager의 IsPaused를 true, IsGameOver, IsClear, IsPaused로 구분할지 고민
-        //todo 해당 UI가 Enable되면, GameManager의 클리어 시간, 해당 레벨에서의 최단 시간 표시
-        //todo 클리어 시간과 최단 시간이 같을 때(갱신) New 표시 여부 검토
-        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_titleSceneName));
-        m_restartButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_levelSceneName));
-        m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_nextSceneName));
-        
+        GameManager.Instance.GameClear(m_levelSceneName);
+            
         m_titleBackground.gameObject.SetActive(false);
         m_blackBackground.gameObject.SetActive(false);
+        m_currentTimeContainer.SetActive(false);
+        
+        //todo 클리어 시간과 최단 시간이 같을 때(갱신) New 표시 여부 검토
+        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_titleSceneName));
+        
+        //# 재시작 시 GameStart 메서드를 호출하여 초기화
+        m_restartButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_levelSceneName));
+        m_restartButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_levelSceneName));
+        
+        //# 다음 레벨로 넘어갈 시 GameStart 메서드를 호출하여 초기화
+        m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_nextSceneName));
+        m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_nextSceneName));
+
+        //# clear 시점의 CurrentTime이 클리어 시간
+        m_clearTime.text = $"{GameManager.Instance.CurrentTime,6:F1}";
+        m_bestTime.text = $"{GameManager.Instance.BestTime,6:F1}";
+    }
+
+    private void OnDisable()
+    {
+        m_mainMenuButton.onClick.RemoveAllListeners();
+        m_restartButton.onClick.RemoveAllListeners();
+        m_nextLevelButton.onClick.RemoveAllListeners();
+
+        m_clearTime.text = "";
+        m_bestTime.text = "";
+        
+        m_currentTimeContainer.SetActive(true);
     }
 }
