@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/SDW/Scenes/[Test] PlayerControlScene.unity
     guid: e1f730e21169b934297b3ba38175f443
   - enabled: 1
-    path: Assets/SDW/Scenes/[Test] LevelScene.unity
+    path: Assets/SDW/Scenes/[Test] PlayScene.unity
     guid: 4b07c3ace609f0346bd5e9a7e85eea20
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 4398f008affba3e469ccaa77a7b02b68, type: 3}
