@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ItemInfoUI : MonoBehaviour
+public class ItemInfoUI_ : MonoBehaviour
 {
     [SerializeField] private GameObject tooltipPanel; // UI Panel 오브젝트
     [SerializeField] private TextMeshProUGUI tooltipText; // Panel 안의 Text
@@ -11,7 +11,7 @@ public class ItemInfoUI : MonoBehaviour
 
     private bool isHovering = false;
     private float hoverTime = 0f;
-    [SerializeField] private float tooltipDelay = 1.5f;
+    [SerializeField] private float tooltipDelay = 1f;
 
     void Update()
     {

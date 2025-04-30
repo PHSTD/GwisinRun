@@ -12,9 +12,7 @@ GameObject:
   - component: {fileID: 9164173173177742752}
   - component: {fileID: 6504209539418900246}
   - component: {fileID: 1697069132791977286}
-  - component: {fileID: 4980266784122696706}
   - component: {fileID: 1488259401282357629}
-  - component: {fileID: 6689874730446492762}
   m_Layer: 0
   m_Name: ItemHeartPotion
   m_TagString: Item
@@ -109,27 +107,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &4980266784122696706
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357889660688583978}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!108 &1488259401282357629
 Light:
   m_ObjectHideFlags: 0
@@ -192,20 +169,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &6689874730446492762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357889660688583978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d620abc4bd805143ac0dbe320c62848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  verticalSpeed: 2
-  rotationSpeed: 25
 --- !u!1 &4756936342764435642
 GameObject:
   m_ObjectHideFlags: 0

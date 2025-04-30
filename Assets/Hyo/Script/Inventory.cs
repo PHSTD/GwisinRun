@@ -33,17 +33,19 @@ public class Inventory : MonoBehaviour
     {
         if (items.Count >= maxSlots)
         {
+            Debug.Log("인벤토리가 가득 찼습니다.");
             return false;
         }
 
         items.Add(item);
+        Debug.Log($"{item.itemName} 아이템을 획득했습니다.");
         UpdateInventoryUI();
         return true;
     }
 
     void UpdateInventoryUI() // 여기서 UI 구현
     {
-        Debug.Log("인벤토리 상태: " + string.Join(", ", items));
+        Debug.Log($"인벤토리 상태: {string.Join(", ", items)}");
     }
 
     public void UseItem(int slotIndex)
