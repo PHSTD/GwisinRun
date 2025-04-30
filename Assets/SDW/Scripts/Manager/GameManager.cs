@@ -17,9 +17,9 @@ public class GameManager : MonoBehaviour
     //todo 추후 리팩토링 시 검토
     // public UIManager UI;
 
-    //# 게임 Time Attack에 사용할 Event
-    [NonSerialized] public UnityEvent OnGameStart;
-    [NonSerialized] public UnityEvent OnGameOver;
+    //todo 추후 사용 고민 게임 Time Attack에 사용할 Event
+    // [NonSerialized] public UnityEvent OnGameStart;
+    // [NonSerialized] public UnityEvent OnGameOver;
     [NonSerialized] public UnityEvent OnTimeChanged;
 
     //# 게임 Time Attack에 사용할 필드와 프로퍼티
@@ -28,13 +28,16 @@ public class GameManager : MonoBehaviour
 
     private float m_currentTime;
     public float CurrentTime => m_currentTime;
+    private float m_bestTime;
+    public float BestTime => m_bestTime;
 
-    private float m_highestTime;
-    public float HighestTime => m_highestTime;
-
-    //# GameOver 관련 필드와 프로퍼티
+    //# GameOver 관련 필드와 프로퍼티, 추후 Event 방식으로 동작 여부 검토
     private bool m_isGameOver;
-    public bool IsGameOver => m_isGameOver;
+    public bool IsGameOver { get => m_isGameOver; set => m_isGameOver = value; }
+    private bool m_isPaused = true;
+    public bool IsPaused { get => m_isPaused; set => m_isPaused = value; }
+    private bool m_isCleared;
+    public bool IsCleared { get => m_isCleared; set => m_isCleared = value; }
 
 
     public static void CreateInstance()
@@ -58,54 +61,72 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //# 현재는 GameOver만 등록
-        OnGameOver = new UnityEvent();
-        OnGameOver.AddListener(GameOver);
-        OnGameStart = new UnityEvent();
+        // OnGameOver = new UnityEvent();
+        // OnGameOver.AddListener(GameOver);
+        // OnGameStart = new UnityEvent();
         OnTimeChanged = new UnityEvent();
     }
 
     private void OnDisable()
     {
-        OnGameStart.RemoveAllListeners();
-        OnGameOver.RemoveAllListeners();
+        // OnGameStart.RemoveAllListeners();
+        // OnGameOver.RemoveAllListeners();
         OnTimeChanged.RemoveAllListeners();
     }
 
     private void Update()
     {
-        //# 타입어택 적용 시 사용할 부분, 현재 주석 처리
-        // if (!m_isGameOver)
-        // {
-        //     m_currentTime += Time.deltaTime;
-        //     if (m_currentTime - m_previousTime >= 0.1f)
-        //     {
-        //         OnTimeChanged?.Invoke();
-        //         m_previousTime = m_currentTime;
-        //     }
-        // }
+        if (m_isGameOver || m_isPaused || m_isCleared)
+            return;
+        
+        m_currentTime += Time.deltaTime;
+        
+        if (m_currentTime - m_previousTime >= 0.1f)
+        {
+            OnTimeChanged?.Invoke();
+            m_previousTime = m_currentTime;
+        }
     }
 
-    public void GameStart()
+    public void GameStart(string sceneName)
     {
         m_currentTime = 0;
         m_previousTime = 0;
         m_isGameOver = false;
-        OnGameStart?.Invoke();
+        m_isCleared = false;
+        //# m_isPaused는 플레이어의 첫 키 입력이 있을 때 false
+        m_isPaused = true;
+        
+        //# Read
+        m_bestTime = PlayerPrefs.GetFloat(sceneName);
+        
+        if (m_bestTime <= 1.0f)
+        {
+            m_bestTime = float.MaxValue;
+        }
     }
 
-    private void GameOver()
+    public void GameOver()
     {
-        if (m_currentTime > m_highestTime)
-        {
-            m_highestTime = m_currentTime;
-        }
         m_isGameOver = true;
     }
 
+    public void GameClear(string sceneName)
+    {
+        m_isCleared = true;
+        if (m_currentTime < m_bestTime)
+        {
+            m_bestTime = m_currentTime;
+            
+            //# Write
+            PlayerPrefs.SetFloat(sceneName, m_bestTime);
+        }
+    }
+    
     public void SceneLoader(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        GameStart(sceneName);
     }
 
     public void Exit()
