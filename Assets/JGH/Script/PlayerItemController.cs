@@ -42,6 +42,7 @@ public class PlayerItemController : MonoBehaviour, IInteractable
             }
         }
 
+        // 버리기
         if (GameManager.Instance.Input.DropKeyPressed)
         {
             DropItem();
