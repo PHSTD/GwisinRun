@@ -27,7 +27,7 @@ public class SwitchController : MonoBehaviour, IInteractable
             {
                 boolAnimator(m_objectAnimator[i]);
             }
-        }
+        }        
     }
 
     // 현 단계에선 번갈아가면서 bool값이 번갈아가게 되어 있으나,

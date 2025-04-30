@@ -34,7 +34,7 @@ public class LHWPlayerController : MonoBehaviour
         }
     }
     public void Interact()
-    {
-        GameObject.Find("Switch").GetComponent<SwitchController>().Interact();
+    {        
+        GameObject.Find("DrawerTrigger").GetComponent<DeskDrawerController>().Interact();
     }
 }
