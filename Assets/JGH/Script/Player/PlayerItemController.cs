@@ -1,0 +1,159 @@
+// 구조화된 아이템 슬롯 시스템을 기반으로 한 PlayerItemController 리셋 버전
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerItemController : MonoBehaviour, IInteractable
+{
+    [SerializeField] private ItemSlotData[] m_itemSlots = new ItemSlotData[6];
+
+    private int m_equippedSlotIndex = -1;
+    private GameObject m_equippedItem;
+    private Collider m_riggerItem;
+
+    void Update()
+    {
+        DetectItemByRay();
+
+        if (m_riggerItem != null && GameManager.Instance.Input.InteractionKeyPressed)
+        {
+            if (StoreItem(m_riggerItem.gameObject))
+                m_riggerItem = null;
+        }
+
+        for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
+        {
+            if (GameManager.Instance.Input.ItemKeyPressed[i])
+            {
+                EquipItem(i);
+                GameManager.Instance.Input.ItemKeyPressed[i] = false;
+            }
+        }
+
+        if (GameManager.Instance.Input.DropKeyPressed)
+        {
+            DropItem();
+        }
+    }
+
+    void DetectItemByRay()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.5f;
+        Vector3 direction = transform.forward;
+
+        if (Physics.SphereCast(origin, 0.4f, direction, out RaycastHit hit, 1.5f))
+        {
+            if (hit.collider.CompareTag("Item"))
+            {
+                m_riggerItem = hit.collider;
+                return;
+            }
+        }
+
+        m_riggerItem = null;
+    }
+
+    public bool StoreItem(GameObject item)
+    {
+        ItemInfo info = item.GetComponent<ItemInfo>() ?? item.GetComponentInChildren<ItemInfo>();
+        if (info == null)
+        {
+            Debug.LogWarning("ItemInfo 컴포넌트를 찾을 수 없습니다: " + item.name);
+            return false;
+        }
+
+        for (int i = 0; i < m_itemSlots.Length; i++)
+{
+    if (m_itemSlots[i] == null || m_itemSlots[i].ItemObject == null)
+    {
+        m_itemSlots[i] = new ItemSlotData
+        {
+            ItemName = info.ItemName,
+            Type = info.Type,
+            Values = info.GetAttributeDictionary(),
+            ItemObject = item
+        };
+
+                item.SetActive(false);
+                item.name = item.name.Replace("(Clone)", "").Trim();
+                Debug.Log($"{i + 1}번 슬롯에 {item.name} 저장 완료");
+                return true;
+            }
+        }
+
+        Debug.Log("슬롯이 모두 찼습니다!");
+        return false;
+    }
+
+    public void EquipItem(int slotIndex)
+    {
+        if (m_itemSlots[slotIndex] == null || m_itemSlots[slotIndex].ItemObject == null)
+        {
+            Debug.LogWarning($"[{slotIndex + 1}]번 슬롯에 장착 가능한 아이템이 없습니다.");
+            return;
+        }
+
+        if (m_equippedSlotIndex == slotIndex)
+        {
+            UnequipItem();
+            return;
+        }
+
+        UnequipItem();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Player 오브젝트를 찾을 수 없습니다.");
+            return;
+        }
+
+        m_equippedItem = Instantiate(m_itemSlots[slotIndex].ItemObject, player.transform);
+        m_equippedItem.SetActive(true);
+        m_equippedItem.transform.localPosition = Vector3.zero;
+        m_equippedItem.transform.localRotation = Quaternion.identity;
+
+        m_equippedSlotIndex = slotIndex;
+        Debug.Log($"{slotIndex + 1}번 슬롯 장착 완료");
+    }
+
+    private void UnequipItem()
+    {
+        if (m_equippedItem != null)
+        {
+            Destroy(m_equippedItem);
+            Debug.Log("아이템 장착 해제");
+        }
+
+        m_equippedItem = null;
+        m_equippedSlotIndex = -1;
+    }
+
+    public void DropItem()
+    {
+        if (m_equippedItem == null || m_equippedSlotIndex == -1)
+        {
+            Debug.Log("버릴 아이템 없음");
+            return;
+        }
+
+        m_equippedItem.transform.SetParent(null);
+        m_equippedItem.SetActive(true);
+        m_equippedItem.transform.position = transform.position + transform.right * 1f;
+
+        Rigidbody rb = m_equippedItem.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
+
+        Debug.Log($"{m_equippedItem.name} 버림");
+        m_itemSlots[m_equippedSlotIndex] = null;
+
+        m_equippedItem = null;
+        m_equippedSlotIndex = -1;
+    }
+
+    public void Interact() { }
+}
