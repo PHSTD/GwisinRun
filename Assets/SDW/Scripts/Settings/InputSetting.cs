@@ -11,6 +11,7 @@ public class InputSetting : MonoBehaviour
         m_playerInput = GetComponent<PlayerInput>();
         
         GameManager.Instance.Input.SetPlayerInput(m_playerInput);
+        LoadBinding();
     }
 
     public void LoadBinding()
@@ -18,5 +19,15 @@ public class InputSetting : MonoBehaviour
         var rebinds = PlayerPrefs.GetString("rebinds");
         if (!string.IsNullOrEmpty(rebinds))
             m_playerInput.actions.LoadBindingOverridesFromJson(rebinds);
+        
+        foreach(var action in m_playerInput.actions)
+        {
+            if (action.name == "Interaction")
+            {
+                string keyValue = action.controls[0].displayName;
+                PlayerPrefs.SetString("Interaction", keyValue);
+                break;
+            }
+        }
     }
 }
