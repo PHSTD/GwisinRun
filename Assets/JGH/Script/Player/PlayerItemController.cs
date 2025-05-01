@@ -1,14 +1,24 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerItemController : MonoBehaviour, IInteractable
+public class PlayerItemController : MonoBehaviour
 {
     [SerializeField] private ItemInfo.ItemSlotData[] m_itemSlots = new ItemInfo.ItemSlotData[6];
 
     private int m_equippedSlotIndex = -1;
     private GameObject m_equippedItem;
     private Collider m_riggerItem;
+    private Coroutine m_interactionCoroutine;
+
+    [Header("RayCast Distance")]
+    [SerializeField] private float m_raycastDistance;
+    
+    //# 문 등 상호작용 동작
+    // 1. 인터렉션이 가능한 영역으로 들어감
+    // 2. 예를 들어 문이 있는 곳에서 e(인터렉션키)를 누름
+    // 3. Trigger 내에서 동자r
 
     void Update()
     {
@@ -19,6 +29,8 @@ public class PlayerItemController : MonoBehaviour, IInteractable
             if (StoreItem(m_riggerItem.gameObject))
                 m_riggerItem = null;
         }
+        if(GameManager.Instance.Input.InteractionKeyPressed)
+            InteractWithInteractableObject();
 
         for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
         {
@@ -42,7 +54,7 @@ public class PlayerItemController : MonoBehaviour, IInteractable
 
         if (Physics.SphereCast(origin, 0.4f, direction, out RaycastHit hit, 1.5f))
         {
-            if (hit.collider.CompareTag("Item"))
+            if (hit.collider.CompareTag("Items"))
             {
                 m_riggerItem = hit.collider;
                 return;
@@ -152,5 +164,32 @@ public class PlayerItemController : MonoBehaviour, IInteractable
         UnequipItem();
     }
 
-    public void Interact() { }
+    private void InteractWithInteractableObject()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        Debug.DrawRay(ray.origin, ray.direction * m_raycastDistance, Color.red, 0.1f);
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            if (hitInfo.distance > m_raycastDistance)
+                return;
+            
+            Debug.Log(hitInfo.collider.gameObject.name);
+
+            if (hitInfo.collider.gameObject.CompareTag("InteractableObject"))
+            {
+                IInteractable interactableObject = hitInfo.collider.gameObject.GetComponent<IInteractable>();
+                interactableObject.Interact();
+                m_interactionCoroutine = StartCoroutine(InteractionDelay());
+            }
+        }
+        
+    }
+    
+    IEnumerator InteractionDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        m_interactionCoroutine = null;
+    }
 }

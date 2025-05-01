@@ -13751,7 +13751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_newGameYesButton: {fileID: 1174333200470079548}
-  m_sceneName: '[Test] LevelScene'
+  m_sceneName: '[Test] PlayScene'
 --- !u!222 &8906716836784053200
 CanvasRenderer:
   m_ObjectHideFlags: 0

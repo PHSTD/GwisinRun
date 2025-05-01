@@ -66,6 +66,11 @@ public class PlayerMove : MonoBehaviour
 
         if (GameManager.Instance.Input.RunKeyBeingHeld)
         {
+            //todo 스태미너 100일 경우 -> 예를 들어 1이 이깍히면 1%(맥스)
+            /*
+             * todo runSpeed의 minimum : walkspeed
+             * runSpeed의 1%(맥스)
+            */
             m_speed = m_runSpeed;
             if (moveX != 0 || moveZ != 0) StaminaMinus();
             else StaminaPlus();
