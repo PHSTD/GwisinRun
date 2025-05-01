@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,21 +7,43 @@ using UnityEngine.Serialization;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int m_maxHealth = 100;
-    [SerializeField] private int m_currentHealth;
+    [Header("HP")]
+    public static int MaxHealth = 100; // 최대 체력
+    public static int CurrentHealth; // 현재 체력
+    
+    [Header("Stamina")]
+    public static int MaxStamina = 100; // 최대 스태미너
+    public static int CurrentStamina = 100; // 현재 스태미너
+    
+    static float m_timer = 0f;
+    
+   public int _MaxH;
+   public int _CurrH;
+   public int _MaxS;
+   public int _CurrS;
+
 
     void Start()
     {
-        m_currentHealth = m_maxHealth;
+        CurrentHealth = MaxHealth;
         GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
+    }
+
+    private void Update()
+    {
+        // TODO: 테스트용 지워야됨
+        _MaxH = MaxHealth;
+        _CurrH = MaxHealth;
+        _MaxS = MaxStamina;
+        _CurrS = CurrentStamina;
     }
 
     public void TakeDamage(int amount)
     {
-        m_currentHealth -= amount;
-        Debug.Log($"플레이어가 {amount} 데미지를 입었습니다. 현재 체력: {m_currentHealth}");
+        CurrentHealth -= amount;
+        Debug.Log($"플레이어가 {amount} 데미지를 입었습니다. 현재 체력: {CurrentHealth}");
 
-        if (m_currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             Die();
         }
@@ -36,16 +59,42 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (itemName != "HeartPotion")
             return;
         
-        m_currentHealth += value;
+        CurrentHealth += value;
 
-        if (m_currentHealth < 0)
+        if (CurrentHealth < 0)
         {
-            m_currentHealth = 0;
+            CurrentHealth = 0;
             //todo GameOver;
         }
-        else if (m_currentHealth > m_maxHealth)
+        else if (CurrentHealth > MaxHealth)
         {
-            m_currentHealth = m_maxHealth;
+            CurrentHealth = MaxHealth;
+        }
+    }
+    
+    public static void StaminaPlus()
+    {
+        m_timer += Time.deltaTime;
+        if (m_timer >= 0.05f)
+        {
+            CurrentStamina++;
+            m_timer = 0f;
+        }
+        if (CurrentStamina >= 100) CurrentStamina = 100;
+    }
+
+    public static void StaminaMinus()
+    {
+        m_timer += Time.deltaTime;
+        if (m_timer >= 0.05f)
+        {
+            CurrentStamina--;
+            m_timer = 0f;
+        }
+        if (CurrentStamina <= 0)
+        {
+            CurrentStamina = 0;
+            PlayerMove.m_speed = PlayerMove.m_walkSpeed;
         }
     }
 }
