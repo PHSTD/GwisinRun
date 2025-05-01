@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 1963314350945711923}
   - component: {fileID: 7518849382213452059}
   - component: {fileID: 5864637021616236412}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_arch_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 8888642466944531772}
   - component: {fileID: 2148436120773228008}
   - component: {fileID: 8417299063567799453}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 7306420222838654269}
   - component: {fileID: 5085252845221697723}
   - component: {fileID: 5882839696861200941}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 1139682134422916684}
   - component: {fileID: 7466291869329099200}
   - component: {fileID: 3193594873105340213}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_arch_v2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -740,7 +740,7 @@ GameObject:
   - component: {fileID: 5031324786882646994}
   - component: {fileID: 4276991607419719358}
   - component: {fileID: 633993570492066691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1113,7 +1113,7 @@ GameObject:
   - component: {fileID: 4697227539995269656}
   - component: {fileID: 4146635155169711479}
   - component: {fileID: 1415287823281888752}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1254,7 +1254,7 @@ GameObject:
   - component: {fileID: 7821762537231594346}
   - component: {fileID: 5179661523565399391}
   - component: {fileID: 9151411310965955184}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1443,7 +1443,7 @@ GameObject:
   - component: {fileID: 8384378227031672677}
   - component: {fileID: 4379194921654685953}
   - component: {fileID: 7333492058290420446}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1632,7 +1632,7 @@ GameObject:
   - component: {fileID: 1798982426576539673}
   - component: {fileID: 7200330454312141957}
   - component: {fileID: 1207446886505611154}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1878,7 +1878,7 @@ GameObject:
   - component: {fileID: 901728627362427113}
   - component: {fileID: 3520225507384384016}
   - component: {fileID: 2365148127867643643}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1982,7 +1982,7 @@ GameObject:
   - component: {fileID: 7584440958032852422}
   - component: {fileID: 9110169333523853710}
   - component: {fileID: 6610310030340964807}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2066,7 +2066,7 @@ GameObject:
   - component: {fileID: 4750885401116762852}
   - component: {fileID: 2931115062643538340}
   - component: {fileID: 2141967303547075320}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2171,6 +2171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_window_2x2 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1658369230051982, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4992305226081638, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.75
@@ -2261,6 +2265,10 @@ PrefabInstance:
     - target: {fileID: 1658369230051982, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
       propertyPath: m_Name
       value: wall_window_2x2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658369230051982, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4992305226081638, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
       propertyPath: m_LocalPosition.x

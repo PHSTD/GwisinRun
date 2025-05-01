@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 730505878334872493}
   - component: {fileID: 5163676852828798735}
   - component: {fileID: 6002984675844762230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 3580281668979888995}
   - component: {fileID: 8108471646769162323}
   - component: {fileID: 6726886191264553754}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 1944013983436909849}
   - component: {fileID: 2254274500429520120}
   - component: {fileID: 2762279178654136689}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_corner_inner (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -823,6 +823,10 @@ PrefabInstance:
     - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_Name
       value: wall_corner_outer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4148426695010036, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_LocalPosition.x

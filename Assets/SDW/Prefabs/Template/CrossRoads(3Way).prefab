@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 7306567706459462158}
   - component: {fileID: 3333257325745961836}
   - component: {fileID: 5339271332250508955}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 1357479940507637184}
   - component: {fileID: 1052349066591875401}
   - component: {fileID: 2484629200550182786}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,6 +330,10 @@ PrefabInstance:
     - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_Name
       value: wall_corner_outer (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4148426695010036, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -813,6 +817,10 @@ PrefabInstance:
     - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_Name
       value: wall_corner_outer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4148426695010036, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_LocalPosition.x

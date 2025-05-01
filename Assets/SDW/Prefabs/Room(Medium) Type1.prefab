@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8374568803953448663}
   - component: {fileID: 5479179592294938232}
   - component: {fileID: 2075971636586707028}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_corner_inner (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 1377178568826736323}
   - component: {fileID: 1421686888687742674}
   - component: {fileID: 2935966337680749270}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_arch_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -758,7 +758,7 @@ GameObject:
   - component: {fileID: 6385891931093768643}
   - component: {fileID: 7501738873272037169}
   - component: {fileID: 4816377203390644884}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_corner_inner (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,7 +920,7 @@ GameObject:
   - component: {fileID: 2615756207371381309}
   - component: {fileID: 8505040753877178165}
   - component: {fileID: 5427851292299405227}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1078,7 +1078,7 @@ GameObject:
   - component: {fileID: 7922562666839567055}
   - component: {fileID: 4373768849417458255}
   - component: {fileID: 2233744580623152094}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_corner_inner (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1311,7 +1311,7 @@ GameObject:
   - component: {fileID: 8241272756396925313}
   - component: {fileID: 8068246437198435670}
   - component: {fileID: 2653430724194559133}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_corner_inner (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1439,7 +1439,7 @@ GameObject:
   - component: {fileID: 78794411578957284}
   - component: {fileID: 6144911745936687628}
   - component: {fileID: 4539569219178294305}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_arch_v2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2078,6 +2078,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_window_2x2
       objectReference: {fileID: 0}
+    - target: {fileID: 1658369230051982, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4992305226081638, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
@@ -2231,6 +2235,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_corner_outer (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4148426695010036, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.9959965
@@ -2355,6 +2363,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_corner_outer (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4148426695010036, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.9960117
@@ -2416,6 +2428,10 @@ PrefabInstance:
     - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_Name
       value: wall_corner_outer (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4148426695010036, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2540,6 +2556,10 @@ PrefabInstance:
     - target: {fileID: 1103766790177608, guid: 576fcd16aac64b447928051d9400742f, type: 3}
       propertyPath: m_Name
       value: wall_window_1x2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103766790177608, guid: 576fcd16aac64b447928051d9400742f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4696830126284968, guid: 576fcd16aac64b447928051d9400742f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3079,6 +3099,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_window_2x2 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1658369230051982, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4992305226081638, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.75
@@ -3169,6 +3193,10 @@ PrefabInstance:
     - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_Name
       value: wall_corner_outer (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643286574203630, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4148426695010036, guid: 7bb5be7235b47984793ef592194c552b, type: 3}
       propertyPath: m_LocalPosition.x
