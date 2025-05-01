@@ -1,68 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerHide : MonoBehaviour
 {
-    [SerializeField] private bool m_isHiding = false;
-    [SerializeField] private bool m_canHide = false;
-    [SerializeField] private Camera m_playerCamera;
-    [SerializeField] private Color m_originalColor;
+    //# 추후 리팩토링 시 SerializeField 제거
+    [SerializeField] private bool m_isDetected = false;
+    public bool IsDetected => m_isDetected;
 
-    void Start()
+    void OnEnable()
     {
-        m_playerCamera = Camera.main;
-        m_originalColor = m_playerCamera.backgroundColor;
+        m_isDetected = false;
+    }
+    
+    void DetectedObjectAtHead()
+    {
+        m_isDetected = true;
     }
 
-    void Update()
+    void Clear()
     {
-        if (m_canHide && GameManager.Instance.Input.InteractionKeyPressed)
-        {
-            if (!m_isHiding) Hide();
-            else Unhide();
-        }
-        
-        // 렌더링 제어 추가
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
-        bool shouldHide = m_canHide && m_isHiding;
-
-        foreach (Renderer renderer in renderers)
-        {
-            renderer.enabled = !shouldHide;
-        }
-    }
-
-    void Hide()
-    {
-        m_isHiding = true;
-        m_playerCamera.backgroundColor = Color.black; // 검은 화면
-        // 플레이어 이동, 상호작용 등 비활성화 처리 추가(필요시)
-    }
-
-    void Unhide()
-    {
-        m_isHiding = false;
-        m_playerCamera.backgroundColor = m_originalColor;
-        // 플레이어 이동, 상호작용 등 다시 활성화(필요시)
-        
+        m_isDetected = false;
     }
 
     // 트리거로 HideObject 감지
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("HideObject"))
-        {
-            m_canHide = true;
-        }
+        DetectedObjectAtHead();
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("HideObject"))
-        {
-            m_canHide = false;
-            if (m_isHiding) Unhide(); // 숨은 상태에서 벗어나면 자동 해제
-        }
+        Clear();
     } 
 }

@@ -15,10 +15,11 @@ public class PlayerItemController : MonoBehaviour
     [Header("RayCast Distance")]
     [SerializeField] private float m_raycastDistance;
     
-    //# 문 등 상호작용 동작
-    // 1. 인터렉션이 가능한 영역으로 들어감
-    // 2. 예를 들어 문이 있는 곳에서 e(인터렉션키)를 누름
-    // 3. Trigger 내에서 동자r
+    //# 앉아서 숨었을 때
+    //# isHiding
+    //# 책상 - 머리 쪽에 있는 collider에 감지가되면(interactableObject)
+    //# 숨은 것으로 판정
+    
 
     void Update()
     {

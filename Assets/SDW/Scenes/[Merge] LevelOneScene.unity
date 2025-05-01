@@ -682,8 +682,9 @@ GameObject:
   m_Component:
   - component: {fileID: 243985178}
   - component: {fileID: 243985179}
+  - component: {fileID: 243985180}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Head Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,7 +699,7 @@ Transform:
   m_GameObject: {fileID: 243985177}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.076, z: 0}
+  m_LocalPosition: {x: 0, y: 1.581, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -719,12 +720,25 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.19072281
   m_Center: {x: 0, y: 0.10902108, z: 0}
+--- !u!114 &243985180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243985177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258bea04affe2483ab2ec233a6adf455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isDetected: 0
 --- !u!1001 &246045575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10748,11 +10762,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5474765065598066157, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
+      propertyPath: m_fallSpeed
+      value: -28
+      objectReference: {fileID: 0}
+    - target: {fileID: 5474765065598066157, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
+      propertyPath: m_playerTransform
+      value: 
+      objectReference: {fileID: 2145669897}
+    - target: {fileID: 5474765065598066157, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
+      propertyPath: m_headTriggerObject
+      value: 
+      objectReference: {fileID: 243985180}
     - target: {fileID: 5905442835411024973, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
       propertyPath: m_raycastDistance
       value: 1.8
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8594897119126340052, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5397872202031868086, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
