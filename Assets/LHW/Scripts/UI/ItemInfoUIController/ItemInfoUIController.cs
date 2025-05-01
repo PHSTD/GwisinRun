@@ -44,12 +44,13 @@ public class ItemInfoUIController : MonoBehaviour
             m_panel.SetActive(true);
             UpdateTextMessage();
 
-            Vector2 localPos = Vector2.zero;
+            Vector3 localPos = Vector3.zero;
 
             RectTransform rectTransform = m_canvasRectTransfom.transform as RectTransform;
             Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+            
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, mousePos, m_canvasRectTransfom.worldCamera, out localPos);
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, mousePos, m_canvasRectTransfom.worldCamera, out localPos);
             m_panelpos.anchoredPosition = localPos;
         }
         else
