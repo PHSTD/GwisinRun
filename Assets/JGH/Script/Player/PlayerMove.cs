@@ -24,10 +24,11 @@ public class PlayerMove : MonoBehaviour
     private Vector3 m_sitPlayerScale;
     private bool m_isSit;
     private bool m_releasedSitKey;
-    
+
     [Header("Stamina & Jump Settings")]
-    [SerializeField] private int m_stamina = 100;
+    [SerializeField] private int m_maxStamina = 100;
     [SerializeField] private float m_jumpHeight = 1.2f;
+    private int m_currentStamina = 100;
     
     [Header("Basic Setting")]
     [SerializeField] private CharacterController m_controller;
@@ -38,8 +39,13 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Transform m_cameraTransform;
     private Camera m_playerCamera;
     
+    [Header("Game UI")]
+    [SerializeField] private GameObject m_pausedMenu;
+    
     private float m_timer = 0f;
     private float m_speed;
+    private bool m_isFirstMove = true;
+    private Rigidbody m_rigidbody;
 
     void Start()
     {
@@ -53,6 +59,9 @@ public class PlayerMove : MonoBehaviour
 
         m_originalPlayerScale = m_playerTransform.localScale;
         m_sitPlayerScale = new Vector3(m_originalPlayerScale.x, m_originalPlayerScale.y * 0.5f, m_originalPlayerScale.z);
+
+        m_rigidbody = GetComponent<Rigidbody>();
+        GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
     }
 
     void Update()
@@ -96,6 +105,14 @@ public class PlayerMove : MonoBehaviour
 
         if (m_controller.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
+        
+        
+        //# 첫 움직임이 시작되면 GameManager의 Pause가 풀림
+        if (m_rigidbody.velocity.magnitude != 0 && m_isFirstMove)
+        {
+            GameManager.Instance.IsPaused = false;
+            m_isFirstMove = false;
+        }
     }
 
     void Jump()
@@ -170,10 +187,10 @@ public class PlayerMove : MonoBehaviour
         m_timer += Time.deltaTime;
         if (m_timer >= 0.05f)
         {
-            m_stamina++;
+            m_currentStamina++;
             m_timer = 0f;
         }
-        if (m_stamina >= 100) m_stamina = 100;
+        if (m_currentStamina >= 100) m_currentStamina = 100;
     }
 
     void StaminaMinus()
@@ -181,18 +198,28 @@ public class PlayerMove : MonoBehaviour
         m_timer += Time.deltaTime;
         if (m_timer >= 0.05f)
         {
-            m_stamina--;
+            m_currentStamina--;
             m_timer = 0f;
         }
-        if (m_stamina <= 0)
+        if (m_currentStamina <= 0)
         {
-            m_stamina = 0;
+            m_currentStamina = 0;
             m_speed = m_walkSpeed;
         }
     }
 
     void RotateView()
     {
+        if (GameManager.Instance.Input.PauseKeyPressed)
+        {
+            m_pausedMenu.SetActive(!GameManager.Instance.IsPaused);
+        }
+
+        if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
+        
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
@@ -213,5 +240,22 @@ public class PlayerMove : MonoBehaviour
             m_normalFOV = Mathf.Clamp(m_normalFOV, m_zoomFOV, 60f);
         }
         m_playerCamera.fieldOfView = Mathf.Lerp(m_playerCamera.fieldOfView, m_normalFOV, Time.deltaTime * 10f);
+    }
+
+    private void UseItem(string itemName, int value)
+    {
+        if (itemName != "SpeedPotion")
+            return;
+        
+        m_currentStamina += value;
+
+        if (m_currentStamina < 0)
+        {
+            m_currentStamina = 0;
+        }
+        else if (m_currentStamina > m_maxStamina)
+        {
+            m_currentStamina = m_maxStamina;
+        }
     }
 }
