@@ -7,6 +7,8 @@ TagManager:
   - Items
   - HideObject
   - Walkable
+  - Item
+  - InteractableObject
   layers:
   - Default
   - TransparentFX
