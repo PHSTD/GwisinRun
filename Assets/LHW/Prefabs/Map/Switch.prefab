@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8166110666635724866}
-  - component: {fileID: 9194349205725435638}
   - component: {fileID: 7153842504909668905}
-  m_Layer: 2
+  - component: {fileID: 6109315857313133536}
+  m_Layer: 0
   m_Name: Switch
-  m_TagString: Untagged
+  m_TagString: InteractableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,21 @@ Transform:
   - {fileID: 3001546770214000629}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &9194349205725435638
+--- !u!114 &7153842504909668905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530654805304250639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2781ee5b355bcf44ea207df3974dc59b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectAnimator:
+  - {fileID: 0}
+--- !u!65 &6109315857313133536
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,21 +67,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9392157, y: 6.5907836, z: 1.771462}
-  m_Center: {x: -0.046628937, y: -0.8207072, z: -0.8632937}
---- !u!114 &7153842504909668905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2530654805304250639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2781ee5b355bcf44ea207df3974dc59b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_objectAnimator: []
+  m_Size: {x: 1, y: 1, z: 1.7440405}
+  m_Center: {x: -0, y: 0, z: -0.3720201}
 --- !u!1 &4360679294747394230
 GameObject:
   m_ObjectHideFlags: 0
