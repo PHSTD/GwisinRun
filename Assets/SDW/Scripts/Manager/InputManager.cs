@@ -15,9 +15,9 @@ public class InputManager : MonoBehaviour
     public bool SitKeyReleased { get; private set; }
     public bool InteractionKeyPressed { get; private set; }
     public bool DropKeyPressed { get; private set; }
-    
     public bool[] ItemKeyPressed { get; private set; }
     public bool PauseKeyPressed { get; private set; }
+    public bool JumpKeyPressed { get; private set; }
 
     private PlayerInput m_playerInput;
     
@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour
     private InputAction m_dropAction;
     private InputAction m_itemsAction;
     private InputAction m_pauseAction;
+    private InputAction m_jumpAction;
     private bool m_isUpdateable;
 
     private void Awake()
@@ -50,6 +51,7 @@ public class InputManager : MonoBehaviour
         m_dropAction = m_playerInput.actions["Drop"];
         m_itemsAction = m_playerInput.actions["Items"];
         m_pauseAction = m_playerInput.actions["Pause"];
+        m_jumpAction = m_playerInput.actions["Jump"];
 
         //# Pressed
         m_itemsAction.started += OnInteractionStarted;
@@ -78,6 +80,7 @@ public class InputManager : MonoBehaviour
         InteractionKeyPressed = m_interactionAction.WasPressedThisFrame();
         DropKeyPressed = m_dropAction.WasPressedThisFrame();
         PauseKeyPressed = m_pauseAction.WasPressedThisFrame();
+        JumpKeyPressed= m_jumpAction.WasPressedThisFrame();
     }
 
     private void OnInteractionStarted(InputAction.CallbackContext context)
