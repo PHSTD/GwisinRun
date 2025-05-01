@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7213313555104221274}
   - component: {fileID: 2757251067938240664}
   - component: {fileID: 8006753845754666002}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8069359906855878200}
   - component: {fileID: 596929752416879401}
   - component: {fileID: 8528111977671384549}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 4141245485721731481}
   - component: {fileID: 9037145170029674216}
   - component: {fileID: 5117047277290510483}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 4693867207359411644}
   - component: {fileID: 6031548545502814329}
   - component: {fileID: 5404201399616890556}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +743,7 @@ GameObject:
   - component: {fileID: 7758191301159719251}
   - component: {fileID: 1741833484348980236}
   - component: {fileID: 8222273088457198294}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -827,7 +827,7 @@ GameObject:
   - component: {fileID: 6415643532397327306}
   - component: {fileID: 229655272140115213}
   - component: {fileID: 5344938019136995107}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_straight_v2 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -934,7 +934,7 @@ GameObject:
   - component: {fileID: 2275360972887527269}
   - component: {fileID: 2868977765625280952}
   - component: {fileID: 5630303111567814879}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_arch_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1122,7 +1122,7 @@ GameObject:
   - component: {fileID: 299186602929505776}
   - component: {fileID: 3591737824043109504}
   - component: {fileID: 6601193797820349582}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_arch_v2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1846,6 +1846,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_window_2x2 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1658369230051982, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4992305226081638, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.75
@@ -1936,6 +1940,10 @@ PrefabInstance:
     - target: {fileID: 1658369230051982, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
       propertyPath: m_Name
       value: wall_window_2x2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658369230051982, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4992305226081638, guid: c268cff8bd24163469a91698488d5e0a, type: 3}
       propertyPath: m_LocalPosition.x
