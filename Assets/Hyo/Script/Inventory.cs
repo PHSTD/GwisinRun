@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Inventory : MonoBehaviour
 {
     public int maxSlots = 6;
     public List<Item> items = new List<Item>();
+    public UnityEvent<string, int> OnUseItem;
 
     void Update()
     {
@@ -51,10 +54,15 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (items[slotIndex] is IUsable item)
+        if (items[slotIndex] is IUsable)
         {
-            item.Use();
+            UsableItem item = items[slotIndex] as UsableItem;
+            if (item == null)
+                return;
+            
+            OnUseItem?.Invoke(item.ItemName, item.Value); 
             items.RemoveAt(slotIndex);
+            item.Use();
             UpdateInventoryUI();
         }
 

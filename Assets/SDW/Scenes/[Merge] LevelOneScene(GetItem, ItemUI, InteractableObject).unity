@@ -7801,7 +7801,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1768291410644558, guid: f0a84b89bc2bdd24b8840ad9126bf6d6, type: 3}
       propertyPath: m_Name
-      value: HearPotion
+      value: HeartPotion
       objectReference: {fileID: 0}
     - target: {fileID: 1768291410644558, guid: f0a84b89bc2bdd24b8840ad9126bf6d6, type: 3}
       propertyPath: m_IsActive
@@ -7919,10 +7919,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.19913197
-  m_Height: 0.70639396
+  m_Radius: 0.23833784
+  m_Height: 0.79286957
   m_Direction: 1
-  m_Center: {x: 0, y: 0.35319698, z: -0.000000007450581}
+  m_Center: {x: 0, y: 0.39643478, z: 0}
 --- !u!114 &1950467752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7937,8 +7937,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_type: 1
   m_itemName: 
-  value: 5
-  isPositive: 1
+  m_value: 10
+  m_isPositive: 1
 --- !u!114 &1950467753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11061,6 +11061,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 450344574537000797, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
+      propertyPath: m_currentHealth
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2743173503352836836, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
       propertyPath: m_Name
       value: Player

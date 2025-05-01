@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
@@ -13,6 +14,9 @@ public class ItemInfoUIController : MonoBehaviour
     private RectTransform m_panelpos;
     [SerializeField] private float m_detectRadius;
     [SerializeField] private LayerMask m_playerLayer;
+    
+    private Coroutine m_refreshCoroutine;
+    private bool m_canOn;
 
     public void Awake()
     {
@@ -39,6 +43,10 @@ public class ItemInfoUIController : MonoBehaviour
 
     private void OnMouseOver()
     {
+        m_canOn = true;
+        if (m_refreshCoroutine != null)
+            return;
+        
         if (Physics.OverlapSphere(transform.position, m_detectRadius, m_playerLayer).Length > 0)
         {
             m_panel.SetActive(true);
@@ -52,6 +60,8 @@ public class ItemInfoUIController : MonoBehaviour
 
             RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, mousePos, m_canvasRectTransfom.worldCamera, out localPos);
             m_panelpos.anchoredPosition = localPos;
+
+            m_refreshCoroutine = StartCoroutine(RefreshTime());
         }
         else
         {
@@ -59,13 +69,25 @@ public class ItemInfoUIController : MonoBehaviour
         }
     }
 
+    IEnumerator RefreshTime()
+    {
+        yield return new WaitForSeconds(0.5f);
+        m_refreshCoroutine = null;
+        m_panel.SetActive(m_canOn);
+    }
+
     private void OnMouseExit()
     {
-        m_panel.SetActive(false);
+        // if (m_refreshCoroutine != null)
+        //     return;
+        // m_panel.SetActive(false);
+        m_canOn = false;
     }
 
     private void OnDisable()
     {
+        if (m_panel == null)
+            return;
         m_panel.SetActive(false);
     }
 }
