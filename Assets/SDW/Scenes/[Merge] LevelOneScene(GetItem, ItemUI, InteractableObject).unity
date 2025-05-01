@@ -7938,7 +7938,7 @@ MonoBehaviour:
   m_type: 1
   m_itemName: 
   m_value: 10
-  m_isPositive: 1
+  m_isPositive: 0
 --- !u!114 &1950467753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11117,6 +11117,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5474765065598066157, guid: fba62643fe26e7d48bdc1262c8304d53, type: 3}
+      propertyPath: m_pausedMenu
+      value: 
+      objectReference: {fileID: 3685496331163338262}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

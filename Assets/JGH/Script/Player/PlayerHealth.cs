@@ -6,11 +6,8 @@ using UnityEngine.Serialization;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    [SerializeField]
-    private int m_maxHealth = 100;
-    [FormerlySerializedAs("currentHealth")]
-    [SerializeField]
-    private int m_currentHealth;
+    [SerializeField] private int m_maxHealth = 100;
+    [SerializeField] private int m_currentHealth;
 
     void Start()
     {

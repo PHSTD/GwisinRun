@@ -39,8 +39,13 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Transform m_cameraTransform;
     private Camera m_playerCamera;
     
+    [Header("Game UI")]
+    [SerializeField] private GameObject m_pausedMenu;
+    
     private float m_timer = 0f;
     private float m_speed;
+    private bool m_isFirstMove = true;
+    private Rigidbody m_rigidbody;
 
     void Start()
     {
@@ -54,7 +59,8 @@ public class PlayerMove : MonoBehaviour
 
         m_originalPlayerScale = m_playerTransform.localScale;
         m_sitPlayerScale = new Vector3(m_originalPlayerScale.x, m_originalPlayerScale.y * 0.5f, m_originalPlayerScale.z);
-        
+
+        m_rigidbody = GetComponent<Rigidbody>();
         GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
     }
 
@@ -99,6 +105,14 @@ public class PlayerMove : MonoBehaviour
 
         if (m_controller.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
+        
+        
+        //# 첫 움직임이 시작되면 GameManager의 Pause가 풀림
+        if (m_rigidbody.velocity.magnitude != 0 && m_isFirstMove)
+        {
+            GameManager.Instance.IsPaused = false;
+            m_isFirstMove = false;
+        }
     }
 
     void Jump()
@@ -196,6 +210,16 @@ public class PlayerMove : MonoBehaviour
 
     void RotateView()
     {
+        if (GameManager.Instance.Input.PauseKeyPressed)
+        {
+            m_pausedMenu.SetActive(!GameManager.Instance.IsPaused);
+        }
+
+        if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
+        
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
