@@ -16,5 +16,14 @@ public class RebindSaveLoad : MonoBehaviour
     {
         var rebinds = actions.SaveBindingOverridesAsJson();
         PlayerPrefs.SetString("rebinds", rebinds);
+        foreach(var action in actions)
+        {
+            if (action.name == "Interaction")
+            {
+                string keyValue = action.controls[0].displayName;
+                PlayerPrefs.SetString("Interaction", keyValue);
+                break;
+            }
+        }
     }
 }
