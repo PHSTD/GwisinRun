@@ -1,11 +1,10 @@
-// 구조화된 아이템 슬롯 시스템을 기반으로 한 PlayerItemController 리셋 버전
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerItemController : MonoBehaviour, IInteractable
 {
-    [SerializeField] private ItemSlotData[] m_itemSlots = new ItemSlotData[6];
+    [SerializeField] private ItemInfo.ItemSlotData[] m_itemSlots = new ItemInfo.ItemSlotData[6];
 
     private int m_equippedSlotIndex = -1;
     private GameObject m_equippedItem;
@@ -63,16 +62,16 @@ public class PlayerItemController : MonoBehaviour, IInteractable
         }
 
         for (int i = 0; i < m_itemSlots.Length; i++)
-{
-    if (m_itemSlots[i] == null || m_itemSlots[i].ItemObject == null)
-    {
-        m_itemSlots[i] = new ItemSlotData
         {
-            ItemName = info.ItemName,
-            Type = info.Type,
-            Values = info.GetAttributeDictionary(),
-            ItemObject = item
-        };
+            if (m_itemSlots[i].ItemObject == null)
+            {
+                m_itemSlots[i] = new ItemInfo.ItemSlotData
+                {
+                    ItemName = info.ItemName,
+                    Type = info.Type,
+                    Values = info.GetAttributeDictionary(),
+                    ItemObject = item
+                };
 
                 item.SetActive(false);
                 item.name = item.name.Replace("(Clone)", "").Trim();
@@ -87,7 +86,7 @@ public class PlayerItemController : MonoBehaviour, IInteractable
 
     public void EquipItem(int slotIndex)
     {
-        if (m_itemSlots[slotIndex] == null || m_itemSlots[slotIndex].ItemObject == null)
+        if (m_itemSlots[slotIndex].ItemObject == null)
         {
             Debug.LogWarning($"[{slotIndex + 1}]번 슬롯에 장착 가능한 아이템이 없습니다.");
             return;
@@ -137,22 +136,20 @@ public class PlayerItemController : MonoBehaviour, IInteractable
             return;
         }
 
-        m_equippedItem.transform.SetParent(null);
-        m_equippedItem.SetActive(true);
-        m_equippedItem.transform.position = transform.position + transform.right * 1f;
+        GameObject dropped = Instantiate(m_itemSlots[m_equippedSlotIndex].ItemObject);
+        dropped.SetActive(true);
+        dropped.transform.position = transform.position + transform.right * 1f;
 
-        Rigidbody rb = m_equippedItem.GetComponent<Rigidbody>();
+        Rigidbody rb = dropped.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.isKinematic = false;
             rb.useGravity = true;
         }
 
-        Debug.Log($"{m_equippedItem.name} 버림");
-        m_itemSlots[m_equippedSlotIndex] = null;
-
-        m_equippedItem = null;
-        m_equippedSlotIndex = -1;
+        Debug.Log($"{dropped.name} 버림");
+        m_itemSlots[m_equippedSlotIndex] = new ItemInfo.ItemSlotData();
+        UnequipItem();
     }
 
     public void Interact() { }
