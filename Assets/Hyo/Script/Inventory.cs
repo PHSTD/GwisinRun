@@ -1,32 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
-    public static Inventory Instance;
     public int maxSlots = 6;
     public List<Item> items = new List<Item>();
 
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-    }
-
     void Update()
     {
-        for (int i = 0; i < 6; i++)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-            {
-                Debug.Log($"{i + 1}번 슬롯 아이템 사용 시도");
-                UseItem(i);
-            }
-        }
+        // for (int i = 0; i < 6; i++)
+        // {
+        //     if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+        //     {
+        //         Debug.Log($"{i + 1}번 슬롯 아이템 사용 시도");
+        //         UseItem(i);
+        //     }
+        // }
     }
 
     public bool AddItem(Item item)
@@ -38,13 +29,17 @@ public class Inventory : MonoBehaviour
         }
 
         items.Add(item);
-        Debug.Log($"{item.itemName} 아이템을 획득했습니다.");
+        item.gameObject.SetActive(false);
+        Debug.Log($"{item.ItemName} 아이템을 획득했습니다.");
         UpdateInventoryUI();
         return true;
     }
 
     void UpdateInventoryUI() // 여기서 UI 구현
     {
+        if (items.Count == 0)
+            return;
+        
         Debug.Log($"인벤토리 상태: {string.Join(", ", items)}");
     }
 
@@ -56,9 +51,12 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        var item = items[slotIndex];
-        Debug.Log($"{item.itemName} 아이템을 사용했습니다.");
-        items.RemoveAt(slotIndex);
-        UpdateInventoryUI();
+        if (items[slotIndex] is IUsable item)
+        {
+            item.Use();
+            items.RemoveAt(slotIndex);
+            UpdateInventoryUI();
+        }
+
     }
 }

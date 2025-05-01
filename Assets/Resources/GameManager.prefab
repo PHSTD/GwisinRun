@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: -3610262973815887109}
   - component: {fileID: 3755818551790341460}
   - component: {fileID: 4537530020594626988}
+  - component: {fileID: -7768665555755020762}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -310,7 +311,7 @@ MonoBehaviour:
   Input: {fileID: -8836289289814120754}
   Audio: {fileID: -3610262973815887109}
   Graphics: {fileID: 3755818551790341460}
-  UI: {fileID: 0}
+  Inventory: {fileID: -7768665555755020762}
 --- !u!114 &-8836289289814120754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,8 +367,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dad5234d3bc4e4409c6ef5bfe7fa9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_settingMenuPrefab: {fileID: 6028529266617640792, guid: f16f27e82e7097148b6e5433ea2e1aec, type: 3}
-  m_settingPopupPrefab: {fileID: 1776154005210168613, guid: 3f239653f20cd23489a39934b59781f8, type: 3}
+--- !u!114 &-7768665555755020762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328943208720696621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58fc6f99a9022448b23e08d37b1eccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSlots: 6
+  items: []
 --- !u!1 &8360031530557093322
 GameObject:
   m_ObjectHideFlags: 0
