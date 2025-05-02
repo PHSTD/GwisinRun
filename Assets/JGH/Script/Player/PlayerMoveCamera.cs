@@ -89,8 +89,20 @@ public class PlayerMoveCamera : MonoBehaviour
             if (isMoving && !PlayerMove.IsSit)
             {
                 // 걷기와 뛰기 여부에 따라 주기(frequency)와 진폭(amplitude) 선택
-                float frequency = GameManager.Instance.Input.RunKeyBeingHeld ? m_bobFrequencyRun : m_bobFrequencyWalk;
-                float amplitude = GameManager.Instance.Input.RunKeyBeingHeld ? m_bobAmplitudeRun : m_bobAmplitudeWalk;
+                float frequency;
+                float amplitude;
+                // 뛰기를 눌렀고 스태미너가 있으면 뛰기
+                if (GameManager.Instance.Input.RunKeyBeingHeld && PlayerHealth.CurrentStamina != 0)
+                {
+                    frequency = m_bobFrequencyRun;
+                    amplitude = m_bobAmplitudeRun ;
+                }
+                // 뛰기를 눌렀는데 스태미너가 없으면 걷기로 강제 전환
+                else
+                {
+                    frequency = m_bobFrequencyWalk;
+                    amplitude = m_bobAmplitudeWalk ;
+                }
 
                 // 사인파를 기반으로 한 시간 계산
                 m_bobTimer += Time.deltaTime * frequency;
