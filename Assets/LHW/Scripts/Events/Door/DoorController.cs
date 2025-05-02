@@ -10,16 +10,27 @@ public class DoorController : MonoBehaviour, IInteractable
     private bool m_close = true;
     [SerializeField] DoorTrigger1 m_doortrigger1;
     [SerializeField] DoorTrigger2 m_doortrigger2;
+    private bool m_isClosed = true;
+
+    public void Awake()
+    {
+        m_doorAnimator.SetBool("Close", true);
+    }
 
     public void Update()
     {
-        if(m_doortrigger1.MonsterDetected())
+        m_isClosed = m_doorAnimator.GetBool("Close");
+        if(m_doortrigger1.MonsterDetected() && m_isClosed)
         {
             OpenDoorCounterClockwise();
         }
-        else if (m_doortrigger2.MonsterDetected())
+        else if (m_doortrigger2.MonsterDetected() && m_isClosed)
         {
             OpenDoorClockwise();
+        }
+        else if (m_doortrigger1.MonsterDetected() || m_doortrigger2.MonsterDetected())
+        {
+            return;
         }
     }
 
