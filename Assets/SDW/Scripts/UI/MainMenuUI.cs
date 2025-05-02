@@ -13,5 +13,7 @@ public class MainMenuUI : MonoBehaviour
     {
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
         // Debug.LogError("temp");
+        Cursor.lockState = CursorLockMode.None;
+        GameManager.Instance.Graphics.SetBrightness(1f);
     }
 }
