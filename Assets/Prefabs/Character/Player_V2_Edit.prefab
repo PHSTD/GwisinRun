@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8077348278276745814}
   - component: {fileID: 8882570129921626322}
   - component: {fileID: 1359636677811118221}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 8607009832172469553}
   - component: {fileID: 8826569898667721361}
   - component: {fileID: 2685486388909143176}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 7193743145439110672}
   - component: {fileID: 6446103893168254967}
   - component: {fileID: 5217613680084315332}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 2219477002760727318}
   - component: {fileID: 2351764077040386967}
   - component: {fileID: 3524753106698798678}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Player_V2_Edit
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -595,10 +595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe482324bb239455d94f5754111ac7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_runSpeed: 10
-  m_fallSpeed: -28
-  m_sitHeight: 1
-  m_jumpHeight: 1.2
 --- !u!114 &6571856990789490356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,7 +607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e978978296d4d6eb6084c8b2f4a6a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_raycastDistance: 1.8
 --- !u!114 &2319699047227597326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,11 +631,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018b328c96877494ab9ac46be33d9d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_zoomFOV: 30
-  m_normalFOV: 60
-  m_zoomSpeed: 10
-  m_cameraTransform: {fileID: 3672641858633234033}
-  PlayerCamera: {fileID: 7193743145439110672}
 --- !u!114 &2219477002760727318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,7 +678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5374160555119231075}
   - component: {fileID: 5862621283436977351}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}

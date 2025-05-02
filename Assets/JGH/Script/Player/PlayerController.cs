@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Game UI")]
     [SerializeField] private GameObject m_pausedMenu;
-    public static GameObject PausedMenu;
     
     //# 수정 사항(20250502) -- 시작
     [SerializeField] private GameObject m_gameStartPanel;
@@ -15,35 +14,49 @@ public class PlayerController : MonoBehaviour
     //# SDW 수정 사항(20250502) -- 끝
     
     [Header("Basic Setting")]
+    // PlayerController
     public static CharacterController PlayerCont;
+    // Player 위치
     public static Transform PlayerTransform;
+    // 머리 충돌 판정 오브젝트
     public static PlayerHide HeadTriggerObject;
 
-    private void Awake()
+    private void Start()
     {
-        PausedMenu = m_pausedMenu;
+        PlayerCont = GetComponent<CharacterController>();
+        GameStartPanel = m_gameStartPanel;
     }
 
-    void Start()
+    //# 수정 사항(20250502) -- 시작
+    void Update()
     {
-        GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
-        
+        CheckPauseKeyPressed();
     }
+
+    private void CheckPauseKeyPressed()
+    {
+        if (GameManager.Instance.Input.PauseKeyPressed)
+        {
+            if (GameStartPanel != null && GameStartPanel.activeSelf == true)
+                return;
+            
+            if (GameManager.Instance.IsPaused == false)
+            {
+                m_pausedMenu.SetActive(true);
+            }
+            else
+            {
+                m_pausedMenu.SetActive(false);
+                m_pausedMenu.GetComponent<PauseMenuUI>().Close();
+            }
+        }
+    } 
+    //# 수정 사항(20250502) -- 끝
 
     private void UseItem(string itemName, int value)
     {
         if (itemName != "SpeedPotion")
             return;
         
-        PlayerHealth.CurrentStamina += value;
-
-        if (PlayerHealth.CurrentStamina < 0)
-        {
-            PlayerHealth.CurrentStamina = 0;
-        }
-        else if (PlayerHealth.CurrentStamina > PlayerHealth.MaxStamina)
-        {
-            PlayerHealth.CurrentStamina = PlayerHealth.MaxStamina;
-        }
     }
 }
