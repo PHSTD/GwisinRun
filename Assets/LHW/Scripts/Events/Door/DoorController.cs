@@ -11,6 +11,18 @@ public class DoorController : MonoBehaviour, IInteractable
     [SerializeField] DoorTrigger1 m_doortrigger1;
     [SerializeField] DoorTrigger2 m_doortrigger2;
 
+    public void Update()
+    {
+        if(m_doortrigger1.MonsterDetected())
+        {
+            OpenDoorCounterClockwise();
+        }
+        else if (m_doortrigger2.MonsterDetected())
+        {
+            OpenDoorClockwise();
+        }
+    }
+
     public void Interact()
     {
         if (m_close == true && m_doortrigger1.PlayerDetected())

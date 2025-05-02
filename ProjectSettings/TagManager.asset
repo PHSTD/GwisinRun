@@ -9,6 +9,7 @@ TagManager:
   - Walkable
   - Item
   - InteractableObject
+  - Monster
   layers:
   - Default
   - TransparentFX
