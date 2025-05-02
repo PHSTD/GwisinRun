@@ -13,7 +13,7 @@ public abstract class FsmState<T> where T : Enum
     {
         StateType = stateType;
     }
-
+    
     public virtual void OnEnter(T fromState, FsmMessage msg) { }
     public virtual void OnUpdate(float deltaTime) { }
     public virtual void OnExit(T toState) { }

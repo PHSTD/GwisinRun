@@ -62,20 +62,13 @@ public class MonsterPatrolState : FsmState<MonsterState>
     {
         while (true)
         {
-            Transform target = monster.fieldOfViewSystem.FindVisibleTarget();
-            if(target != null)
+            // 타겟 감지는 FieldOfViewSystem에서 이벤트로 처리하므로 제거
+            // 단순히 패트롤 로직만 유지
+            if (monster.IsArrived())
             {
-                monster.FSM.ChangeState(MonsterState.Chase);
-                yield break;
+                repeatPatrol();
             }
-            else
-            {
-                if(monster.IsArrived())
-                {
-                    repeatPatrol();
-                }
-            }
-            yield return new WaitForSeconds(monster.delay);
+            yield return new WaitForSeconds(monster.stateTickDelay);
         }
     }
 }
@@ -91,22 +84,27 @@ public class MonsterSearchState : FsmState<MonsterState>
     }
     public override void OnEnter(MonsterState fromState, FsmMessage msg)
     {
-        monster.StartCustomCoroutine(SearchRoutine());
         m_searchCount = 0;
+        monster.StartCustomCoroutine(SearchRoutine());
+        Debug.Log("MonsterSearchState 실행됨 초기화됨됨" + m_searchCount);
     }
 
+    
 
     public override void OnExit(MonsterState toState)
     {
+        Debug.Log("MonsterSearchState 종료됨");
         monster.StopCustomCoroutine();
     }
     private IEnumerator SearchRoutine()
     {
         while (true)
         {
+            Debug.Log(m_searchCount);
             Transform target = monster.fieldOfViewSystem.FindVisibleTarget();
             if(target != null)
             {
+                Debug.Log("MonsterSearchState Chase 상태로 변경");
                 monster.FSM.ChangeState(MonsterState.Chase);
                 yield break; // 코루틴 명시적 종료
             }
@@ -117,11 +115,13 @@ public class MonsterSearchState : FsmState<MonsterState>
                 Debug.Log($"Search Count: {m_searchCount}/{monster.searchMoveCount}");
                 if(m_searchCount > monster.searchMoveCount)
                 {
+                    Debug.Log("MonsterSearchState Patrol 상태로 변경");
                     monster.FSM.ChangeState(MonsterState.Patrol);
                     yield break; // 코루틴 명시적 종료
                 }
             }
-            yield return new WaitForSeconds(monster.delay);
+            yield return new WaitForSeconds(monster.stateTickDelay);
+
         }
     }
 
@@ -149,18 +149,13 @@ public class MonsterChaseState : FsmState<MonsterState>
     {
         while (true)
         {
-            Transform target = monster.fieldOfViewSystem.FindVisibleTarget();
-            if(target != null)
+            // 직접 타겟을 찾는 대신 currentTarget 사용
+            if (monster.fieldOfViewSystem.currentTarget != null)
             {
-                monster.navMesh.SetDestination(target.position);
+                monster.navMesh.SetDestination(monster.fieldOfViewSystem.currentTarget.position);
             }
-            else if(monster.IsArrived())
-            {
-                
-                monster.FSM.ChangeState(MonsterState.Search);
-                yield break;
-            }
-            yield return new WaitForSeconds(monster.delay);
+            // 타겟 손실은 이벤트로 처리하므로 여기서 검사할 필요 없음
+            yield return new WaitForSeconds(monster.stateTickDelay);
         }
     }
 }
@@ -175,20 +170,44 @@ public class MonsterAttackState : FsmState<MonsterState>
     }
     public override void OnEnter(MonsterState fromState, FsmMessage msg)
     {
+        // 공격 시작 시 몬스터의 공격 중 상태 설정
+        monster.SetAttacking(true);
+        
+        // NavMesh 이동 중지
+        monster.navMesh.isStopped = true;
+        
         monster.StartCustomCoroutine(Attack());
     }
 
 
     public override void OnExit(MonsterState toState)
     {
+        monster.SetAttacking(false);
+
+        // NavMesh 이동 재개
+        monster.navMesh.isStopped = false;
+
         monster.StopCustomCoroutine();
     }
 
     private IEnumerator Attack()
     {
         Debug.Log("공격 시작");
+        
+        // 공격 애니메이션이나 효과를 여기에 추가
+        
         yield return new WaitForSeconds(3f);
+        
         Debug.Log("공격 종료");
-        yield break;
+        
+        // 공격 후 상태 결정 (타겟이 있으면 추적, 없으면 탐색)
+        if (monster.fieldOfViewSystem.currentTarget != null)
+        {
+            monster.FSM.ChangeState(MonsterState.Chase);
+        }
+        else
+        {
+            monster.FSM.ChangeState(MonsterState.Search);
+        }
     }
 }

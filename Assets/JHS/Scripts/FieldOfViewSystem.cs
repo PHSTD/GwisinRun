@@ -1,38 +1,103 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FieldOfViewSystem : MonoBehaviour
 {
-    [Header("View Settings")]
-    [SerializeField] private float m_ViewRadius = 10f;
-    [SerializeField] [Range(0, 360)] private float m_ViewAngle = 90f;
+    public event Action<Transform>  OnTargetDetected;
+    public event Action             OnTargetLost;
+    public event Action<float>      OnTargetDistanceChanged; //타겟과의 거리 변화
+    public event Action<Vector3>    OnLastKnownPositionUpdated; //마지막 발견 위치 업데이트
 
-    [Header("Layer Masks")]
+
+
+    public Vector3 LastKnownPosition {get; private set;}
+    public float DistanceToTarget {get; private set;}
+
+    public     Transform           currentTarget;
+
+    // // 탐지 주기
+    [SerializeField] private float m_DetectionDelay = 0.5f;
+    [SerializeField] private float m_ViewRadius = 10f;
+    [SerializeField] private float m_ViewAngle = 90f;
     [SerializeField] private LayerMask m_TargetMask;
     [SerializeField] private LayerMask m_ObstacleMask;
 
-    //public List<Transform> visibleTargets = new List<Transform>();
+    
+    private void Start()
+    {
+        StartCoroutine(DetectionLoop());
+    }
+    //여기에서 모든 이벤트 처리를 담당한다.
+    private IEnumerator DetectionLoop()
+    {
+        while(true)
+        {
+            var newTarget = FindVisibleTarget();
+            
+            // 타겟 발견/손실 이벤트
+            if(newTarget != null && currentTarget == null)
+            {
+                currentTarget = newTarget;
+                LastKnownPosition = newTarget.position;
+                OnTargetDetected?.Invoke(newTarget);
+            }
+            else if(newTarget == null && currentTarget != null)
+            {
+                OnTargetLost?.Invoke();
+                currentTarget = null;
+            }
+            
+            // 타겟이 있을 때 추가 정보 업데이트
+            if(currentTarget != null)
+            {
+                float newDistance = Vector3.Distance(transform.position, currentTarget.position);
+                
+                // 거리 변화 감지
+                if(Mathf.Abs(newDistance - DistanceToTarget) > 0.5f)
+                {
+                    DistanceToTarget = newDistance;
+                    OnTargetDistanceChanged?.Invoke(DistanceToTarget);
+                }
+                
+                // 마지막 위치 업데이트
+                if(Vector3.Distance(LastKnownPosition, currentTarget.position) > 1f)
+                {
+                    LastKnownPosition = currentTarget.position;
+                    OnLastKnownPositionUpdated?.Invoke(LastKnownPosition);
+                }
+            }
+            
+            yield return new WaitForSeconds(m_DetectionDelay);
+        }
+    }
+    
 
-    // 탐지 주기
-    [SerializeField] private float m_DetectionDelay = 0.2f;
-
-    public Transform visibleTarget;
     private bool IsTargetVisible(Transform target)
     {
-        Vector3 dirToTarget = (target.position - transform.position).normalized;
-        float angle = Vector3.Angle(transform.forward, dirToTarget);
+        Vector3 origin = transform.position;
+        Vector3 dirToTarget = (target.position - origin);
+        float sqrDistanceToTarget = dirToTarget.sqrMagnitude;
 
-        if (angle < m_ViewAngle / 2f)
+        // 시야각 체크
+        float angleToTarget = Vector3.Angle(transform.forward, dirToTarget.normalized);
+        if (angleToTarget > m_ViewAngle * 0.5f)
+            return false;
+
+        // 시야 거리 체크
+        if (sqrDistanceToTarget > m_ViewRadius * m_ViewRadius)
+            return false;
+
+        // 장애물 체크 (Raycast)
+        if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
         {
-            float distance = Vector3.Distance(transform.position, target.position);
-
-            if (!Physics.Raycast(transform.position, dirToTarget, distance, m_ObstacleMask))
-            {
-                return true;
-            }
+            // 장애물이 타겟보다 앞에 있는 경우
+            if (hit.transform != target)
+                return false;
         }
-        return false;
+
+        return true;
     }
     private void FindVisibleTargets(ref List<Transform> visibleTargets)
     {
@@ -61,7 +126,6 @@ public class FieldOfViewSystem : MonoBehaviour
     }
     public Transform FindVisibleTarget()
     {
-        visibleTarget = null;   // 수정해야함
         // 시야 반경 내의 타겟 검색
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, m_ViewRadius, m_TargetMask);
 
@@ -70,8 +134,7 @@ public class FieldOfViewSystem : MonoBehaviour
             Transform target = collider.transform;
 
             if (IsTargetVisible(target))
-            {   
-                visibleTarget = target; // 수정해야함
+            {
                 return target;
             }
         }
