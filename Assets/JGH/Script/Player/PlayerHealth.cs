@@ -41,6 +41,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void UseItem(string itemName, int value)
     {
+        //# 수정 사항(20250502) -- 시작
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
+        //# 수정 사항(20250502) -- 끝
+        
         if (itemName != "HeartPotion")
             return;
         
