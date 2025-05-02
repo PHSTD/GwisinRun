@@ -35,6 +35,18 @@ public class Monster : MonoBehaviour
         RegisterEvents();
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+        {
+            navMesh.isStopped = true;
+        }
+        else
+        {
+            navMesh.isStopped = false;
+        }
+    }
+
     private void RegisterEvents()
     {
         // 기존 이벤트 구독
