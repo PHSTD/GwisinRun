@@ -32,8 +32,8 @@ public class PlayerMoveCamera : MonoBehaviour
         m_cameraTransform = PlayerCamera.transform;
         
         // 고정 시야 높이 설정
-        m_cameraDefaultPos = new Vector3(0, 1.20f, 0); // 서 있을 때
-        m_cameraSitPos = new Vector3(0, 0.50f, 0);     // 앉았을 때
+        m_cameraDefaultPos = new Vector3(0, 1.40f, 0); // 서 있을 때
+        m_cameraSitPos = new Vector3(0, 0.13f, 0);     // 앉았을 때
 
         // 초점 처리를 위해
         PlayerCamera.fieldOfView = m_normalFOV;
@@ -64,7 +64,6 @@ public class PlayerMoveCamera : MonoBehaviour
     
     void RotateView()
     {
-
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
@@ -81,30 +80,37 @@ public class PlayerMoveCamera : MonoBehaviour
     /// </summary>
     void HeadBob()
     {
-        // 현재 이동 입력이 있고, 땅에 닿아 있으며 앉아있지 않은 상태에서만 흔들림 적용
-        Vector2 moveInput = GameManager.Instance.Input.MoveInput;
-        bool isMoving = moveInput.sqrMagnitude > 0.01f && PlayerController.PlayerCont.isGrounded && !PlayerMove.IsSit;
+            // 현재 이동 입력이 있고, 땅에 닿아 있으며 앉아있지 않은 상태에서만 흔들림 적용
+            Vector2 moveInput = GameManager.Instance.Input.MoveInput;
+            bool isMoving = moveInput.sqrMagnitude > 0.01f && PlayerController.PlayerCont.isGrounded;
+            // 기준 카메라 위치 결정
+            Vector3 baseCamPos = PlayerMove.IsSit ? m_cameraSitPos : m_cameraDefaultPos;
+            
+            if (isMoving && !PlayerMove.IsSit)
+            {
+                // 걷기와 뛰기 여부에 따라 주기(frequency)와 진폭(amplitude) 선택
+                float frequency = GameManager.Instance.Input.RunKeyBeingHeld ? m_bobFrequencyRun : m_bobFrequencyWalk;
+                float amplitude = GameManager.Instance.Input.RunKeyBeingHeld ? m_bobAmplitudeRun : m_bobAmplitudeWalk;
 
-        if (isMoving)
-        {
-            // 걷기와 뛰기 여부에 따라 주기(frequency)와 진폭(amplitude) 선택
-            float frequency = GameManager.Instance.Input.RunKeyBeingHeld ? m_bobFrequencyRun : m_bobFrequencyWalk;
-            float amplitude = GameManager.Instance.Input.RunKeyBeingHeld ? m_bobAmplitudeRun : m_bobAmplitudeWalk;
+                // 사인파를 기반으로 한 시간 계산
+                m_bobTimer += Time.deltaTime * frequency;
 
-            // 사인파를 기반으로 한 시간 계산
-            m_bobTimer += Time.deltaTime * frequency;
+                // sin 값으로 카메라의 y축 오프셋 계산
+                float bobOffset = Mathf.Sin(m_bobTimer) * amplitude;
 
-            // sin 값으로 카메라의 y축 오프셋 계산
-            float bobOffset = Mathf.Sin(m_bobTimer) * amplitude;
-
-            // 원래 위치 + 위아래 흔들림 적용
-            m_cameraTransform.localPosition = m_cameraDefaultPos + new Vector3(0, bobOffset, 0);
+                // 원래 위치 + 위아래 흔들림 적용
+                //m_cameraTransform.localPosition = m_cameraDefaultPos + new Vector3(0, bobOffset, 0);
+                 m_cameraTransform.localPosition = Vector3.Lerp(
+                m_cameraTransform.localPosition,
+                baseCamPos + new Vector3(0, bobOffset, 0),
+                Time.deltaTime * 5f
+            );
         }
         else
         {
             // 이동하지 않을 경우 타이머 초기화 및 카메라 위치를 원래 위치로 부드럽게 되돌림
             m_bobTimer = 0f;
-            m_cameraTransform.localPosition = Vector3.Lerp(m_cameraTransform.localPosition, m_cameraDefaultPos, Time.deltaTime * 5f);
+            m_cameraTransform.localPosition = Vector3.Lerp(m_cameraTransform.localPosition, baseCamPos, Time.deltaTime * 5f);
         }
     }
 }
