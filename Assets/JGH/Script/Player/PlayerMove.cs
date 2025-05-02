@@ -130,14 +130,16 @@ public class PlayerMove : MonoBehaviour
 
         // 목표 높이와 중심 위치, 스케일 설정
         float targetHeight = IsSit ? m_sitHeight : m_originalHeight;
-        Vector3 targetCenter = IsSit ? new Vector3(0, m_sitHeight / 2f, 0) : m_originalCenter;
+        
+        // 캐릭터 앉아 있는 상태 계산 아니면 일어서기
+        Vector3 targetCenter = IsSit ? new Vector3(0, m_originalCenter.y - (m_originalHeight - m_sitHeight) / 3f , 0) : m_originalCenter;
+
         Vector3 targetScale = IsSit ? m_sitPlayerScale : m_originalPlayerScale;
 
         // Lerp를 통해 부드럽게 보간 처리 (Time.deltaTime * 10f → 속도 조절용)
         PlayerController.PlayerCont.height = Mathf.Lerp(PlayerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
         PlayerController.PlayerCont.center = Vector3.Lerp(PlayerController.PlayerCont.center, targetCenter, Time.deltaTime * 10f);
         PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);
-        
     }
 
 }
