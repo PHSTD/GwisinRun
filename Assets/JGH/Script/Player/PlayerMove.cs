@@ -59,12 +59,10 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        //# 수정 사항(20250502) -- 시작
-        // if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
-        //     return;
-        //# 수정 사항(20250502) -- 끝
         
         Move();
+        
+        
         Jump();
         SitPlayer();
     }
@@ -88,8 +86,15 @@ public class PlayerMove : MonoBehaviour
             m_speed = m_walkSpeed;
             PlayerHealth.StaminaPlus();
         }
+        
+        //# 수정 사항(20250502) -- 시작
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
+        //# 수정 사항(20250502) -- 끝
 
         PlayerController.PlayerCont.Move( m_speed * Time.deltaTime * move);
+        
+        
 
         m_velocity.y += m_fallSpeed * Time.deltaTime;
         PlayerController.PlayerCont.Move(m_velocity * Time.deltaTime);
