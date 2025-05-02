@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SDW/Scenes/[Test] PlayScene.unity
     guid: 4b07c3ace609f0346bd5e9a7e85eea20
+  - enabled: 1
+    path: Assets/SDW/Scenes/[Merge] LevelOneScene(GetItem, ItemUI, InteractableObject).unity
+    guid: 89dc62a8c55eeb04caa04827643dd57a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 4398f008affba3e469ccaa77a7b02b68, type: 3}

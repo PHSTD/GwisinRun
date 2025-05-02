@@ -1,59 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float m_walkSpeed = 5f;
+    [Header("Speed Settings")]
+    public static float m_walkSpeed = 5f;
+    public static float m_speed;
     [SerializeField] private float m_runSpeed = 10f;
-    [SerializeField] private float m_gravity = -9.81f;
-    [SerializeField] private Transform m_cameraTransform;
-    [SerializeField] private CharacterController m_controller;
-    [SerializeField] private Vector3 m_velocity;
-    [SerializeField] private float m_zoomFOV = 30f;
-    [SerializeField] private float m_normalFOV = 60f;
-    [SerializeField] private float m_zoomSpeed = 10f;
-    [SerializeField] private int m_stamina = 100;
-    [SerializeField] private float m_speed;
+    [SerializeField] private float m_fallSpeed = -9.81f;
+    private Vector3 m_velocity;
+    
+    [Header("Player Sit Setting")]
+    [SerializeField] private float m_sitHeight = 1.0f;
+    private float m_originalHeight;
+    private Vector3 m_originalCenter;
+    private Vector3 m_originalPlayerScale;
+    private Vector3 m_sitPlayerScale;
+    private bool m_isSit;
+    private bool m_releasedSitKey;
+
+    [Header("Jump Settings")]
     [SerializeField] private float m_jumpHeight = 1.2f;
-
-    private Camera m_playerCamera;
-    private float m_timer = 0f;
-
-    [SerializeField] private bool m_isCrouching = false;
-    [SerializeField] private float m_originalHeight;
-    [SerializeField] private Vector3 m_originalCenter;
-    [SerializeField] private float m_crouchHeight = 1.0f;
-    [SerializeField] private Transform m_capsuleModel;
-    [SerializeField] private LayerMask m_ceilingMask; // 천장 레이어
-
-    private Vector3 m_originalScale;
-    private Vector3 m_crouchScale;
-
-    private bool m_forceCrouch = false;
-    private float m_headCheckDistance = 1.0f;
+    
+    private Rigidbody m_rigidbody;
 
     void Start()
     {
-        m_controller = GetComponent<CharacterController>();
+        PlayerController.PlayerCont = GetComponent<CharacterController>();
+        
+        PlayerController.PlayerTransform = transform;
+        if (PlayerController.PlayerTransform == null)
+        {
+            Debug.LogError("PlayerTransform이 초기화되지 않았습니다!");
+            return;
+        }
+        PlayerController.HeadTriggerObject = GetComponentInChildren<PlayerHide>();
+        
         Cursor.lockState = CursorLockMode.Locked;
-        m_playerCamera = m_cameraTransform.GetComponent<Camera>();
-        m_playerCamera.fieldOfView = m_normalFOV;
 
-        m_originalHeight = m_controller.height;
-        m_originalCenter = m_controller.center;
+        m_originalHeight = PlayerController.PlayerCont.height;
+        m_originalCenter = PlayerController.PlayerCont.center;
 
-        m_originalScale = m_capsuleModel.localScale;
-        m_crouchScale = new Vector3(m_originalScale.x, m_originalScale.y * 0.5f, m_originalScale.z);
+        m_originalPlayerScale = PlayerController.PlayerTransform.localScale;
+        m_sitPlayerScale = new Vector3(m_originalPlayerScale.x, m_originalPlayerScale.y * 0.5f, m_originalPlayerScale.z);
+
+        m_rigidbody = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         Move();
-        RotateView();
-        ZoomView();
         Jump();
-        HandleCrouch();
+        SitPlayer();
     }
 
     void Move()
@@ -72,88 +72,77 @@ public class PlayerMove : MonoBehaviour
              * runSpeed의 1%(맥스)
             */
             m_speed = m_runSpeed;
-            if (moveX != 0 || moveZ != 0) StaminaMinus();
-            else StaminaPlus();
+            if (moveX != 0 || moveZ != 0) PlayerHealth.StaminaMinus();
+            else PlayerHealth.StaminaPlus();
         }
         else
         {
             m_speed = m_walkSpeed;
-            StaminaPlus();
+            PlayerHealth.StaminaPlus();
         }
 
-        m_controller.Move(move * m_speed * Time.deltaTime);
+        PlayerController.PlayerCont.Move( m_speed * Time.deltaTime * move);
 
-        m_velocity.y += m_gravity * Time.deltaTime;
-        m_controller.Move(m_velocity * Time.deltaTime);
+        m_velocity.y += m_fallSpeed * Time.deltaTime;
+        PlayerController.PlayerCont.Move(m_velocity * Time.deltaTime);
 
-        if (m_controller.isGrounded && m_velocity.y < 0)
+        if (PlayerController.PlayerCont.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
+        
+        
+        //# 첫 움직임이 시작되면 GameManager의 Pause가 풀림
+        if (m_rigidbody.velocity.magnitude != 0 && PlayerController.IsFirstMove)
+        {
+            GameManager.Instance.IsPaused = false;
+            PlayerController.IsFirstMove = false;
+        }
     }
 
     void Jump()
     {
-        if (GameManager.Instance.Input.JumpKeyPressed && m_controller.isGrounded && !m_isCrouching)
+        if (GameManager.Instance.Input.JumpKeyPressed && PlayerController.PlayerCont.isGrounded)
         {
-            m_velocity.y = Mathf.Sqrt(m_jumpHeight * -2f * m_gravity);
+            m_velocity.y = Mathf.Sqrt(m_jumpHeight * -2f * m_fallSpeed);
         }
     }
 
-    void HandleCrouch()
+    void SitPlayer()
     {
-        bool crouchKeyHeld = GameManager.Instance.Input.SitKeyBeingHeld;
-        bool ceilingBlocked = IsCeilingAbove();
-
-        if (ceilingBlocked)
+        bool sitKeyHeld = GameManager.Instance.Input.SitKeyBeingHeld;
+        
+        if(GameManager.Instance.Input.SitKeyReleased)
         {
-            ForceCrouch();
-            m_forceCrouch = true;
-            return;
+            m_releasedSitKey = true;
         }
-
-        if (!crouchKeyHeld)
+        
+        if (sitKeyHeld || (m_isSit && PlayerController.HeadTriggerObject.IsDetected))
         {
-            if (!m_forceCrouch && !IsCeilingAbove())
-            {
-                Stand();
-            }
-            return;
+            DoSit();
         }
-
-        if (crouchKeyHeld)
+        //# 키가 때졌을 때 또는 headTriggerObject의 감지가 안될 떄
+        else if(m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
         {
-            Crouch();
-            m_forceCrouch = false;
+            Stand();
         }
     }
 
-    bool IsCeilingAbove()
+    void DoSit()
     {
-        Vector3 origin = transform.position + Vector3.up * (m_controller.height / 2f);
-        return Physics.Raycast(origin, Vector3.up, m_headCheckDistance, m_ceilingMask);
-    }
-
-    void Crouch()
-    {
-        if (m_isCrouching) return;
-
-        m_controller.height = m_crouchHeight;
-        m_controller.center = new Vector3(0, m_crouchHeight / 2f, 0);
-        m_capsuleModel.localScale = m_crouchScale;
-        m_isCrouching = true;
+        m_isSit = true;
+        PlayerController.PlayerCont.height = m_sitHeight;
+        PlayerController.PlayerCont.center = new Vector3(0, m_sitHeight / 2f, 0);
+        PlayerController.PlayerTransform.localScale = m_sitPlayerScale;
     }
 
     void Stand()
     {
-        if (!m_isCrouching) return;
-        if (IsCeilingAbove()) return;
-
         // 바닥 레이어 감지용 Raycast
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         float rayDistance = 2f;
 
         bool hasGround = Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, rayDistance, LayerMask.GetMask("Floor"));
 
-        m_controller.enabled = false;
+        PlayerController.PlayerCont.enabled = false;
 
         // 바닥 없으면 위치 강제로 조정
         if (hasGround)
@@ -167,69 +156,14 @@ public class PlayerMove : MonoBehaviour
         }
 
         // 기본값 복구
-        m_controller.height = m_originalHeight;
-        m_controller.center = m_originalCenter;
-        m_capsuleModel.localScale = m_originalScale;
-        m_isCrouching = false;
+        PlayerController.PlayerCont.height = m_originalHeight;
+        PlayerController.PlayerCont.center = m_originalCenter;
+        PlayerController.PlayerTransform.localScale = m_originalPlayerScale;
+        
 
-        m_controller.enabled = true;
+        PlayerController.PlayerCont.enabled = true;
+        m_isSit = false;
+        m_releasedSitKey = false;
     }
 
-    void ForceCrouch()
-    {
-        m_controller.height = m_crouchHeight;
-        m_controller.center = new Vector3(0, m_crouchHeight / 2f, 0);
-        m_capsuleModel.localScale = m_crouchScale;
-        m_isCrouching = true;
-    }
-
-    void StaminaPlus()
-    {
-        m_timer += Time.deltaTime;
-        if (m_timer >= 0.05f)
-        {
-            m_stamina++;
-            m_timer = 0f;
-        }
-        if (m_stamina >= 100) m_stamina = 100;
-    }
-
-    void StaminaMinus()
-    {
-        m_timer += Time.deltaTime;
-        if (m_timer >= 0.05f)
-        {
-            m_stamina--;
-            m_timer = 0f;
-        }
-        if (m_stamina <= 0)
-        {
-            m_stamina = 0;
-            m_speed = m_walkSpeed;
-        }
-    }
-
-    void RotateView()
-    {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-
-        transform.Rotate(Vector3.up * mouseX * 2f);
-
-        float rotationX = m_cameraTransform.localEulerAngles.x - mouseY * 2f;
-        if (rotationX > 180) rotationX -= 360;
-        rotationX = Mathf.Clamp(rotationX, -80, 80);
-        m_cameraTransform.localEulerAngles = new Vector3(rotationX, 0, 0);
-    }
-
-    void ZoomView()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0)
-        {
-            m_normalFOV -= scroll * m_zoomSpeed;
-            m_normalFOV = Mathf.Clamp(m_normalFOV, m_zoomFOV, 60f);
-        }
-        m_playerCamera.fieldOfView = Mathf.Lerp(m_playerCamera.fieldOfView, m_normalFOV, Time.deltaTime * 10f);
-    }
 }

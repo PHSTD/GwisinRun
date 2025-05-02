@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public InputManager Input;
     public AudioSetting Audio;
     public GraphicsSetting Graphics;
+    public Inventory Inventory;
     //todo 추후 리팩토링 시 검토
     // public UIManager UI;
 

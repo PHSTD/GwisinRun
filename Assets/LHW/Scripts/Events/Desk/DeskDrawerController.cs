@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class DeskDrawerController : MonoBehaviour, IInteractable
 {
-    private bool m_interactable = false;
+    private Animator m_animator;
 
+    void Awake()
+    {
+        m_animator = GetComponent<Animator>();
+    }
 
 
     public void Interact()
     {
-        DrawerAnimator(GetComponent<Animator>());
+        DrawerAnimator(m_animator);
     }
 
     private void DrawerAnimator(Animator animator)

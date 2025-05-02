@@ -1,32 +1,67 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class ItemInfoUIController : MonoBehaviour
 {
-    [SerializeField] Canvas m_canvas;
+    [SerializeField] Canvas m_canvasRectTransfom;
     [SerializeField] GameObject m_panel;
+    [SerializeField] private TMP_Text m_popupText;
     private RectTransform m_panelpos;
     [SerializeField] private float m_detectRadius;
     [SerializeField] private LayerMask m_playerLayer;
+    
+    private Coroutine m_refreshCoroutine;
+    private bool m_canOn;
 
     public void Awake()
     {
         m_panelpos = m_panel.GetComponent<RectTransform>();
     }
 
+    private void UpdateTextMessage()
+    {
+        var interactionKey = PlayerPrefs.GetString("Interaction");
+        if (string.IsNullOrEmpty(interactionKey))
+            return;
+        
+        if (gameObject.CompareTag("Item"))
+        {
+            m_popupText.text= $"아이템을 얻으려면 [{interactionKey}]를 누르세요.";
+        }
+        
+        else if (gameObject.CompareTag("InteractableObject"))
+        {
+            m_popupText.text= $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
+        }
+    }
+
 
     private void OnMouseOver()
     {
+        m_canOn = true;
+        if (m_refreshCoroutine != null)
+            return;
+        
         if (Physics.OverlapSphere(transform.position, m_detectRadius, m_playerLayer).Length > 0)
         {
             m_panel.SetActive(true);
+            UpdateTextMessage();
 
-            Vector2 localPos = Vector2.zero;
+            Vector3 localPos = Vector3.zero;
 
-            RectTransform rectTransform = m_canvas.transform as RectTransform;
+            RectTransform rectTransform = m_canvasRectTransfom.transform as RectTransform;
             Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+            
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, mousePos, m_canvas.worldCamera, out localPos);
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, mousePos, m_canvasRectTransfom.worldCamera, out localPos);
             m_panelpos.anchoredPosition = localPos;
+
+            m_refreshCoroutine = StartCoroutine(RefreshTime());
         }
         else
         {
@@ -34,8 +69,25 @@ public class ItemInfoUIController : MonoBehaviour
         }
     }
 
+    IEnumerator RefreshTime()
+    {
+        yield return new WaitForSeconds(0.5f);
+        m_refreshCoroutine = null;
+        m_panel.SetActive(m_canOn);
+    }
+
     private void OnMouseExit()
     {
+        // if (m_refreshCoroutine != null)
+        //     return;
+        // m_panel.SetActive(false);
+        m_canOn = false;
+    }
+
+    private void OnDisable()
+    {
+        if (m_panel == null)
+            return;
         m_panel.SetActive(false);
     }
 }
