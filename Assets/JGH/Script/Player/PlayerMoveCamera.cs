@@ -33,7 +33,7 @@ public class PlayerMoveCamera : MonoBehaviour
         
         // 고정 시야 높이 설정
         m_cameraDefaultPos = new Vector3(0, 1.40f, 0); // 서 있을 때
-        m_cameraSitPos = new Vector3(0, 0.13f, 0);     // 앉았을 때
+        m_cameraSitPos = new Vector3(0, 0.50f, 0);     // 앉았을 때
 
         // 초점 처리를 위해
         PlayerCamera.fieldOfView = m_normalFOV;
