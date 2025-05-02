@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     //# SDW 수정 사항(20250502) -- 끝
     
     public static GameObject GameOverPanel;
-    [SerializeField] public GameObject m_gameOverPanel;
+    [SerializeField] private GameObject m_gameOverPanel;
     
     
     [Header("Basic Setting")]
