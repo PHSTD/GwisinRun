@@ -49,10 +49,6 @@ public class PlayerMove : MonoBehaviour
         }
         PlayerController.HeadTriggerObject = GetComponentInChildren<PlayerHide>();
         
-        //# 수정 사항(20250502) -- 시작
-        // Cursor.lockState = CursorLockMode.Locked;
-        //# 수정 사항(20250502) -- 끝
-
         m_originalHeight = PlayerController.PlayerCont.height;
         m_originalCenter = PlayerController.PlayerCont.center;
 
@@ -95,10 +91,6 @@ public class PlayerMove : MonoBehaviour
 
         if (PlayerController.PlayerCont.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
-        
-        //# 수정 사항(20250502) -- 시작
-        //# 제거
-        //# 수정 사항(20250502) -- 끝
     }
 
     void Jump()
@@ -111,41 +103,34 @@ public class PlayerMove : MonoBehaviour
 
     void SitPlayer()
     {
+        // 앉기 키가 눌려있는지 확인
         bool sitKeyHeld = GameManager.Instance.Input.SitKeyBeingHeld;
-        
-        if(GameManager.Instance.Input.SitKeyReleased)
-        {
+
+        if (GameManager.Instance.Input.SitKeyReleased)
             m_releasedSitKey = true;
-        }
-        
+
+        // 키가 눌려있거나, 이미 앉은 상태인데 천장이 감지되면 계속 앉은 상태 유지
         if (sitKeyHeld || (m_isSit && PlayerController.HeadTriggerObject.IsDetected))
         {
-            DoSit();
+            m_isSit = true;
         }
-        //# 키가 때졌을 때 또는 headTriggerObject의 감지가 안될 떄
-        else if(m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
+        // 키를 뗐고, 천장도 감지되지 않으면 일어남
+        else if (m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
         {
-            Stand();
+            m_isSit = false;
+            m_releasedSitKey = false;
         }
-    }
 
-    void DoSit()
-    {
-        m_isSit = true;
-        PlayerController.PlayerCont.height = m_sitHeight;
-        PlayerController.PlayerCont.center = new Vector3(0, m_sitHeight / 2f, 0);
-        PlayerController.PlayerTransform.localScale = m_sitPlayerScale;
-    }
+        // 목표 높이와 중심 위치, 스케일 설정
+        float targetHeight = m_isSit ? m_sitHeight : m_originalHeight;
+        Vector3 targetCenter = m_isSit ? new Vector3(0, m_sitHeight / 2f, 0) : m_originalCenter;
+        Vector3 targetScale = m_isSit ? m_sitPlayerScale : m_originalPlayerScale;
 
-    void Stand()
-    {
-        // 원래 위치로 원복
-        PlayerController.PlayerCont.height = m_originalHeight;
-        PlayerController.PlayerCont.center = m_originalCenter;
-        PlayerController.PlayerTransform.localScale = m_originalPlayerScale;
-
-        m_isSit = false;
-        m_releasedSitKey = false;
+        // Lerp를 통해 부드럽게 보간 처리 (Time.deltaTime * 10f → 속도 조절용)
+        PlayerController.PlayerCont.height = Mathf.Lerp(PlayerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
+        PlayerController.PlayerCont.center = Vector3.Lerp(PlayerController.PlayerCont.center, targetCenter, Time.deltaTime * 10f);
+        PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);
+        
     }
 
 }
