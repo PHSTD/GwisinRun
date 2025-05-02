@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Game UI")]
     [SerializeField] private GameObject m_pausedMenu;
-    public static GameObject PausedMenu;
     
     //# 수정 사항(20250502) -- 시작
     [SerializeField] private GameObject m_gameStartPanel;
@@ -25,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         PlayerCont = GetComponent<CharacterController>();
-        
+        GameStartPanel = m_gameStartPanel;
     }
 
     //# 수정 사항(20250502) -- 시작
@@ -38,17 +37,17 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.Input.PauseKeyPressed)
         {
-            if (PlayerController.GameStartPanel != null && PlayerController.GameStartPanel.activeSelf == true)
+            if (GameStartPanel != null && GameStartPanel.activeSelf == true)
                 return;
             
             if (GameManager.Instance.IsPaused == false)
             {
-                PlayerController.PausedMenu.SetActive(true);
+                m_pausedMenu.SetActive(true);
             }
             else
             {
-                PlayerController.PausedMenu.SetActive(false);
-                PlayerController.PausedMenu.GetComponent<PauseMenuUI>().Close();
+                m_pausedMenu.SetActive(false);
+                m_pausedMenu.GetComponent<PauseMenuUI>().Close();
             }
         }
     } 
@@ -56,11 +55,6 @@ public class PlayerController : MonoBehaviour
 
     private void UseItem(string itemName, int value)
     {
-        //# 수정 사항(20250502) -- 시작
-        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
-            return;
-        //# 수정 사항(20250502) -- 끝
-        
         if (itemName != "SpeedPotion")
             return;
         

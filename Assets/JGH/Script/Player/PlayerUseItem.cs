@@ -13,8 +13,8 @@ public class PlayerUseItem : MonoBehaviour
     void Update()
     {
         //# 수정 사항(20250502) -- 시작
-        // if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
-        //     return;
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
         //# 수정 사항(20250502) -- 끝
         
         for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
