@@ -6,25 +6,36 @@ using UnityEngine.Serialization;
 public class PlayerMove : MonoBehaviour
 {
     [Header("Speed Settings")]
+    // 걷기 속도
     public static float m_walkSpeed = 5f;
+    // 뛰기 속도
+    private float m_runSpeed = 10f;
+    // 현재 속도를 걷기나 뛰기 속도를 저장
     public static float m_speed;
-    [SerializeField] private float m_runSpeed = 10f;
-    [SerializeField] private float m_fallSpeed = -9.81f;
+    // 떨어지는 속도
+    private float m_fallSpeed = -28.0f;
+    // 전체적인 이동 속도 계산
     private Vector3 m_velocity;
     
     [Header("Player Sit Setting")]
-    [SerializeField] private float m_sitHeight = 1.0f;
+    private float m_sitHeight = 1.0f;
+    // 캐릭터 원래 높이
     private float m_originalHeight;
+    // 캐릭터 원래 중심 위치
     private Vector3 m_originalCenter;
+    // 프레이어 크기 저장
     private Vector3 m_originalPlayerScale;
+    // 앉은 상태의 스케일
     private Vector3 m_sitPlayerScale;
-    private bool m_isSit;
+    // 앉은 상태인지 확인
+    public static bool IsSit;
+    // 앉기 키 누른 상태인지 확인
     private bool m_releasedSitKey;
 
     [Header("Jump Settings")]
-    [SerializeField] private float m_jumpHeight = 1.2f;
+    // 점프 높이
+    private float m_jumpHeight = 1.2f;
     
-    private Rigidbody m_rigidbody;
 
     void Start()
     {
@@ -38,17 +49,12 @@ public class PlayerMove : MonoBehaviour
         }
         PlayerController.HeadTriggerObject = GetComponentInChildren<PlayerHide>();
         
-        //# 수정 사항(20250502) -- 시작
-        // Cursor.lockState = CursorLockMode.Locked;
-        //# 수정 사항(20250502) -- 끝
-
         m_originalHeight = PlayerController.PlayerCont.height;
         m_originalCenter = PlayerController.PlayerCont.center;
 
         m_originalPlayerScale = PlayerController.PlayerTransform.localScale;
         m_sitPlayerScale = new Vector3(m_originalPlayerScale.x, m_originalPlayerScale.y * 0.5f, m_originalPlayerScale.z);
 
-        m_rigidbody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -73,11 +79,6 @@ public class PlayerMove : MonoBehaviour
 
         if (GameManager.Instance.Input.RunKeyBeingHeld)
         {
-            //todo 스태미너 100일 경우 -> 예를 들어 1이 이깍히면 1%(맥스)
-            /*
-             * todo runSpeed의 minimum : walkspeed
-             * runSpeed의 1%(맥스)
-            */
             m_speed = m_runSpeed;
             if (moveX != 0 || moveZ != 0) PlayerHealth.StaminaMinus();
             else PlayerHealth.StaminaPlus();
@@ -95,10 +96,6 @@ public class PlayerMove : MonoBehaviour
 
         if (PlayerController.PlayerCont.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
-        
-        //# 수정 사항(20250502) -- 시작
-        //# 제거
-        //# 수정 사항(20250502) -- 끝
     }
 
     void Jump()
@@ -111,62 +108,34 @@ public class PlayerMove : MonoBehaviour
 
     void SitPlayer()
     {
+        // 앉기 키가 눌려있는지 확인
         bool sitKeyHeld = GameManager.Instance.Input.SitKeyBeingHeld;
-        
-        if(GameManager.Instance.Input.SitKeyReleased)
-        {
+
+        if (GameManager.Instance.Input.SitKeyReleased)
             m_releasedSitKey = true;
+
+        // 키가 눌려있거나, 이미 앉은 상태인데 천장이 감지되면 계속 앉은 상태 유지
+        if (sitKeyHeld || (IsSit && PlayerController.HeadTriggerObject.IsDetected))
+        {
+            IsSit = true;
         }
+        // 키를 뗐고, 천장도 감지되지 않으면 일어남
+        else if (m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
+        {
+            IsSit = false;
+            m_releasedSitKey = false;
+        }
+
+        // 목표 높이와 중심 위치, 스케일 설정
+        float targetHeight = IsSit ? m_sitHeight : m_originalHeight;
+        Vector3 targetCenter = IsSit ? new Vector3(0, m_sitHeight / 2f, 0) : m_originalCenter;
+        Vector3 targetScale = IsSit ? m_sitPlayerScale : m_originalPlayerScale;
+
+        // Lerp를 통해 부드럽게 보간 처리 (Time.deltaTime * 10f → 속도 조절용)
+        PlayerController.PlayerCont.height = Mathf.Lerp(PlayerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
+        PlayerController.PlayerCont.center = Vector3.Lerp(PlayerController.PlayerCont.center, targetCenter, Time.deltaTime * 10f);
+        PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);
         
-        if (sitKeyHeld || (m_isSit && PlayerController.HeadTriggerObject.IsDetected))
-        {
-            DoSit();
-        }
-        //# 키가 때졌을 때 또는 headTriggerObject의 감지가 안될 떄
-        else if(m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
-        {
-            Stand();
-        }
-    }
-
-    void DoSit()
-    {
-        m_isSit = true;
-        PlayerController.PlayerCont.height = m_sitHeight;
-        PlayerController.PlayerCont.center = new Vector3(0, m_sitHeight / 2f, 0);
-        PlayerController.PlayerTransform.localScale = m_sitPlayerScale;
-    }
-
-    void Stand()
-    {
-        // 바닥 레이어 감지용 Raycast
-        Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
-        float rayDistance = 2f;
-
-        bool hasGround = Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, rayDistance, LayerMask.GetMask("Floor"));
-
-        PlayerController.PlayerCont.enabled = false;
-
-        // 바닥 없으면 위치 강제로 조정
-        if (hasGround)
-        {
-            transform.position = new Vector3(transform.position.x, hit.point.y + 0.05f, transform.position.z);
-        }
-        else
-        {
-            // 최후 보정: 아주 살짝 위로 띄움
-            transform.position += Vector3.up * 0.2f;
-        }
-
-        // 기본값 복구
-        PlayerController.PlayerCont.height = m_originalHeight;
-        PlayerController.PlayerCont.center = m_originalCenter;
-        PlayerController.PlayerTransform.localScale = m_originalPlayerScale;
-        
-
-        PlayerController.PlayerCont.enabled = true;
-        m_isSit = false;
-        m_releasedSitKey = false;
     }
 
 }

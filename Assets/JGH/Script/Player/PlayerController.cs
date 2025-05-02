@@ -15,18 +15,16 @@ public class PlayerController : MonoBehaviour
     //# SDW 수정 사항(20250502) -- 끝
     
     [Header("Basic Setting")]
+    // PlayerController
     public static CharacterController PlayerCont;
+    // Player 위치
     public static Transform PlayerTransform;
+    // 머리 충돌 판정 오브젝트
     public static PlayerHide HeadTriggerObject;
 
-    private void Awake()
+    private void Start()
     {
-        PausedMenu = m_pausedMenu;
-    }
-
-    void Start()
-    {
-        GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
+        PlayerCont = GetComponent<CharacterController>();
         
     }
 
@@ -66,15 +64,5 @@ public class PlayerController : MonoBehaviour
         if (itemName != "SpeedPotion")
             return;
         
-        PlayerHealth.CurrentStamina += value;
-
-        if (PlayerHealth.CurrentStamina < 0)
-        {
-            PlayerHealth.CurrentStamina = 0;
-        }
-        else if (PlayerHealth.CurrentStamina > PlayerHealth.MaxStamina)
-        {
-            PlayerHealth.CurrentStamina = PlayerHealth.MaxStamina;
-        }
     }
 }
