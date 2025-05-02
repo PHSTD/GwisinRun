@@ -20,8 +20,8 @@ public class PlayerMoveCamera : MonoBehaviour
     private float m_bobTimer = 0f;      // 흔들림 계산용 타이머
     private float m_bobFrequencyWalk = 6f;    // 걷기 시 위아래 흔들림 속도 (진동 주기)
     private float m_bobFrequencyRun = 10f;    // 뛰기 시 위아래 흔들림 속도
-    private float m_bobAmplitudeWalk = 0.03f; // 걷기 시 위아래 흔들림 크기
-    private float m_bobAmplitudeRun = 0.06f;  // 뛰기 시 위아래 흔들림 크기
+    private float m_bobAmplitudeWalk = 0.11f; // 걷기 시 위아래 흔들림 크기
+    private float m_bobAmplitudeRun = 0.25f;  // 뛰기 시 위아래 흔들림 크기
     
     private void Start()
     {
