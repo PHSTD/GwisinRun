@@ -17,25 +17,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     
     static float m_timer = 0f;
     
-   public int _MaxH;
-   public int _CurrH;
-   public int _MaxS;
-   public int _CurrS;
-
-
     void Start()
     {
         CurrentHealth = MaxHealth;
         GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
-    }
-
-    private void Update()
-    {
-        // TODO: 테스트용 지워야됨
-        _MaxH = MaxHealth;
-        _CurrH = MaxHealth;
-        _MaxS = MaxStamina;
-        _CurrS = CurrentStamina;
     }
 
     public void TakeDamage(int amount)
