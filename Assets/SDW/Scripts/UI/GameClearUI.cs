@@ -32,6 +32,7 @@ public class GameClearUI : MonoBehaviour
     
     private void OnEnable()
     {
+        Cursor.lockState = CursorLockMode.None;
         GameManager.Instance.GameClear(m_levelSceneName);
             
         m_titleBackground.gameObject.SetActive(false);

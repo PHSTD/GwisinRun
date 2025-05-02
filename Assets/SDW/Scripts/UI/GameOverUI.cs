@@ -25,6 +25,7 @@ public class GameOverUI : MonoBehaviour
     
     private void OnEnable()
     {
+        Cursor.lockState = CursorLockMode.None;
         GameManager.Instance.GameOver();
         
         m_titleBackground.gameObject.SetActive(false);

@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour
     public void GameClear(string sceneName)
     {
         m_isCleared = true;
+        
         if (m_currentTime < m_bestTime)
         {
             m_bestTime = m_currentTime;
@@ -122,6 +123,8 @@ public class GameManager : MonoBehaviour
             //# Write
             PlayerPrefs.SetFloat(sceneName, m_bestTime);
         }
+        
+        m_bestTime = PlayerPrefs.GetFloat(sceneName);
     }
     
     public void SceneLoader(string sceneName)
