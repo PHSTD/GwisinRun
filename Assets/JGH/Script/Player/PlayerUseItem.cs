@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class PlayerUseItem : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
 
     void Update()
     {
@@ -23,4 +18,5 @@ public class PlayerUseItem : MonoBehaviour
             }
         }
     }
+    
 }

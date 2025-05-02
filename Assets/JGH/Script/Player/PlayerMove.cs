@@ -6,15 +6,11 @@ using UnityEngine.Serialization;
 public class PlayerMove : MonoBehaviour
 {
     [Header("Speed Settings")]
-    [SerializeField] private float m_walkSpeed = 5f;
+    public static float m_walkSpeed = 5f;
+    public static float m_speed;
     [SerializeField] private float m_runSpeed = 10f;
     [SerializeField] private float m_fallSpeed = -9.81f;
     private Vector3 m_velocity;
-    
-    [Header("Player Sight Settings")]
-    [SerializeField] private float m_zoomFOV = 30f;
-    [SerializeField] private float m_normalFOV = 60f;
-    [SerializeField] private float m_zoomSpeed = 10f;
     
     [Header("Player Sit Setting")]
     [SerializeField] private float m_sitHeight = 1.0f;
@@ -25,50 +21,37 @@ public class PlayerMove : MonoBehaviour
     private bool m_isSit;
     private bool m_releasedSitKey;
 
-    [Header("Stamina & Jump Settings")]
-    [SerializeField] private int m_maxStamina = 100;
+    [Header("Jump Settings")]
     [SerializeField] private float m_jumpHeight = 1.2f;
-    private int m_currentStamina = 100;
     
-    [Header("Basic Setting")]
-    [SerializeField] private CharacterController m_controller;
-    [SerializeField] private Transform m_playerTransform;
-    [SerializeField] private PlayerHide m_headTriggerObject;
-    
-    [Header("Camera Settings")]
-    [SerializeField] private Transform m_cameraTransform;
-    private Camera m_playerCamera;
-    
-    [Header("Game UI")]
-    [SerializeField] private GameObject m_pausedMenu;
-    
-    private float m_timer = 0f;
-    private float m_speed;
-    private bool m_isFirstMove = true;
     private Rigidbody m_rigidbody;
 
     void Start()
     {
-        m_controller = GetComponent<CharacterController>();
+        PlayerController.PlayerCont = GetComponent<CharacterController>();
+        
+        PlayerController.PlayerTransform = transform;
+        if (PlayerController.PlayerTransform == null)
+        {
+            Debug.LogError("PlayerTransform이 초기화되지 않았습니다!");
+            return;
+        }
+        PlayerController.HeadTriggerObject = GetComponentInChildren<PlayerHide>();
+        
         Cursor.lockState = CursorLockMode.Locked;
-        m_playerCamera = m_cameraTransform.GetComponent<Camera>();
-        m_playerCamera.fieldOfView = m_normalFOV;
 
-        m_originalHeight = m_controller.height;
-        m_originalCenter = m_controller.center;
+        m_originalHeight = PlayerController.PlayerCont.height;
+        m_originalCenter = PlayerController.PlayerCont.center;
 
-        m_originalPlayerScale = m_playerTransform.localScale;
+        m_originalPlayerScale = PlayerController.PlayerTransform.localScale;
         m_sitPlayerScale = new Vector3(m_originalPlayerScale.x, m_originalPlayerScale.y * 0.5f, m_originalPlayerScale.z);
 
         m_rigidbody = GetComponent<Rigidbody>();
-        GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
     }
 
     void Update()
     {
         Move();
-        RotateView();
-        ZoomView();
         Jump();
         SitPlayer();
     }
@@ -89,35 +72,35 @@ public class PlayerMove : MonoBehaviour
              * runSpeed의 1%(맥스)
             */
             m_speed = m_runSpeed;
-            if (moveX != 0 || moveZ != 0) StaminaMinus();
-            else StaminaPlus();
+            if (moveX != 0 || moveZ != 0) PlayerHealth.StaminaMinus();
+            else PlayerHealth.StaminaPlus();
         }
         else
         {
             m_speed = m_walkSpeed;
-            StaminaPlus();
+            PlayerHealth.StaminaPlus();
         }
 
-        m_controller.Move( m_speed * Time.deltaTime * move);
+        PlayerController.PlayerCont.Move( m_speed * Time.deltaTime * move);
 
         m_velocity.y += m_fallSpeed * Time.deltaTime;
-        m_controller.Move(m_velocity * Time.deltaTime);
+        PlayerController.PlayerCont.Move(m_velocity * Time.deltaTime);
 
-        if (m_controller.isGrounded && m_velocity.y < 0)
+        if (PlayerController.PlayerCont.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
         
         
         //# 첫 움직임이 시작되면 GameManager의 Pause가 풀림
-        if (m_rigidbody.velocity.magnitude != 0 && m_isFirstMove)
+        if (m_rigidbody.velocity.magnitude != 0 && PlayerController.IsFirstMove)
         {
             GameManager.Instance.IsPaused = false;
-            m_isFirstMove = false;
+            PlayerController.IsFirstMove = false;
         }
     }
 
     void Jump()
     {
-        if (GameManager.Instance.Input.JumpKeyPressed && m_controller.isGrounded)
+        if (GameManager.Instance.Input.JumpKeyPressed && PlayerController.PlayerCont.isGrounded)
         {
             m_velocity.y = Mathf.Sqrt(m_jumpHeight * -2f * m_fallSpeed);
         }
@@ -132,12 +115,12 @@ public class PlayerMove : MonoBehaviour
             m_releasedSitKey = true;
         }
         
-        if (sitKeyHeld || (m_isSit && m_headTriggerObject.IsDetected))
+        if (sitKeyHeld || (m_isSit && PlayerController.HeadTriggerObject.IsDetected))
         {
             DoSit();
         }
-        //# 키게 때졌을 때 또는 headTriggerObject의 감지가 안될 떄
-        else if(m_releasedSitKey && !m_headTriggerObject.IsDetected)
+        //# 키가 때졌을 때 또는 headTriggerObject의 감지가 안될 떄
+        else if(m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
         {
             Stand();
         }
@@ -146,9 +129,9 @@ public class PlayerMove : MonoBehaviour
     void DoSit()
     {
         m_isSit = true;
-        m_controller.height = m_sitHeight;
-        m_controller.center = new Vector3(0, m_sitHeight / 2f, 0);
-        m_playerTransform.localScale = m_sitPlayerScale;
+        PlayerController.PlayerCont.height = m_sitHeight;
+        PlayerController.PlayerCont.center = new Vector3(0, m_sitHeight / 2f, 0);
+        PlayerController.PlayerTransform.localScale = m_sitPlayerScale;
     }
 
     void Stand()
@@ -159,7 +142,7 @@ public class PlayerMove : MonoBehaviour
 
         bool hasGround = Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, rayDistance, LayerMask.GetMask("Floor"));
 
-        m_controller.enabled = false;
+        PlayerController.PlayerCont.enabled = false;
 
         // 바닥 없으면 위치 강제로 조정
         if (hasGround)
@@ -173,89 +156,14 @@ public class PlayerMove : MonoBehaviour
         }
 
         // 기본값 복구
-        m_controller.height = m_originalHeight;
-        m_controller.center = m_originalCenter;
-        m_playerTransform.localScale = m_originalPlayerScale;
+        PlayerController.PlayerCont.height = m_originalHeight;
+        PlayerController.PlayerCont.center = m_originalCenter;
+        PlayerController.PlayerTransform.localScale = m_originalPlayerScale;
+        
 
-        m_controller.enabled = true;
+        PlayerController.PlayerCont.enabled = true;
         m_isSit = false;
         m_releasedSitKey = false;
     }
 
-    void StaminaPlus()
-    {
-        m_timer += Time.deltaTime;
-        if (m_timer >= 0.05f)
-        {
-            m_currentStamina++;
-            m_timer = 0f;
-        }
-        if (m_currentStamina >= 100) m_currentStamina = 100;
-    }
-
-    void StaminaMinus()
-    {
-        m_timer += Time.deltaTime;
-        if (m_timer >= 0.05f)
-        {
-            m_currentStamina--;
-            m_timer = 0f;
-        }
-        if (m_currentStamina <= 0)
-        {
-            m_currentStamina = 0;
-            m_speed = m_walkSpeed;
-        }
-    }
-
-    void RotateView()
-    {
-        if (GameManager.Instance.Input.PauseKeyPressed)
-        {
-            m_pausedMenu.SetActive(!GameManager.Instance.IsPaused);
-        }
-
-        if (GameManager.Instance.IsPaused)
-        {
-            return;
-        }
-        
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-
-        transform.Rotate(mouseX * 2f * Vector3.up);
-
-        float rotationX = m_cameraTransform.localEulerAngles.x - mouseY * 2f;
-        if (rotationX > 180) rotationX -= 360;
-        rotationX = Mathf.Clamp(rotationX, -80, 80);
-        m_cameraTransform.localEulerAngles = new Vector3(rotationX, 0, 0);
-    }
-
-    void ZoomView()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0)
-        {
-            m_normalFOV -= scroll * m_zoomSpeed;
-            m_normalFOV = Mathf.Clamp(m_normalFOV, m_zoomFOV, 60f);
-        }
-        m_playerCamera.fieldOfView = Mathf.Lerp(m_playerCamera.fieldOfView, m_normalFOV, Time.deltaTime * 10f);
-    }
-
-    private void UseItem(string itemName, int value)
-    {
-        if (itemName != "SpeedPotion")
-            return;
-        
-        m_currentStamina += value;
-
-        if (m_currentStamina < 0)
-        {
-            m_currentStamina = 0;
-        }
-        else if (m_currentStamina > m_maxStamina)
-        {
-            m_currentStamina = m_maxStamina;
-        }
-    }
 }
