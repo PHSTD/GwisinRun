@@ -6,17 +6,24 @@ using UnityEngine;
 public class PlayerMoveCamera : MonoBehaviour
 {
     [Header("Player Sight Settings")]
-    [SerializeField] private float m_zoomFOV = 30f;
-    [SerializeField] private float m_normalFOV = 60f;
-    [SerializeField] private float m_zoomSpeed = 10f;
+    private float m_zoomFOV = 30f;
+    private float m_normalFOV = 60f;
+    private float m_zoomSpeed = 10f;
     
     [Header("Camera Settings")]
-    [SerializeField] private Transform m_cameraTransform;
-    public Camera PlayerCamera;
+    private Transform m_cameraTransform;
+    private Camera PlayerCamera;
     
     private void Start()
     {
-        PlayerCamera = m_cameraTransform.GetComponent<Camera>();
+        // PlayerCamera = m_cameraTransform.GetComponent<Camera>();
+        // 메인 카메라를 찾아 저장한다
+        GameObject camObj = GameObject.FindWithTag("MainCamera");
+        PlayerCamera = camObj.GetComponent<Camera>();
+        
+        m_cameraTransform = PlayerCamera.transform;
+
+        // 초점 처리를 위해
         PlayerCamera.fieldOfView = m_normalFOV;
     }
 

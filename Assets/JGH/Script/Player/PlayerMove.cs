@@ -6,38 +6,39 @@ using UnityEngine.Serialization;
 public class PlayerMove : MonoBehaviour
 {
     [Header("Speed Settings")]
+    // 걷기 속도
     public static float m_walkSpeed = 5f;
+    // 뛰기 속도
+    private float m_runSpeed = 10f;
+    // 현재 속도를 걷기나 뛰기 속도를 저장
     public static float m_speed;
-    [SerializeField] private float m_runSpeed = 10f;
-    [SerializeField] private float m_fallSpeed = -9.81f;
+    // 떨어지는 속도
+    private float m_fallSpeed = -28.0f;
+    // 전체적인 이동 속도 계산
     private Vector3 m_velocity;
     
     [Header("Player Sit Setting")]
-    [SerializeField] private float m_sitHeight = 1.0f;
+    private float m_sitHeight = 1.0f;
+    // 캐릭터 원래 높이
     private float m_originalHeight;
+    // 캐릭터 원래 중심 위치
     private Vector3 m_originalCenter;
+    // 프레이어 크기 저장
     private Vector3 m_originalPlayerScale;
+    // 앉은 상태의 스케일
     private Vector3 m_sitPlayerScale;
+    // 앉은 상태인지 확인
     private bool m_isSit;
+    // 앉기 키 누른 상태인지 확인
     private bool m_releasedSitKey;
 
     [Header("Jump Settings")]
-    [SerializeField] private float m_jumpHeight = 1.2f;
+    // 점프 높이
+    private float m_jumpHeight = 1.2f;
     
-    private Rigidbody m_rigidbody;
 
     void Start()
     {
-        PlayerController.PlayerCont = GetComponent<CharacterController>();
-        
-        PlayerController.PlayerTransform = transform;
-        if (PlayerController.PlayerTransform == null)
-        {
-            Debug.LogError("PlayerTransform이 초기화되지 않았습니다!");
-            return;
-        }
-        PlayerController.HeadTriggerObject = GetComponentInChildren<PlayerHide>();
-        
         Cursor.lockState = CursorLockMode.Locked;
 
         m_originalHeight = PlayerController.PlayerCont.height;
@@ -46,7 +47,6 @@ public class PlayerMove : MonoBehaviour
         m_originalPlayerScale = PlayerController.PlayerTransform.localScale;
         m_sitPlayerScale = new Vector3(m_originalPlayerScale.x, m_originalPlayerScale.y * 0.5f, m_originalPlayerScale.z);
 
-        m_rigidbody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -66,11 +66,6 @@ public class PlayerMove : MonoBehaviour
 
         if (GameManager.Instance.Input.RunKeyBeingHeld)
         {
-            //todo 스태미너 100일 경우 -> 예를 들어 1이 이깍히면 1%(맥스)
-            /*
-             * todo runSpeed의 minimum : walkspeed
-             * runSpeed의 1%(맥스)
-            */
             m_speed = m_runSpeed;
             if (moveX != 0 || moveZ != 0) PlayerHealth.StaminaMinus();
             else PlayerHealth.StaminaPlus();
@@ -91,7 +86,7 @@ public class PlayerMove : MonoBehaviour
         
         
         //# 첫 움직임이 시작되면 GameManager의 Pause가 풀림
-        if (m_rigidbody.velocity.magnitude != 0 && PlayerController.IsFirstMove)
+        if (PlayerController.PlayerRigidbody.velocity.magnitude != 0 && PlayerController.IsFirstMove)
         {
             GameManager.Instance.IsPaused = false;
             PlayerController.IsFirstMove = false;

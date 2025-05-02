@@ -20,7 +20,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     void Start()
     {
         CurrentHealth = MaxHealth;
-        GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
     }
 
     public void TakeDamage(int amount)
@@ -34,28 +33,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
     }
 
-    void Die()
+    // TODO: 게임 오버 씬으로 전환 필요
+    public static void Die()
     {
         Debug.Log("플레이어 사망!");
     }
 
-    private void UseItem(string itemName, int value)
-    {
-        if (itemName != "HeartPotion")
-            return;
-        
-        CurrentHealth += value;
-
-        if (CurrentHealth < 0)
-        {
-            CurrentHealth = 0;
-            //todo GameOver;
-        }
-        else if (CurrentHealth > MaxHealth)
-        {
-            CurrentHealth = MaxHealth;
-        }
-    }
     
     public static void StaminaPlus()
     {
@@ -73,8 +56,20 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         m_timer += Time.deltaTime;
         if (m_timer >= 0.05f)
         {
-            CurrentStamina--;
-            m_timer = 0f;
+            //todo 스태미너 100일 경우 -> 예를 들어 1이 이깍히면 1%(맥스)
+            /*
+             * todo runSpeed의 minimum : walkspeed
+             * runSpeed의 1%(맥스)
+            */
+            // if ()
+            // {
+                
+            // }
+            // else
+            // {
+                CurrentStamina--;
+                m_timer = 0f;
+            // }
         }
         if (CurrentStamina <= 0)
         {

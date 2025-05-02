@@ -10,37 +10,27 @@ public class PlayerController : MonoBehaviour
     public static GameObject PausedMenu;
     
     [Header("Basic Setting")]
+    // PlayerController
     public static CharacterController PlayerCont;
+    // Player 위치
     public static Transform PlayerTransform;
+    // 머리 충돌 판정 오브젝트
     public static PlayerHide HeadTriggerObject;
     
+    // 게임 시작 후 움직였나
     public static bool IsFirstMove = true;
+    
+    public static Rigidbody PlayerRigidbody;
 
     private void Awake()
     {
+        // 인스펙터 창에서 넣어주기 위해 
         PausedMenu = m_pausedMenu;
-    }
-
-    void Start()
-    {
-        GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
+        PlayerCont = GetComponent<CharacterController>();
         
-    }
-
-    private void UseItem(string itemName, int value)
-    {
-        if (itemName != "SpeedPotion")
-            return;
+        PlayerTransform = transform;
+        HeadTriggerObject = GetComponentInChildren<PlayerHide>();
         
-        PlayerHealth.CurrentStamina += value;
-
-        if (PlayerHealth.CurrentStamina < 0)
-        {
-            PlayerHealth.CurrentStamina = 0;
-        }
-        else if (PlayerHealth.CurrentStamina > PlayerHealth.MaxStamina)
-        {
-            PlayerHealth.CurrentStamina = PlayerHealth.MaxStamina;
-        }
+        PlayerRigidbody = GetComponent<Rigidbody>();
     }
 }
