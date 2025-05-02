@@ -28,7 +28,7 @@ public class PlayerMove : MonoBehaviour
     // 앉은 상태의 스케일
     private Vector3 m_sitPlayerScale;
     // 앉은 상태인지 확인
-    private bool m_isSit;
+    public static bool IsSit;
     // 앉기 키 누른 상태인지 확인
     private bool m_releasedSitKey;
 
@@ -110,21 +110,21 @@ public class PlayerMove : MonoBehaviour
             m_releasedSitKey = true;
 
         // 키가 눌려있거나, 이미 앉은 상태인데 천장이 감지되면 계속 앉은 상태 유지
-        if (sitKeyHeld || (m_isSit && PlayerController.HeadTriggerObject.IsDetected))
+        if (sitKeyHeld || (IsSit && PlayerController.HeadTriggerObject.IsDetected))
         {
-            m_isSit = true;
+            IsSit = true;
         }
         // 키를 뗐고, 천장도 감지되지 않으면 일어남
         else if (m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
         {
-            m_isSit = false;
+            IsSit = false;
             m_releasedSitKey = false;
         }
 
         // 목표 높이와 중심 위치, 스케일 설정
-        float targetHeight = m_isSit ? m_sitHeight : m_originalHeight;
-        Vector3 targetCenter = m_isSit ? new Vector3(0, m_sitHeight / 2f, 0) : m_originalCenter;
-        Vector3 targetScale = m_isSit ? m_sitPlayerScale : m_originalPlayerScale;
+        float targetHeight = IsSit ? m_sitHeight : m_originalHeight;
+        Vector3 targetCenter = IsSit ? new Vector3(0, m_sitHeight / 2f, 0) : m_originalCenter;
+        Vector3 targetScale = IsSit ? m_sitPlayerScale : m_originalPlayerScale;
 
         // Lerp를 통해 부드럽게 보간 처리 (Time.deltaTime * 10f → 속도 조절용)
         PlayerController.PlayerCont.height = Mathf.Lerp(PlayerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
