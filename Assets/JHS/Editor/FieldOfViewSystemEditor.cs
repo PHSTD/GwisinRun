@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEditor;
 
 //FieldOfView 스크립트용 커스텀 에디터
-[CustomEditor (typeof (FieldOfView))]
-public class FieldOfViewEditor : Editor
+[CustomEditor (typeof (FieldOfViewSystem))]
+public class FieldOfViewSystemEditor : Editor
 {
     void OnSceneGUI()
     {
-        FieldOfView fow = (FieldOfView)target;
+        FieldOfViewSystem fow = (FieldOfViewSystem)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, fow.ViewRadius);
 
@@ -20,9 +20,9 @@ public class FieldOfViewEditor : Editor
         Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * fow.ViewRadius);
 
         Handles.color = Color.red;
-        foreach(Transform visibleTarget in fow.visibleTargets)
+        if(fow.currentTarget != null)
         {
-            Handles.DrawLine(fow.transform.position, visibleTarget.position);
+            Handles.DrawLine(fow.transform.position, fow.currentTarget.position);
         }
     }
 
