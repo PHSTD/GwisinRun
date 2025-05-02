@@ -48,7 +48,20 @@ public class PlayerMoveCamera : MonoBehaviour
     {
         if (GameManager.Instance.Input.PauseKeyPressed)
         {
-            PlayerController.PausedMenu.SetActive(!GameManager.Instance.IsPaused);
+            //# 수정 사항(20250502) -- 시작
+            if (PlayerController.GameStartPanel != null && PlayerController.GameStartPanel.activeSelf == true)
+                return;
+            
+            if (GameManager.Instance.IsPaused == false)
+            {
+                PlayerController.PausedMenu.SetActive(true);
+            }
+            else
+            {
+                PlayerController.PausedMenu.SetActive(false);
+                PlayerController.PausedMenu.GetComponent<PauseMenuUI>().Close();
+            }
+            //# 수정 사항(20250502) -- 끝
         }
 
         if (GameManager.Instance.IsPaused)

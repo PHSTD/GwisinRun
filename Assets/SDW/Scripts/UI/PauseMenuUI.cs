@@ -19,10 +19,21 @@ public class PauseMenuUI : MonoBehaviour
 
     [Header("Current Time in Game")]
     [SerializeField] private GameObject m_currentTimeContainer;
+
+    [Header("Update Key binding")]
+    [SerializeField] private InputSetting m_inputSetting;
+
+    [Header("UIs")]
+    [SerializeField] private GameObject m_settingsMenu;
+    [SerializeField] private GameObject m_soundsSettingDialog;
+    [SerializeField] private GameObject m_graphicsSettingDialog;
+    [SerializeField] private GameObject m_controlsSettingDialog;
     
     private void OnEnable()
     {
         GameManager.Instance.IsPaused = true;
+        
+        Cursor.lockState = CursorLockMode.None;
         
         m_titleBackground.gameObject.SetActive(true);
         m_blackBackground.gameObject.SetActive(true);
@@ -30,7 +41,6 @@ public class PauseMenuUI : MonoBehaviour
         
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
         m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_sceneName));
-
     }
 
     public void Close()
@@ -38,10 +48,19 @@ public class PauseMenuUI : MonoBehaviour
         m_exitButton.onClick.RemoveAllListeners();
         m_mainMenuButton.onClick.RemoveAllListeners();
         
+        m_settingsMenu.SetActive(false);
+        m_soundsSettingDialog.SetActive(false);
+        m_graphicsSettingDialog.SetActive(false);
+        m_controlsSettingDialog.SetActive(false);
+        
         m_titleBackground.gameObject.SetActive(false);
         m_blackBackground.gameObject.SetActive(false);
         m_currentTimeContainer.SetActive(true);
         
+        m_inputSetting.LoadBinding();
+        
         GameManager.Instance.IsPaused = false;
+        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

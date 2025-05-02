@@ -39,7 +39,19 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        PlayerController.PlayerCont = GetComponent<CharacterController>();
+        
+        PlayerController.PlayerTransform = transform;
+        if (PlayerController.PlayerTransform == null)
+        {
+            Debug.LogError("PlayerTransform이 초기화되지 않았습니다!");
+            return;
+        }
+        PlayerController.HeadTriggerObject = GetComponentInChildren<PlayerHide>();
+        
+        //# 수정 사항(20250502) -- 시작
+        // Cursor.lockState = CursorLockMode.Locked;
+        //# 수정 사항(20250502) -- 끝
 
         m_originalHeight = PlayerController.PlayerCont.height;
         m_originalCenter = PlayerController.PlayerCont.center;
@@ -84,13 +96,9 @@ public class PlayerMove : MonoBehaviour
         if (PlayerController.PlayerCont.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
         
-        
-        //# 첫 움직임이 시작되면 GameManager의 Pause가 풀림
-        if (PlayerController.PlayerRigidbody.velocity.magnitude != 0 && PlayerController.IsFirstMove)
-        {
-            GameManager.Instance.IsPaused = false;
-            PlayerController.IsFirstMove = false;
-        }
+        //# 수정 사항(20250502) -- 시작
+        //# 제거
+        //# 수정 사항(20250502) -- 끝
     }
 
     void Jump()

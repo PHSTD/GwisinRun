@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject m_pausedMenu;
     public static GameObject PausedMenu;
     
+    //# 수정 사항(20250502) -- 시작
+    [SerializeField] private GameObject m_gameStartPanel;
+    public static GameObject GameStartPanel;
+    //# SDW 수정 사항(20250502) -- 끝
+    
     [Header("Basic Setting")]
     // PlayerController
     public static CharacterController PlayerCont;
@@ -16,10 +21,6 @@ public class PlayerController : MonoBehaviour
     public static Transform PlayerTransform;
     // 머리 충돌 판정 오브젝트
     public static PlayerHide HeadTriggerObject;
-    
-    // 게임 시작 후 움직였나
-    public static bool IsFirstMove = true;
-    
     public static Rigidbody PlayerRigidbody;
 
     private void Awake()
