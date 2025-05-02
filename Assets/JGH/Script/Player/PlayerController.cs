@@ -9,12 +9,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject m_pausedMenu;
     public static GameObject PausedMenu;
     
+    //# 수정 사항(20250502) -- 시작
+    [SerializeField] private GameObject m_gameStartPanel;
+    public static GameObject GameStartPanel;
+    //# SDW 수정 사항(20250502) -- 끝
+    
     [Header("Basic Setting")]
     public static CharacterController PlayerCont;
     public static Transform PlayerTransform;
     public static PlayerHide HeadTriggerObject;
-    
-    public static bool IsFirstMove = true;
 
     private void Awake()
     {
