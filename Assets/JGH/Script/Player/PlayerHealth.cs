@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
@@ -15,6 +16,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public static int MaxStamina = 100; // 최대 스태미너
     public static int CurrentStamina = 100; // 현재 스태미너
     
+    
+    
     static float m_timer = 0f;
     
     void Start()
@@ -25,12 +28,18 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public void TakeDamage(int amount)
     {
         CurrentHealth -= amount;
-        Debug.Log($"플레이어가 {amount} 데미지를 입었습니다. 현재 체력: {CurrentHealth}");
-
+        
+        string Message = CurrentHealth <= 0 ?
+            $"플레이어가 {amount} 데미지를 입었습니다. 현재 체력: 0" :
+            $"플레이어가 {amount} 데미지를 입었습니다. 현재 체력: {CurrentHealth}";
+        Debug.Log(Message);
+        
         if (CurrentHealth <= 0)
         {
-            Die();
+            CurrentHealth = 0;
+            PlayerController.Die();
         }
+
     }
 
     private void Update()
@@ -42,11 +51,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         Debug.Log($"CurrS{CurrentStamina}");
     }
 
-    // TODO: 게임 오버 씬으로 전환 필요
-    public static void Die()
-    {
-        Debug.Log("플레이어 사망!");
-    }
 
     
     public static void StaminaPlus()

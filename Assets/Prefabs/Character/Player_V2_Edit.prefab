@@ -584,6 +584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_pausedMenu: {fileID: 0}
   m_gameStartPanel: {fileID: 0}
+  m_gameOverPanel: {fileID: 0}
 --- !u!114 &5582473293265521031
 MonoBehaviour:
   m_ObjectHideFlags: 0
