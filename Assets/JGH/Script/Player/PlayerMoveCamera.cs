@@ -15,7 +15,8 @@ public class PlayerMoveCamera : MonoBehaviour
     private Camera PlayerCamera;
     
     [Header("Head Bobbing")]
-    private Vector3 m_cameraDefaultPos; // 카메라의 초기 위치 (Start에서 저장)
+    private Vector3 m_cameraDefaultPos; // 카메라 위치 - 서있을떄
+    private Vector3 m_cameraSitPos;  // 카메라 위치 - 앉았을때
     private float m_bobTimer = 0f;      // 흔들림 계산용 타이머
     private float m_bobFrequencyWalk = 6f;    // 걷기 시 위아래 흔들림 속도 (진동 주기)
     private float m_bobFrequencyRun = 10f;    // 뛰기 시 위아래 흔들림 속도
@@ -29,6 +30,10 @@ public class PlayerMoveCamera : MonoBehaviour
         GameObject camObj = GameObject.FindWithTag("MainCamera");
         PlayerCamera = camObj.GetComponent<Camera>();
         m_cameraTransform = PlayerCamera.transform;
+        
+        // 고정 시야 높이 설정
+        m_cameraDefaultPos = new Vector3(0, 1.20f, 0); // 서 있을 때
+        m_cameraSitPos = new Vector3(0, 0.50f, 0);     // 앉았을 때
 
         // 초점 처리를 위해
         PlayerCamera.fieldOfView = m_normalFOV;
