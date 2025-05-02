@@ -53,6 +53,11 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        //# 수정 사항(20250502) -- 시작
+        // if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+        //     return;
+        //# 수정 사항(20250502) -- 끝
+        
         Move();
         Jump();
         SitPlayer();
