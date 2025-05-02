@@ -16,8 +16,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public static int MaxStamina = 100; // 최대 스태미너
     public static int CurrentStamina = 100; // 현재 스태미너
     
-    
-    
     static float m_timer = 0f;
     
     void Start()
@@ -42,17 +40,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     }
 
-    private void Update()
-    {
-        Debug.ClearDeveloperConsole(); 
-        Debug.Log($"MaxH{MaxHealth}");
-        Debug.Log($"CurrH{CurrentHealth}");
-        Debug.Log($"MaxS{MaxStamina}");
-        Debug.Log($"CurrS{CurrentStamina}");
-    }
-
-
-    
     public static void StaminaPlus()
     {
         // 일정 시간 간격으로 스태미너 증가 처리 (0.05초마다 1씩 증가)
