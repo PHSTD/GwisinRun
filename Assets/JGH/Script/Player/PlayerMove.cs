@@ -139,32 +139,11 @@ public class PlayerMove : MonoBehaviour
 
     void Stand()
     {
-        // 바닥 레이어 감지용 Raycast
-        Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
-        float rayDistance = 2f;
-
-        bool hasGround = Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, rayDistance, LayerMask.GetMask("Floor"));
-
-        PlayerController.PlayerCont.enabled = false;
-
-        // 바닥 없으면 위치 강제로 조정
-        if (hasGround)
-        {
-            transform.position = new Vector3(transform.position.x, hit.point.y + 0.05f, transform.position.z);
-        }
-        else
-        {
-            // 최후 보정: 아주 살짝 위로 띄움
-            transform.position += Vector3.up * 0.2f;
-        }
-
-        // 기본값 복구
+        // 원래 위치로 원복
         PlayerController.PlayerCont.height = m_originalHeight;
         PlayerController.PlayerCont.center = m_originalCenter;
         PlayerController.PlayerTransform.localScale = m_originalPlayerScale;
-        
 
-        PlayerController.PlayerCont.enabled = true;
         m_isSit = false;
         m_releasedSitKey = false;
     }

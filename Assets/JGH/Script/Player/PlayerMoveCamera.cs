@@ -20,7 +20,6 @@ public class PlayerMoveCamera : MonoBehaviour
         // 메인 카메라를 찾아 저장한다
         GameObject camObj = GameObject.FindWithTag("MainCamera");
         PlayerCamera = camObj.GetComponent<Camera>();
-        
         m_cameraTransform = PlayerCamera.transform;
 
         // 초점 처리를 위해

@@ -21,17 +21,13 @@ public class PlayerController : MonoBehaviour
     public static Transform PlayerTransform;
     // 머리 충돌 판정 오브젝트
     public static PlayerHide HeadTriggerObject;
-    public static Rigidbody PlayerRigidbody;
 
-    private void Awake()
+    private void Start()
     {
-        // 인스펙터 창에서 넣어주기 위해 
-        PausedMenu = m_pausedMenu;
         PlayerCont = GetComponent<CharacterController>();
         
         PlayerTransform = transform;
         HeadTriggerObject = GetComponentInChildren<PlayerHide>();
         
-        PlayerRigidbody = GetComponent<Rigidbody>();
     }
 }

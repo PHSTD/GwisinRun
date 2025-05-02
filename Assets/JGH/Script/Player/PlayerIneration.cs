@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerIneration : MonoBehaviour
 {
     [Header("RayCast Distance")]
-    [SerializeField] private float m_raycastDistance;
+    private float m_raycastDistance = 1.8f;
     
     private Coroutine m_interactionCoroutine;
     private GameObject m_detectedObject;
@@ -69,5 +69,5 @@ public class PlayerIneration : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         m_interactionCoroutine = null;
     }
-    
+
 }

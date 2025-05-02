@@ -55,6 +55,9 @@ public class PlayerUseItem : MonoBehaviour
                 }
                 break;
                 
+            default: 
+                
+                break;
         }
     }
 }
