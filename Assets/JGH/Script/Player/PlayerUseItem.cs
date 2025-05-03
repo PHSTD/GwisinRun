@@ -55,7 +55,7 @@ public class PlayerUseItem : MonoBehaviour
                 if (PlayerHealth.CurrentHealth < 0)
                 {
                     PlayerHealth.CurrentHealth = 0;
-                    m_playerController.Die();
+                    PlayerController.Die();
                 }
                 else if (PlayerHealth.CurrentHealth > PlayerHealth.MaxHealth)
                 {

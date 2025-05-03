@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
-            m_playerController.Die();
+            PlayerController.Die();
         }
 
     }

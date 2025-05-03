@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour
     public static GameObject GameStartPanel;
     //# SDW 수정 사항(20250502) -- 끝
     
-    public GameObject GameOverPanel;
+    public static GameObject GameOverPanel;
+    [SerializeField] private GameObject m_ameOverPanel;
     
     [Header("Basic Setting")]
     // PlayerController
@@ -25,11 +26,10 @@ public class PlayerController : MonoBehaviour
     {
         PlayerCont = GetComponent<CharacterController>();
         PlayerTransform = transform;
-    }
-
-    private void Start()
-    {
+        
         GameStartPanel = m_gameStartPanel;
+        
+        GameOverPanel = m_ameOverPanel;
     }
 
     //# 수정 사항(20250502) -- 시작
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     } 
     //# 수정 사항(20250502) -- 끝
 
-    public void Die()
+    public static void Die()
     {
         GameOverPanel.SetActive(true);
     }
