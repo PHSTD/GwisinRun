@@ -5195,6 +5195,10 @@ PrefabInstance:
       propertyPath: m_levelSceneName
       value: '[Merge] LevelOneScene(UITest)'
       objectReference: {fileID: 0}
+    - target: {fileID: 2709938355266690523, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2981407080418281889}
     - target: {fileID: 4742485059466224440, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
       propertyPath: m_levelSceneName
       value: '[Merge] LevelOneScene(UITest)'
@@ -5693,6 +5697,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
+--- !u!20 &2981407080418281889 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8826569898667721361, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
+  m_PrefabInstance: {fileID: 2981407080418281888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5395540165684404076
 PrefabInstance:
   m_ObjectHideFlags: 0
