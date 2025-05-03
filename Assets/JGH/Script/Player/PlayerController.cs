@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     public static GameObject GameStartPanel;
     //# SDW 수정 사항(20250502) -- 끝
     
+    public static GameObject GameOverPanel;
+    [SerializeField] private GameObject m_gameOverPanel;
+    
+    
     [Header("Basic Setting")]
     // PlayerController
     public static CharacterController PlayerCont;
@@ -23,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        GameOverPanel = m_gameOverPanel;
         PlayerCont = GetComponent<CharacterController>();
         GameStartPanel = m_gameStartPanel;
     }
@@ -53,10 +58,8 @@ public class PlayerController : MonoBehaviour
     } 
     //# 수정 사항(20250502) -- 끝
 
-    private void UseItem(string itemName, int value)
+    public static void Die()
     {
-        if (itemName != "SpeedPotion")
-            return;
-        
+        GameOverPanel.SetActive(true);
     }
 }

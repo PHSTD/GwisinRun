@@ -20,8 +20,8 @@ public class PlayerMoveCamera : MonoBehaviour
     private float m_bobTimer = 0f;      // 흔들림 계산용 타이머
     private float m_bobFrequencyWalk = 6f;    // 걷기 시 위아래 흔들림 속도 (진동 주기)
     private float m_bobFrequencyRun = 10f;    // 뛰기 시 위아래 흔들림 속도
-    private float m_bobAmplitudeWalk = 0.03f; // 걷기 시 위아래 흔들림 크기
-    private float m_bobAmplitudeRun = 0.06f;  // 뛰기 시 위아래 흔들림 크기
+    private float m_bobAmplitudeWalk = 0.11f; // 걷기 시 위아래 흔들림 크기
+    private float m_bobAmplitudeRun = 0.25f;  // 뛰기 시 위아래 흔들림 크기
     
     private void Start()
     {
@@ -32,7 +32,7 @@ public class PlayerMoveCamera : MonoBehaviour
         m_cameraTransform = PlayerCamera.transform;
         
         // 고정 시야 높이 설정
-        m_cameraDefaultPos = new Vector3(0, 1.40f, 0); // 서 있을 때
+        m_cameraDefaultPos = new Vector3(0, 1.20f, 0); // 서 있을 때
         m_cameraSitPos = new Vector3(0, 0.50f, 0);     // 앉았을 때
 
         // 초점 처리를 위해
@@ -89,8 +89,20 @@ public class PlayerMoveCamera : MonoBehaviour
             if (isMoving && !PlayerMove.IsSit)
             {
                 // 걷기와 뛰기 여부에 따라 주기(frequency)와 진폭(amplitude) 선택
-                float frequency = GameManager.Instance.Input.RunKeyBeingHeld ? m_bobFrequencyRun : m_bobFrequencyWalk;
-                float amplitude = GameManager.Instance.Input.RunKeyBeingHeld ? m_bobAmplitudeRun : m_bobAmplitudeWalk;
+                float frequency;
+                float amplitude;
+                // 뛰기를 눌렀고 스태미너가 있으면 뛰기
+                if (GameManager.Instance.Input.RunKeyBeingHeld && PlayerHealth.CurrentStamina != 0)
+                {
+                    frequency = m_bobFrequencyRun;
+                    amplitude = m_bobAmplitudeRun ;
+                }
+                // 뛰기를 눌렀는데 스태미너가 없으면 걷기로 강제 전환
+                else
+                {
+                    frequency = m_bobFrequencyWalk;
+                    amplitude = m_bobAmplitudeWalk ;
+                }
 
                 // 사인파를 기반으로 한 시간 계산
                 m_bobTimer += Time.deltaTime * frequency;
