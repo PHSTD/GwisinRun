@@ -69,6 +69,10 @@ public class PlayerIneration : MonoBehaviour
     void InteractWithObject()
     {
         IInteractable interactableObject = m_detectedObject.gameObject.GetComponent<IInteractable>();
+
+        if (interactableObject == null)
+            return;
+        
         if (m_interactionCoroutine == null)
         {
             interactableObject.Interact();
