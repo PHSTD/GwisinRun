@@ -15328,29 +15328,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_V2_Edit
       objectReference: {fileID: 0}
-    - target: {fileID: 5898414512436737983, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6503623160378578449, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6503623160378578449, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_pausedMenu
       value: 
       objectReference: {fileID: 3685496331163338262}
-    - target: {fileID: 6503623160378578449, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
-      propertyPath: m_gameStartPanel
-      value: 
-      objectReference: {fileID: 44932010}
     - target: {fileID: 6821452782703107798, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.55
       objectReference: {fileID: 0}
     - target: {fileID: 6821452782703107798, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.55
+      value: 0.727
       objectReference: {fileID: 0}
     - target: {fileID: 6821452782703107798, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_LocalPosition.z

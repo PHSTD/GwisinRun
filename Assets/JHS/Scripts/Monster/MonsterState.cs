@@ -195,6 +195,16 @@ public class MonsterAttackState : FsmState<MonsterState>
         Debug.Log("공격 시작");
         
         // 공격 애니메이션이나 효과를 여기에 추가
+        // (250502) 데미지 처리 추가 :: S
+        if (monster.fieldOfViewSystem.currentTarget != null)
+        {
+            IDamageable damageable = monster.fieldOfViewSystem.currentTarget.root.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(FieldOfViewSystem.MonsterPower); // 원하는 데미지 값
+            }
+        } 
+        // (250502) 데미지 처리 추가 :: E
         
         yield return new WaitForSeconds(3f);
         

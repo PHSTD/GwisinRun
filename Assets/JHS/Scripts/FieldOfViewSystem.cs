@@ -23,11 +23,21 @@ public class FieldOfViewSystem : MonoBehaviour
     [SerializeField] private float m_ViewAngle = 90f;
     [SerializeField] private LayerMask m_TargetMask;
     [SerializeField] private LayerMask m_ObstacleMask;
-
     
+    // (250502) 데미지 변수 추가 :: S
+    [Header("MonsterAbility")]
+    [SerializeField] private int m_monsterPower;
+    public static int MonsterPower;
+    // (250502) 데미지 변수 추가 :: E
+
+
     private void Start()
     {
         StartCoroutine(DetectionLoop());
+        
+        // (250502) 인스펙터 창에서 추가 가능하도록 추기 :: S
+        MonsterPower = m_monsterPower;
+        // (250502) 인스펙터 창에서 추가 가능하도록 추기 :: E
     }
     //여기에서 모든 이벤트 처리를 담당한다.
     private IEnumerator DetectionLoop()
