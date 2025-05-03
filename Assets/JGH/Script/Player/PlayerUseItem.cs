@@ -66,4 +66,9 @@ public class PlayerUseItem : MonoBehaviour
                 break;
         }
     }
+    
+    public static void DropItem()
+    {
+        
+    }
 }

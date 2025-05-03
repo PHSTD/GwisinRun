@@ -38,7 +38,7 @@ public class PlayerIneration : MonoBehaviour
         
         if (GameManager.Instance.Input.DropKeyPressed)
         {
-            DropItem();
+            PlayerUseItem.DropItem();
         }
     }
     
@@ -93,11 +93,6 @@ public class PlayerIneration : MonoBehaviour
         }
     }
 
-    // TODO: 아이템 버리기 구현 필요
-    public void DropItem()
-    {
-        
-    }
     
     IEnumerator InteractionDelay()
     {

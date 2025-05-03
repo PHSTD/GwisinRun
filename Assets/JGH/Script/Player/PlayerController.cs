@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class m_playerController : MonoBehaviour
 {
     [Header("Game UI")]
     [SerializeField] private GameObject m_pausedMenu;
@@ -13,21 +13,18 @@ public class PlayerController : MonoBehaviour
     public static GameObject GameStartPanel;
     //# SDW 수정 사항(20250502) -- 끝
     
-    public static GameObject GameOverPanel;
-    [SerializeField] private GameObject m_gameOverPanel;
-    
+    public GameObject GameOverPanel;
     
     [Header("Basic Setting")]
     // PlayerController
-    public static CharacterController PlayerCont;
+    public CharacterController PlayerCont;
     // Player 위치
-    public static Transform PlayerTransform;
+    public Transform PlayerTransform;
     // 머리 충돌 판정 오브젝트
-    public static PlayerHide HeadTriggerObject;
+    public PlayerHide HeadTriggerObject;
 
     private void Start()
     {
-        GameOverPanel = m_gameOverPanel;
         PlayerCont = GetComponent<CharacterController>();
         GameStartPanel = m_gameStartPanel;
     }
@@ -58,7 +55,7 @@ public class PlayerController : MonoBehaviour
     } 
     //# 수정 사항(20250502) -- 끝
 
-    public static void Die()
+    public void Die()
     {
         GameOverPanel.SetActive(true);
     }
