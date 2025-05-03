@@ -10,16 +10,22 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("HP")]
     public static int MaxHealth = 100; // 최대 체력
-    public static int CurrentHealth = MaxHealth; // 현재 체력
+    public static int CurrentHealth; // 현재 체력
     
     [Header("Stamina")]
     public static int MaxStamina = 100; // 최대 스태미너
-    public static int CurrentStamina = MaxStamina; // 현재 스태미너
+    public static int CurrentStamina; // 현재 스태미너
     
     static float m_timer = 0f;
 
     private PlayerController m_playerController;
-    
+
+    private void Start()
+    {
+        CurrentHealth = MaxHealth;
+        CurrentStamina= MaxStamina;
+    }
+
     public void TakeDamage(int amount)
     {
         CurrentHealth -= amount;

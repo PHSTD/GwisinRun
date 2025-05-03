@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -13,8 +14,7 @@ public class PlayerController : MonoBehaviour
     public static GameObject GameStartPanel;
     //# SDW 수정 사항(20250502) -- 끝
     
-    public static GameObject GameOverPanel;
-    [SerializeField] private GameObject m_ameOverPanel;
+    private static GameObject m_overPanel;
     
     [Header("Basic Setting")]
     // PlayerController
@@ -28,8 +28,9 @@ public class PlayerController : MonoBehaviour
         PlayerTransform = transform;
         
         GameStartPanel = m_gameStartPanel;
-        
-        GameOverPanel = m_ameOverPanel;
+
+        // GameOverPanel = GameOverPanel.GetComponent("Game Over Dialog Panel Dialog");GetComponent<Game Over Dialog Panel Dialog>();
+        m_overPanel = GameObject.Find("Game Over Dialog Panel Dialog");
     }
 
     //# 수정 사항(20250502) -- 시작
@@ -60,6 +61,6 @@ public class PlayerController : MonoBehaviour
 
     public static void Die()
     {
-        GameOverPanel.SetActive(true);
+        m_overPanel.SetActive(true);
     }
 }
