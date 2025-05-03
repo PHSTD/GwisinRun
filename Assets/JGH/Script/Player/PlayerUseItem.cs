@@ -22,6 +22,11 @@ public class PlayerUseItem : MonoBehaviour
             GameManager.Instance.Inventory.UseItem();
         }
         //# 수정 사항(20250503) -- 끝
+        
+        if (GameManager.Instance.Input.DropKeyPressed)
+        {
+            DropItem();
+        }
     }
     
     public void UseItem(string itemName, int value)
@@ -66,8 +71,44 @@ public class PlayerUseItem : MonoBehaviour
         }
     }
     
-    public static void DropItem()
+    void DropItem()
     {
-        
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
+
+        // 현재 선택된 아이템 인덱스 가져오기
+        var inventory = GameManager.Instance.Inventory;
+        int index = inventory.GetSelectedIndex(); 
+
+        if (index < 0)
+        {
+            Debug.Log("선택된 아이템 없음");
+            return;
+        }
+
+        var item = inventory.GetItemAt(index); 
+        if (item == null)
+        {
+            Debug.Log("아이템이 비어 있음");
+            return;
+        }
+
+        Transform playerTransform = PlayerController.PlayerTransform.transform;
+        Vector3 dropPos = playerTransform.position + playerTransform.forward * 1.5f + Vector3.up * 0.5f;
+
+        item.transform.position = dropPos;
+        item.transform.rotation = Quaternion.identity;
+        item.gameObject.SetActive(true);
+
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(playerTransform.forward * 2f + Vector3.up * 2f, ForceMode.Impulse);
+        }
+
+        inventory.ClearItemAt(index);
+        Debug.Log($"{item.name}을 버림");
+
     }
 }

@@ -19,6 +19,17 @@ public class Inventory : MonoBehaviour
     //# 수정 사항(20250503) -- 시작
     private int m_selectedItemIndex;
     public int SelectedItemIndex => m_selectedItemIndex;
+    
+    // 250503 추가 :: S
+    public int GetSelectedIndex() => m_selectedItemIndex;
+    public Item GetItemAt(int index) => items[index];
+    public void ClearItemAt(int index)
+    {
+        items[index] = null;
+        m_itemCount--;
+        OnDropOrUseItem?.Invoke(index);
+    }
+    // 250503 추가 :: E
 
     private void Awake()
     {

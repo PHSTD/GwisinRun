@@ -33,11 +33,6 @@ public class PlayerIneration : MonoBehaviour
             InteractWithObject();
         }
         //# 수정 사항(20250503) -- 끝
-        
-        if (GameManager.Instance.Input.DropKeyPressed)
-        {
-            PlayerUseItem.DropItem();
-        }
     }
     
     //# 수정 사항(20250503) -- 시작
