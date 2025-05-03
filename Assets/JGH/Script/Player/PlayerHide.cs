@@ -23,15 +23,25 @@ public class PlayerHide : MonoBehaviour
     {
         m_isDetected = false;
     }
-
-    // 트리거로 HideObject 감지
-    private void OnTriggerStay(Collider other)
+    
+    //# 수정 사항(20250503) -- 시작
+    private void Update()
     {
-        DetectedObjectAtHead();
+        if (CanStandUp())
+        {
+            Clear();
+        }
+        else
+        {
+            DetectedObjectAtHead();
+        }
     }
-
-    private void OnTriggerExit(Collider other)
+    private bool CanStandUp()
     {
-        Clear();
-    } 
+        // 플레이어 머리 위 공간 체크
+        float checkRadius = 0.3f;
+        Vector3 checkPosition = transform.position + Vector3.up;
+        return !Physics.CheckSphere(checkPosition, checkRadius);
+    }
+    //# 수정 사항(20250503) -- 끝
 }

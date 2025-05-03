@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8077348278276745814}
-  - component: {fileID: 8882570129921626322}
   - component: {fileID: 1359636677811118221}
   m_Layer: 6
   m_Name: Head Collider
@@ -27,33 +26,12 @@ Transform:
   m_GameObject: {fileID: 561599223792120902}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.581, z: 0}
+  m_LocalPosition: {x: 0, y: 1.325, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6821452782703107798}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8882570129921626322
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561599223792120902}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.19072281
-  m_Center: {x: 0, y: 0.10902108, z: 0}
 --- !u!114 &1359636677811118221
 MonoBehaviour:
   m_ObjectHideFlags: 0
