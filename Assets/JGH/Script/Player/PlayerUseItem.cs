@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerUseItem : MonoBehaviour
 {
+
+    private PlayerController m_playerController;
     private void Start()
     {
         GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
@@ -53,7 +55,7 @@ public class PlayerUseItem : MonoBehaviour
                 if (PlayerHealth.CurrentHealth < 0)
                 {
                     PlayerHealth.CurrentHealth = 0;
-                    PlayerController.Die();
+                    m_playerController.Die();
                 }
                 else if (PlayerHealth.CurrentHealth > PlayerHealth.MaxHealth)
                 {

@@ -17,6 +17,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public static int CurrentStamina = MaxStamina; // 현재 스태미너
     
     static float m_timer = 0f;
+
+    private PlayerController _playerController;
     
     public void TakeDamage(int amount)
     {
@@ -30,7 +32,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
-            PlayerController.Die();
+            _playerController.Die();
         }
 
     }

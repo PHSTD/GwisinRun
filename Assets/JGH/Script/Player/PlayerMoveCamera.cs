@@ -22,7 +22,8 @@ public class PlayerMoveCamera : MonoBehaviour
     private float m_bobFrequencyRun = 10f;    // 뛰기 시 위아래 흔들림 속도
     private float m_bobAmplitudeWalk = 0.11f; // 걷기 시 위아래 흔들림 크기
     private float m_bobAmplitudeRun = 0.25f;  // 뛰기 시 위아래 흔들림 크기
-    
+
+
     private void Start()
     {
         // PlayerCamera = m_cameraTransform.GetComponent<Camera>();

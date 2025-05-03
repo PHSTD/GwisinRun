@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class m_playerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [Header("Game UI")]
     [SerializeField] private GameObject m_pausedMenu;
@@ -17,15 +17,18 @@ public class m_playerController : MonoBehaviour
     
     [Header("Basic Setting")]
     // PlayerController
-    public CharacterController PlayerCont;
+    public static CharacterController PlayerCont;
     // Player 위치
-    public Transform PlayerTransform;
-    // 머리 충돌 판정 오브젝트
-    public PlayerHide HeadTriggerObject;
+    public static Transform PlayerTransform;
+
+    private void Awake()
+    {
+        PlayerCont = GetComponent<CharacterController>();
+        PlayerTransform = transform;
+    }
 
     private void Start()
     {
-        PlayerCont = GetComponent<CharacterController>();
         GameStartPanel = m_gameStartPanel;
     }
 
