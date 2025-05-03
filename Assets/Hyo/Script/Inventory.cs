@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
     public List<Item> items = new List<Item>();
     public UnityEvent<string, int> OnUseItem;
     
-    //# ¼öÁ¤ »çÇ×(20250503) -- ½ÃÀÛ
+    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ì‹œì‘
     private int m_selectedItemIndex;
     public int SelectedItemIndex => m_selectedItemIndex;
 
@@ -23,40 +23,40 @@ public class Inventory : MonoBehaviour
         if (GameManager.Instance.Input.ItemsActionPressed)
         {
             m_selectedItemIndex = GameManager.Instance.Input.LastPressedKey;
-            Debug.Log($"{m_selectedItemIndex+ 1} ¹øÂ° ½½·Ô ¼±ÅÃ");
+            Debug.Log($"{m_selectedItemIndex+ 1} ë²ˆì§¸ ìŠ¬ë¡¯ ì„ íƒ");
         }
     }
-    //# ¼öÁ¤ »çÇ×(20250503) -- ³¡
+    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ë
 
     public bool AddItem(Item item)
     {
         if (items.Count >= maxSlots)
         {
-            Debug.Log("ÀÎº¥Åä¸®°¡ °¡µæ Ã¡½À´Ï´Ù.");
+            Debug.Log("ì¸ë²¤í† ë¦¬ê°€ ê°€ë“ ì°¼ìŠµë‹ˆë‹¤.");
             return false;
         }
 
         items.Add(item);
         item.gameObject.SetActive(false);
-        Debug.Log($"{item.ItemName} ¾ÆÀÌÅÛÀ» È¹µæÇß½À´Ï´Ù.");
+        Debug.Log($"{item.ItemName} ì•„ì´í…œì„ íšë“í–ˆìŠµë‹ˆë‹¤.");
         UpdateInventoryUI();
         return true;
     }
 
-    void UpdateInventoryUI() // ¿©±â¼­ UI ±¸Çö
+    void UpdateInventoryUI() // ì—¬ê¸°ì„œ UI êµ¬í˜„
     {
         if (items.Count == 0)
             return;
         
-        Debug.Log($"ÀÎº¥Åä¸® »óÅÂ: {string.Join(", ", items)}");
+        Debug.Log($"ì¸ë²¤í† ë¦¬ ìƒíƒœ: {string.Join(", ", items)}");
     }
 
-    //# ¼öÁ¤ »çÇ×(20250503) -- ½ÃÀÛ
+    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ì‹œì‘
     public void UseItem()
     {
         if (m_selectedItemIndex < 0 || m_selectedItemIndex >= items.Count)
         {
-            Debug.Log("ÇØ´ç ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù.");
+            Debug.Log("í•´ë‹¹ ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -70,8 +70,8 @@ public class Inventory : MonoBehaviour
             items.RemoveAt(m_selectedItemIndex);
             item.Use();
             UpdateInventoryUI();
-            Debug.Log($"{m_selectedItemIndex + 1} ½½·Ô¿¡ ¾ÆÀÌÅÛÀ» »ç¿ëÇÕ´Ï´Ù.");
+            Debug.Log($"{m_selectedItemIndex + 1} ìŠ¬ë¡¯ì— ì•„ì´í…œì„ ì‚¬ìš©í•©ë‹ˆë‹¤.");
         }
     }
-    //# ¼öÁ¤ »çÇ×(20250503) -- ³¡
+    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ë
 }
