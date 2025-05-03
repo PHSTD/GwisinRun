@@ -16,11 +16,11 @@ public class Inventory : MonoBehaviour
     public UnityEvent<int, Item> OnAddItem;
     public UnityEvent<int> OnSelectedItemChanged;
     
-    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ì‹œì‘
+    //# ???? ?¬í??(20250503) -- ????
     private int m_selectedItemIndex;
     public int SelectedItemIndex => m_selectedItemIndex;
     
-    // 250503 ì¶”ê°€ :: S
+    // 250503 ì¶?ê°? :: S
     public int GetSelectedIndex() => m_selectedItemIndex;
     public Item GetItemAt(int index) => items[index];
     public void ClearItemAt(int index)
@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviour
         m_itemCount--;
         OnDropOrUseItem?.Invoke(index);
     }
-    // 250503 ì¶”ê°€ :: E
+    // 250503 ì¶?ê°? :: E
 
     private void Awake()
     {
@@ -44,17 +44,17 @@ public class Inventory : MonoBehaviour
         if (GameManager.Instance.Input.ItemsActionPressed)
         {
             m_selectedItemIndex = GameManager.Instance.Input.LastPressedKey;
-            // Debug.Log($"{m_selectedItemIndex+ 1} ë²ˆì§¸ ìŠ¬ë¡¯ ì„ íƒ");
+            // Debug.Log($"{m_selectedItemIndex+ 1} ë²?ì§? ?¬ë¡¯ ????");
             OnSelectedItemChanged?.Invoke(m_selectedItemIndex);
         }
     }
-    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ë
+    //# ???? ?¬í??(20250503) -- ??
 
     public bool AddItem(Item item)
     {
         if (m_itemCount >= maxSlots)
         {
-            Debug.Log("ì¸ë²¤í† ë¦¬ê°€ ê°€ë“ ì°¼ìŠµë‹ˆë‹¤.");
+            Debug.Log("?¸ë²¤??ë¦¬ê? ê°??? ì°¼ì?µë????.");
             return false;
         }
 
@@ -66,24 +66,18 @@ public class Inventory : MonoBehaviour
             items[i] = item;
             item.gameObject.SetActive(false);
             OnAddItem?.Invoke(i, items[i]);
-            
-            Debug.Log($"{item.ItemName} ì•„ì´í…œì„ íšë“í–ˆìŠµë‹ˆë‹¤.");
             m_itemCount++;
-            
             break;
         }
         
         return true;
     }
 
-    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ì‹œì‘
+    //# ???? ?¬í??(20250503) -- ????
     public void UseItem()
     {
         if (m_selectedItemIndex < 0 || m_selectedItemIndex >= items.Length)
-        {
-            Debug.Log("í•´ë‹¹ ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ì—†ìŠµë‹ˆë‹¤.");
             return;
-        }
 
         if (items[m_selectedItemIndex] is IUsable)
         {
@@ -97,7 +91,6 @@ public class Inventory : MonoBehaviour
             items[m_selectedItemIndex] = null;
             item.Use();
             m_itemCount--;
-            Debug.Log($"{m_selectedItemIndex + 1} ìŠ¬ë¡¯ì— ì•„ì´í…œì„ ì‚¬ìš©í•©ë‹ˆë‹¤.");
         }
     }
 
@@ -119,4 +112,23 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
+    public void DropItem(Vector3 startPosition, Vector3 direction, float force)
+    {
+        if (items[m_selectedItemIndex] == null)
+            return;
+
+        Item item = items[m_selectedItemIndex];
+        if (item == null)
+            return;
+        
+        item.gameObject.SetActive(true);
+        item.ThrowItem(startPosition, direction, force);
+        OnDropOrUseItem?.Invoke(m_selectedItemIndex);
+        
+        items[m_selectedItemIndex] = null;
+        
+        m_itemCount--;
+        Debug.Log($"{m_selectedItemIndex + 1} ½½·Ô¿¡ ¾ÆÀÌÅÛÀ» ¹ö¸³´Ï´Ù.");
+    }
+    //# ¼öÁ¤ »çÇ×(20250503) -- ³¡
 }
