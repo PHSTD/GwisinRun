@@ -10,18 +10,23 @@ public class Inventory : MonoBehaviour
     public int maxSlots = 6;
     public List<Item> items = new List<Item>();
     public UnityEvent<string, int> OnUseItem;
+    
+    //# 수정 사항(20250503) -- 시작
+    private int m_selectedItemIndex;
+    public int SelectedItemIndex => m_selectedItemIndex;
 
     void Update()
     {
-        // for (int i = 0; i < 6; i++)
-        // {
-        //     if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-        //     {
-        //         Debug.Log($"{i + 1}번 슬롯 아이템 사용 시도");
-        //         UseItem(i);
-        //     }
-        // }
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
+        
+        if (GameManager.Instance.Input.ItemsActionPressed)
+        {
+            m_selectedItemIndex = GameManager.Instance.Input.LastPressedKey;
+            Debug.Log($"{m_selectedItemIndex+ 1} 번째 슬롯 선택");
+        }
     }
+    //# 수정 사항(20250503) -- 끝
 
     public bool AddItem(Item item)
     {
@@ -46,25 +51,27 @@ public class Inventory : MonoBehaviour
         Debug.Log($"인벤토리 상태: {string.Join(", ", items)}");
     }
 
-    public void UseItem(int slotIndex)
+    //# 수정 사항(20250503) -- 시작
+    public void UseItem()
     {
-        if (slotIndex < 0 || slotIndex >= items.Count)
+        if (m_selectedItemIndex < 0 || m_selectedItemIndex >= items.Count)
         {
             Debug.Log("해당 슬롯에 아이템이 없습니다.");
             return;
         }
 
-        if (items[slotIndex] is IUsable)
+        if (items[m_selectedItemIndex] is IUsable)
         {
-            UsableItem item = items[slotIndex] as UsableItem;
+            UsableItem item = items[m_selectedItemIndex] as UsableItem;
             if (item == null)
                 return;
             
             OnUseItem?.Invoke(item.ItemName, item.Value); 
-            items.RemoveAt(slotIndex);
+            items.RemoveAt(m_selectedItemIndex);
             item.Use();
             UpdateInventoryUI();
+            Debug.Log($"{m_selectedItemIndex + 1} 슬롯에 아이템을 사용합니다.");
         }
-
     }
+    //# 수정 사항(20250503) -- 끝
 }

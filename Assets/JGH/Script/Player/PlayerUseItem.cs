@@ -17,16 +17,12 @@ public class PlayerUseItem : MonoBehaviour
             return;
         //# 수정 사항(20250502) -- 끝
         
-        for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
+        //# 수정 사항(20250503) -- 시작
+        if(GameManager.Instance.Input.UseItemKeyPressed)
         {
-            if (GameManager.Instance.Input.ItemKeyPressed[i])
-            {
-                GameManager.Instance.Inventory.UseItem(i);
-                //# 현재 방법을 찾지 못해 읽은 후 수동으로 clear 해야 합니다.
-                //# 추후 리팩토링 예정
-                GameManager.Instance.Input.ItemKeyPressed[i] = false;
-            }
+            GameManager.Instance.Inventory.UseItem();
         }
+        //# 수정 사항(20250503) -- 끝
     }
     
     public void UseItem(string itemName, int value)
