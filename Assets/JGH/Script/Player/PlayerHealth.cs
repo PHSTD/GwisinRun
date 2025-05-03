@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     
     static float m_timer = 0f;
 
-    private PlayerController _playerController;
+    private PlayerController m_playerController;
     
     public void TakeDamage(int amount)
     {
@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
-            _playerController.Die();
+            m_playerController.Die();
         }
 
     }
