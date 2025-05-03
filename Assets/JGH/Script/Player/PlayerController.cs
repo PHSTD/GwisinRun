@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -14,23 +13,28 @@ public class PlayerController : MonoBehaviour
     public static GameObject GameStartPanel;
     //# SDW 수정 사항(20250502) -- 끝
     
-    private static GameObject m_overPanel;
+    public static GameObject GameOverPanel;
+    [SerializeField] private GameObject m_gameOverPanel;
     
     [Header("Basic Setting")]
     // PlayerController
     public static CharacterController PlayerCont;
     // Player 위치
     public static Transform PlayerTransform;
+    // 머리 충돌 판정 오브젝트
+    public static PlayerHide HeadTriggerObject;
 
     private void Awake()
     {
         PlayerCont = GetComponent<CharacterController>();
         PlayerTransform = transform;
-        
-        GameStartPanel = m_gameStartPanel;
+        HeadTriggerObject = GetComponentInChildren<PlayerHide>();
+    }
 
-        // GameOverPanel = GameOverPanel.GetComponent("Game Over Dialog Panel Dialog");GetComponent<Game Over Dialog Panel Dialog>();
-        m_overPanel = GameObject.Find("Game Over Dialog Panel Dialog");
+    private void Start()
+    {
+        GameStartPanel = m_gameStartPanel;
+        GameOverPanel = m_gameOverPanel;
     }
 
     //# 수정 사항(20250502) -- 시작
@@ -61,6 +65,7 @@ public class PlayerController : MonoBehaviour
 
     public static void Die()
     {
-        m_overPanel.SetActive(true);
+        GameOverPanel.SetActive(true);
     }
 }
+

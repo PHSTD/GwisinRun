@@ -29,6 +29,8 @@ public class PlayerMove : MonoBehaviour
     private Vector3 m_sitPlayerScale;
     // 앉은 상태인지 확인
     public static bool IsSit;
+    // 앉기 키 누른 상태인지 확인
+    private bool m_releasedSitKey;
 
     [Header("Jump Settings")]
     // 점프 높이
@@ -107,35 +109,71 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    
+    // void SitPlayer()
+    // {
+    //     // 앉기 키가 눌려있는지 확인
+    //     bool sitKeyHeld = GameManager.Instance.Input.SitKeyBeingHeld;
+    //     
+    //     // 키가 눌려 있거나
+    //     if (sitKeyHeld)
+    //     {
+    //         IsSit = true;
+    //     }
+    //     // 키가 안눌려있으면
+    //     else 
+    //     {
+    //         IsSit = false;
+    //     }
+    //     
+    //     // 목표 높이와 중심 위치, 스케일 설정
+    //     float targetHeight = IsSit ? m_sitHeight : m_originalHeight;
+    //     
+    //     // 캐릭터 앉아 있는 상태 계산 아니면 일어서기
+    //     Vector3 targetCenter = IsSit ? new Vector3(0, m_originalCenter.y - (m_originalHeight - m_sitHeight) / 6f , 0) : m_originalCenter;
+    //     
+    //     // 캐릭터 크기
+    //     Vector3 targetScale = IsSit ? m_sitPlayerScale : m_originalPlayerScale;
+    //     
+    //     // Lerp를 통해 부드럽게 보간 처리 (Time.deltaTime * 10f → 속도 조절용)
+    //     PlayerController.PlayerCont.height = Mathf.Lerp(PlayerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
+    //     PlayerController.PlayerCont.center = Vector3.Lerp(PlayerController.PlayerCont.center, targetCenter, Time.deltaTime * 10f);
+    //     PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);
+    // }
     void SitPlayer()
     {
         // 앉기 키가 눌려있는지 확인
         bool sitKeyHeld = GameManager.Instance.Input.SitKeyBeingHeld;
-        
-        // 키가 눌려 있거나
-        if (sitKeyHeld)
+
+        if (GameManager.Instance.Input.SitKeyReleased)
+            m_releasedSitKey = true;
+
+        // 키가 눌려있거나, 이미 앉은 상태인데 천장이 감지되면 계속 앉은 상태 유지
+        if (sitKeyHeld || (IsSit && PlayerController.HeadTriggerObject.IsDetected))
         {
             IsSit = true;
         }
-        // 키가 안눌려있으면
-        else 
+        // 키를 뗐고, 천장도 감지되지 않으면 일어남
+        else if (m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
         {
             IsSit = false;
+            m_releasedSitKey = false;
         }
 
         // 목표 높이와 중심 위치, 스케일 설정
         float targetHeight = IsSit ? m_sitHeight : m_originalHeight;
         
         // 캐릭터 앉아 있는 상태 계산 아니면 일어서기
+        // Vector3 targetCenter = IsSit ? new Vector3(0, m_originalCenter.y - (m_originalHeight - m_sitHeight) / 3f , 0) : m_originalCenter;
         Vector3 targetCenter = IsSit ? new Vector3(0, m_originalCenter.y - (m_originalHeight - m_sitHeight) / 6f , 0) : m_originalCenter;
 
-        // 캐릭터 크기
         Vector3 targetScale = IsSit ? m_sitPlayerScale : m_originalPlayerScale;
 
         // Lerp를 통해 부드럽게 보간 처리 (Time.deltaTime * 10f → 속도 조절용)
         PlayerController.PlayerCont.height = Mathf.Lerp(PlayerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
         PlayerController.PlayerCont.center = Vector3.Lerp(PlayerController.PlayerCont.center, targetCenter, Time.deltaTime * 10f);
-        PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);
+        PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);;
     }
+  
 
 }
