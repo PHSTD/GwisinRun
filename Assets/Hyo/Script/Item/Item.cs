@@ -7,6 +7,9 @@ public class Item : MonoBehaviour, IInteractable
 {
     [SerializeField] protected ItemType m_type;
     [SerializeField] protected string m_itemName;
+    [SerializeField] protected Sprite m_itemSprite;
+    public Sprite ItemSprite => m_itemSprite;
+    
     public string ItemName => m_itemName;
 
     public Item(string name, ItemType type)
