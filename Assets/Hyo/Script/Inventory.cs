@@ -93,11 +93,14 @@ public class Inventory : MonoBehaviour
     {
         for(int i = 0; i < items.Length; i++)
         {
+            if (items[i] == null)
+                continue;
+            
             if (items[i].ItemName == "Key")
             {
                 OnDropOrUseItem?.Invoke(i);
-                items[i] = null;
                 Destroy(items[i].gameObject);
+                items[i] = null;
                 m_itemCount--;
                 return true;
             }

@@ -47,7 +47,7 @@ public class DoorController : MonoBehaviour, IInteractable
     public void Interact()
     {
         // 잠겨있지 않은 문이거나 잠금이 풀렸을 때
-        if (m_isLockedDoor == null || !m_isLockedDoor.IsLocked())
+        if (m_isLockedDoor == null || !m_isLockedDoor.IsLocked(true))
         {
             if (m_close == true && m_doortrigger1.PlayerDetected())
             {

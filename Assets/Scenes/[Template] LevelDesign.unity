@@ -1356,6 +1356,11 @@ Transform:
   - {fileID: 182768629}
   m_Father: {fileID: 1618078892}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1836531324 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8826569898667721361, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
+  m_PrefabInstance: {fileID: 2981407080418281888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2014618723 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1971192631110312, guid: ba9b55eaeae4e9f4fad207ca9b3d6252, type: 3}
@@ -1554,15 +1559,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2523462352036605165, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
       propertyPath: m_levelSceneName
-      value: '[Merge] LevelOneScene(UITest)'
+      value: '[Template] LevelDesign'
       objectReference: {fileID: 0}
     - target: {fileID: 2709938355266690523, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 2981407080418281889}
+      objectReference: {fileID: 1836531324}
     - target: {fileID: 4742485059466224440, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
       propertyPath: m_levelSceneName
-      value: '[Merge] LevelOneScene(UITest)'
+      value: '[Template] LevelDesign'
       objectReference: {fileID: 0}
     - target: {fileID: 4969080040463675674, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
       propertyPath: m_Name
@@ -1847,11 +1852,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
---- !u!20 &2981407080418281889 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 7193743145439110672, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
-  m_PrefabInstance: {fileID: 2981407080418281888}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8702323296657820662 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2319699047227597326, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
