@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour, IInteractable
@@ -10,6 +8,7 @@ public class DoorController : MonoBehaviour, IInteractable
     private bool m_close = true;
     [SerializeField] DoorTrigger1 m_doortrigger1;
     [SerializeField] DoorTrigger2 m_doortrigger2;
+    [SerializeField] IsLockedDoor m_isLockedDoor;
     private bool m_isClosed = true;
 
     public void Awake()
@@ -19,41 +18,57 @@ public class DoorController : MonoBehaviour, IInteractable
 
     public void Update()
     {
-        m_isClosed = m_doorAnimator.GetBool("Close");
-        if(m_doortrigger1.MonsterDetected() && m_isClosed)
+        MonsterInteract();
+    }
+
+    // 몬스터 상호작용(다가가서 알아서 문 열기)
+    public void MonsterInteract()
+    {
+        // 잠겨있지 않은 문이거나 잠금이 풀렸을 때
+        if (m_isLockedDoor == null || !m_isLockedDoor.IsLocked())
         {
-            OpenDoorCounterClockwise();
-        }
-        else if (m_doortrigger2.MonsterDetected() && m_isClosed)
-        {
-            OpenDoorClockwise();
-        }
-        else if (m_doortrigger1.MonsterDetected() || m_doortrigger2.MonsterDetected())
-        {
-            return;
+            m_isClosed = m_doorAnimator.GetBool("Close");
+            if (m_doortrigger1.MonsterDetected() && m_isClosed)
+            {
+                OpenDoorCounterClockwise();
+            }
+            else if (m_doortrigger2.MonsterDetected() && m_isClosed)
+            {
+                OpenDoorClockwise();
+            }
+            else if (m_doortrigger1.MonsterDetected() || m_doortrigger2.MonsterDetected())
+            {
+                return;
+            }
         }
     }
 
+    // 캐릭터 상호작용
     public void Interact()
     {
-        if (m_close == true && m_doortrigger1.PlayerDetected())
+        // 잠겨있지 않은 문이거나 잠금이 풀렸을 때
+        if (m_isLockedDoor == null || !m_isLockedDoor.IsLocked())
         {
-            OpenDoorCounterClockwise();
-        }
-        else if (m_close == true && m_doortrigger2.PlayerDetected())
-        {
-            OpenDoorClockwise();
-        }
-        else if (m_close == false)
-        {
-            CloseDoor();
-        }
-        else
-        {
-            return;
+            if (m_close == true && m_doortrigger1.PlayerDetected())
+            {
+                OpenDoorCounterClockwise();
+            }
+            else if (m_close == true && m_doortrigger2.PlayerDetected())
+            {
+                OpenDoorClockwise();
+            }
+            else if (m_close == false)
+            {
+                CloseDoor();
+            }
+            else
+            {
+                return;
+            }
         }
     }
 
+    // 애니메이터 처리 부분
     private void OpenDoorClockwise()
     {
         m_isOpen2 = true;
