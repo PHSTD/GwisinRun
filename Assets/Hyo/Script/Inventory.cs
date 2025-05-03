@@ -16,9 +16,20 @@ public class Inventory : MonoBehaviour
     public UnityEvent<int, Item> OnAddItem;
     public UnityEvent<int> OnSelectedItemChanged;
     
-    //# ¼öÁ¤ »çÇ×(20250503) -- ½ÃÀÛ
+    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ì‹œì‘
     private int m_selectedItemIndex;
     public int SelectedItemIndex => m_selectedItemIndex;
+    
+    // 250503 ì¶”ê°€ :: S
+    public int GetSelectedIndex() => m_selectedItemIndex;
+    public Item GetItemAt(int index) => items[index];
+    public void ClearItemAt(int index)
+    {
+        items[index] = null;
+        m_itemCount--;
+        OnDropOrUseItem?.Invoke(index);
+    }
+    // 250503 ì¶”ê°€ :: E
 
     private void Awake()
     {
@@ -33,16 +44,17 @@ public class Inventory : MonoBehaviour
         if (GameManager.Instance.Input.ItemsActionPressed)
         {
             m_selectedItemIndex = GameManager.Instance.Input.LastPressedKey;
+            // Debug.Log($"{m_selectedItemIndex+ 1} ë²ˆì§¸ ìŠ¬ë¡¯ ì„ íƒ");
             OnSelectedItemChanged?.Invoke(m_selectedItemIndex);
         }
     }
-    //# ¼öÁ¤ »çÇ×(20250503) -- ³¡
+    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ë
 
     public bool AddItem(Item item)
     {
         if (m_itemCount >= maxSlots)
         {
-            Debug.Log("ÀÎº¥Åä¸®°¡ °¡µæ Ã¡½À´Ï´Ù.");
+            Debug.Log("ì¸ë²¤í† ë¦¬ê°€ ê°€ë“ ì°¼ìŠµë‹ˆë‹¤.");
             return false;
         }
 
@@ -55,7 +67,7 @@ public class Inventory : MonoBehaviour
             item.gameObject.SetActive(false);
             OnAddItem?.Invoke(i, items[i]);
             
-            Debug.Log($"{item.ItemName} ¾ÆÀÌÅÛÀ» È¹µæÇß½À´Ï´Ù.");
+            Debug.Log($"{item.ItemName} ì•„ì´í…œì„ íšë“í–ˆìŠµë‹ˆë‹¤.");
             m_itemCount++;
             
             break;
@@ -64,12 +76,12 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    //# ¼öÁ¤ »çÇ×(20250503) -- ½ÃÀÛ
+    //# ìˆ˜ì • ì‚¬í•­(20250503) -- ì‹œì‘
     public void UseItem()
     {
         if (m_selectedItemIndex < 0 || m_selectedItemIndex >= items.Length)
         {
-            Debug.Log("ÇØ´ç ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù.");
+            Debug.Log("í•´ë‹¹ ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -85,7 +97,7 @@ public class Inventory : MonoBehaviour
             items[m_selectedItemIndex] = null;
             item.Use();
             m_itemCount--;
-            Debug.Log($"{m_selectedItemIndex + 1} ½½·Ô¿¡ ¾ÆÀÌÅÛÀ» »ç¿ëÇÕ´Ï´Ù.");
+            Debug.Log($"{m_selectedItemIndex + 1} ìŠ¬ë¡¯ì— ì•„ì´í…œì„ ì‚¬ìš©í•©ë‹ˆë‹¤.");
         }
     }
 
@@ -107,5 +119,4 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
-    //# ¼öÁ¤ »çÇ×(20250503) -- ³¡
 }

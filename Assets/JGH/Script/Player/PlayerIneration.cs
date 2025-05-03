@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -35,11 +33,6 @@ public class PlayerIneration : MonoBehaviour
             InteractWithObject();
         }
         //# 수정 사항(20250503) -- 끝
-        
-        if (GameManager.Instance.Input.DropKeyPressed)
-        {
-            DropItem();
-        }
     }
     
     //# 수정 사항(20250503) -- 시작
@@ -97,11 +90,6 @@ public class PlayerIneration : MonoBehaviour
         }
     }
 
-    // TODO: 아이템 버리기 구현 필요
-    public void DropItem()
-    {
-        
-    }
     
     IEnumerator InteractionDelay()
     {

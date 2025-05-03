@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
@@ -14,13 +8,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     
     [Header("Stamina")]
     public static int MaxStamina = 100; // 최대 스태미너
-    public static int CurrentStamina = 100; // 현재 스태미너
+    public static int CurrentStamina; // 현재 스태미너
     
     static float m_timer = 0f;
-    
-    void Start()
+
+    private PlayerController m_playerController;
+
+    private void Start()
     {
         CurrentHealth = MaxHealth;
+        CurrentStamina= MaxStamina;
     }
 
     public void TakeDamage(int amount)

@@ -1,10 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerUseItem : MonoBehaviour
 {
+
+    private PlayerController m_playerController;
     private void Start()
     {
         GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -35,11 +32,10 @@ public class PlayerMove : MonoBehaviour
     [Header("Jump Settings")]
     // 점프 높이
     private float m_jumpHeight = 1.2f;
-    
+
 
     void Start()
     {
-        PlayerController.PlayerCont = GetComponent<CharacterController>();
         
         PlayerController.PlayerTransform = transform;
         if (PlayerController.PlayerTransform == null)
@@ -47,7 +43,6 @@ public class PlayerMove : MonoBehaviour
             Debug.LogError("PlayerTransform이 초기화되지 않았습니다!");
             return;
         }
-        PlayerController.HeadTriggerObject = GetComponentInChildren<PlayerHide>();
         
         // m_originalHeight = PlayerController.PlayerCont.height;
         // 일어났을때 위치
@@ -143,7 +138,7 @@ public class PlayerMove : MonoBehaviour
         // Lerp를 통해 부드럽게 보간 처리 (Time.deltaTime * 10f → 속도 조절용)
         PlayerController.PlayerCont.height = Mathf.Lerp(PlayerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
         PlayerController.PlayerCont.center = Vector3.Lerp(PlayerController.PlayerCont.center, targetCenter, Time.deltaTime * 10f);
-        PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);
+        PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);;
     }
-
+    
 }
