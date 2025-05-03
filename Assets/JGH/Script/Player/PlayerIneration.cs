@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerIneration : MonoBehaviour
@@ -10,6 +11,11 @@ public class PlayerIneration : MonoBehaviour
     
     private Coroutine m_interactionCoroutine;
     private GameObject m_detectedObject;
+    
+    //# 수정 사항(20250503) -- 시작
+    [SerializeField] GameObject m_panel;
+    [SerializeField] private TMP_Text m_popupText;
+    //# 수정 사항(20250503) -- 끝
 
     
     void Update()
@@ -19,17 +25,57 @@ public class PlayerIneration : MonoBehaviour
             return;
         //# 수정 사항(20250502) -- 끝
         
-        if (GameManager.Instance.Input.InteractionKeyPressed)
+        //# 수정 사항(20250503) -- 시작
+        DetectInteractableObjectByRay();
+        
+        DisplayInteractableObjectUI();
+        
+        if (m_detectedObject != null && GameManager.Instance.Input.InteractionKeyPressed)
         {
-            DetectInteractableObjectByRay();
-            InteractWithInteractableObject();
+            InteractWithObject();
         }
-
+        //# 수정 사항(20250503) -- 끝
+        
         if (GameManager.Instance.Input.DropKeyPressed)
         {
             DropItem();
         }
     }
+    
+    //# 수정 사항(20250503) -- 시작
+    private void DisplayInteractableObjectUI()
+    {
+        if (m_detectedObject == null)
+        {
+            m_panel.SetActive(false);
+            return;
+        }
+        
+        var interactionKey = PlayerPrefs.GetString("Interaction");
+        if (m_detectedObject.CompareTag("Item"))
+        {
+            m_popupText.text = $"아이템을 얻으려면 [{interactionKey}]를 누르세요.";
+            m_panel.SetActive(true);
+        }
+
+        else if (m_detectedObject.CompareTag("InteractableObject"))
+        {
+            m_popupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
+            m_panel.SetActive(true);
+        }
+        
+    }
+
+    void InteractWithObject()
+    {
+        IInteractable interactableObject = m_detectedObject.gameObject.GetComponent<IInteractable>();
+        if (m_interactionCoroutine == null)
+        {
+            interactableObject.Interact();
+            m_interactionCoroutine = StartCoroutine(InteractionDelay());
+        }
+    }
+    //# 수정 사항(20250503) -- 끝
 
     void DetectInteractableObjectByRay()
     {
@@ -44,22 +90,6 @@ public class PlayerIneration : MonoBehaviour
             }
             
             m_detectedObject = hitInfo.collider.gameObject;
-        }
-    }
-    
-    private void InteractWithInteractableObject()
-    {
-        if (m_detectedObject == null)
-            return;
-        
-        if (m_detectedObject.CompareTag("InteractableObject") || m_detectedObject.CompareTag("Item"))
-        {
-            IInteractable interactableObject = m_detectedObject.gameObject.GetComponent<IInteractable>();
-            if (m_interactionCoroutine == null)
-            {
-                interactableObject.Interact();
-                m_interactionCoroutine = StartCoroutine(InteractionDelay());
-            }
         }
     }
 
