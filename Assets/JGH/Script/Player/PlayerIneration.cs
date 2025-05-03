@@ -1,11 +1,17 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerIneration : MonoBehaviour
 {
     [Header("RayCast Distance")]
     private float m_raycastDistance = 1.8f;
+
+    [FormerlySerializedAs("m_dropPosition")]
+    [Header("Drop Position")]
+    [SerializeField] private Transform m_dropTransform;
+    [SerializeField] private float m_dropForce = 5f;
     
     private Coroutine m_interactionCoroutine;
     private GameObject m_detectedObject;
@@ -31,6 +37,11 @@ public class PlayerIneration : MonoBehaviour
         if (m_detectedObject != null && GameManager.Instance.Input.InteractionKeyPressed)
         {
             InteractWithObject();
+        }
+
+        if (GameManager.Instance.Input.DropKeyPressed)
+        {
+            DropItem();
         }
         //# 수정 사항(20250503) -- 끝
     }
@@ -90,6 +101,12 @@ public class PlayerIneration : MonoBehaviour
         }
     }
 
+    private void DropItem()
+    {
+        Debug.Log($"Forward : {transform.forward}");
+        GameManager.Instance.Inventory.DropItem(m_dropTransform.position, transform.forward, m_dropForce);
+        
+    }
     
     IEnumerator InteractionDelay()
     {
