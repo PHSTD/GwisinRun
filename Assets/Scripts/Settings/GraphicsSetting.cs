@@ -3,12 +3,14 @@ using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GraphicsSetting : MonoBehaviour
 {
     [Header("Graphics Setting")]
-    [SerializeField] private PostProcessProfile m_brightness;
+    [SerializeField] private PostProcessProfile m_UIBrightness;
+    [SerializeField] private PostProcessProfile m_mainCameraProfile;
     [SerializeField] private PostProcessLayer m_postProcessLayer;
     
     private GraphicsModel m_defaultSetting;
@@ -16,7 +18,8 @@ public class GraphicsSetting : MonoBehaviour
     private GraphicsModel m_setting;
     public GraphicsModel CurrentSetting => m_setting;
     
-    private AutoExposure exposure;
+    private AutoExposure m_UIExposure;
+    private AutoExposure m_mainCameraExposure;
     
     private Resolution[] m_resolutions;
 
@@ -35,7 +38,8 @@ public class GraphicsSetting : MonoBehaviour
 
     private void Start()
     {
-        m_brightness.TryGetSettings(out exposure);
+        m_UIBrightness.TryGetSettings(out m_UIExposure);
+        m_mainCameraProfile.TryGetSettings(out m_mainCameraExposure);
 
         m_postProcessLayer = Camera.main.GetComponent<PostProcessLayer>();
 
@@ -50,11 +54,13 @@ public class GraphicsSetting : MonoBehaviour
     {
         if (brightness != 0)
         {
-            exposure.keyValue.value = brightness;
+            m_UIExposure.keyValue.value = brightness;
+            m_mainCameraExposure.keyValue.value = brightness;
         }
         else
         {
-            exposure.keyValue.value = 0.1f;
+            m_UIExposure.keyValue.value = 0.1f;
+            m_mainCameraExposure.keyValue.value = 0.1f;
         }
         m_setting.Brightness= brightness;
     }
