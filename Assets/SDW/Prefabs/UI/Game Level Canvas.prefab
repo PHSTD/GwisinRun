@@ -378,6 +378,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -25
       objectReference: {fileID: 0}
+    - target: {fileID: 8118403993241941026, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3340237180752782991, guid: f8c815d93633e15449575173ff42974a, type: 3}
+    - target: {fileID: 8118403993241941026, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ChangeScene
+      objectReference: {fileID: 0}
     - target: {fileID: 8368175752392651666, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

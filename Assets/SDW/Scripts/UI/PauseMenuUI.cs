@@ -44,7 +44,7 @@ public class PauseMenuUI : MonoBehaviour
         m_itemContainer.SetActive(false);
         
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
-        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_sceneName));
+        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_sceneName));
     }
 
     public void Close()

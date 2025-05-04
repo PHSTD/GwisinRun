@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 735466967}
   - component: {fileID: 735466966}
   m_Layer: 10
-  m_Name: Camera
+  m_Name: UICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 735466965}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
