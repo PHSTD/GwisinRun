@@ -19,4 +19,9 @@ public class GameStartUI : MonoBehaviour
         GameManager.Instance.IsPaused = false;
         m_inventoryContainer.SetActive(true);
     }
+
+    public void LoadScene(string sceneName)
+    {
+        GameManager.Instance.ChangeScene(sceneName);
+    }
 }
