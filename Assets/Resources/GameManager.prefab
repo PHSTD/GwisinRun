@@ -128,6 +128,55 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5562780233809149759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1364503616709951989}
+  - component: {fileID: 210198052111592102}
+  m_Layer: 10
+  m_Name: MainCameraPostProcess
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1364503616709951989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5562780233809149759}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2431713147875215956}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &210198052111592102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5562780233809149759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: c2338d74b747c024496fd9e71b5e1212, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &6441181159083986713
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +343,7 @@ Transform:
   - {fileID: 5719234418388437160}
   - {fileID: 5205442268430997395}
   - {fileID: 7427775695967129954}
+  - {fileID: 1364503616709951989}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3340237180752782991
@@ -353,7 +403,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3839aaf135634c47901ed06675c65a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_brightness: {fileID: 11400000, guid: ae188c600f100d94da96818d8ce2129d, type: 2}
+  m_UIBrightness: {fileID: 11400000, guid: ae188c600f100d94da96818d8ce2129d, type: 2}
+  m_mainCameraProfile: {fileID: 11400000, guid: c2338d74b747c024496fd9e71b5e1212, type: 2}
   m_postProcessLayer: {fileID: 0}
 --- !u!114 &4537530020594626988
 MonoBehaviour:
@@ -381,6 +432,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSlots: 6
   items: []
+  OnUseItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDropOrUseItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAddItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSelectedItemChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8360031530557093322
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7427775695967129954}
   - component: {fileID: 714587408995261480}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Brigheness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
