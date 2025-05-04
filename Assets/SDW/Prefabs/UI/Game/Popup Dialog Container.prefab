@@ -245,6 +245,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Start Panel Dialog
       objectReference: {fileID: 0}
+    - target: {fileID: 8761199378320102865, guid: fe415b5daea28b246abf87d8a3dd7193, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761199378320102865, guid: fe415b5daea28b246abf87d8a3dd7193, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3340237180752782991, guid: f8c815d93633e15449575173ff42974a, type: 3}
+    - target: {fileID: 8761199378320102865, guid: fe415b5daea28b246abf87d8a3dd7193, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ChangeScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761199378320102865, guid: fe415b5daea28b246abf87d8a3dd7193, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761199378320102865, guid: fe415b5daea28b246abf87d8a3dd7193, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: TitleScene
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
