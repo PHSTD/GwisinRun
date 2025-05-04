@@ -202,7 +202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &41928333
 Transform:
   m_ObjectHideFlags: 0
@@ -704,7 +704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &268685001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,7 +732,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.1
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 4bb83c87f67468c49bbe432a420a5148, type: 2}
   m_BuildHeightMesh: 0
@@ -4651,8 +4651,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.88235295, g: 0.9411765, b: 0.98039216, a: 1}
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4662,8 +4662,8 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
+    m_Bias: 0.01
+    m_NormalBias: 0.01
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
       e00: 1
@@ -4948,7 +4948,7 @@ MonoBehaviour:
   m_ObstacleMask:
     serializedVersion: 2
     m_Bits: 128
-  m_monsterPower: 100
+  MonsterPower: 20
 --- !u!114 &1815363175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4961,6 +4961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d3e41c5ea1bd84d88499cef1214476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   walkPoints:
   - {fileID: 1515579728}
   - {fileID: 1477257944}
