@@ -202,6 +202,7 @@ public class MonsterAttackState : FsmState<MonsterState>
         Debug.Log("공격 시작");
         
         // 공격 애니메이션이나 효과를 여기에 추가
+        monster.animator.SetTrigger("IsAttacking");
         // (250502) 데미지 처리 추가 :: S
         if (monster.fieldOfViewSystem.currentTarget != null)
         {
