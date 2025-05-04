@@ -48,4 +48,9 @@ public class GameOverUI : MonoBehaviour
         
         m_currentTimeContainer.SetActive(true);
     }
+
+    public void LoadScene(string sceneName)
+    {
+        GameManager.Instance.ChangeScene(sceneName);
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
     public AudioSetting Audio;
     public GraphicsSetting Graphics;
     public Inventory Inventory;
-    public SceneChangeManager Scene;
+    public ChangeSceneManager Scene;
     //todo 추후 리팩토링 시 검토
     // public UIManager UI;
 

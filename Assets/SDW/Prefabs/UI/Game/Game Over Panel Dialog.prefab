@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_restartButton: {fileID: 7455133846240660679}
-  m_levelSceneName: '[Merge] LevelOneScene(Monster)'
+  m_levelSceneName: '[Merge] LevelOneScene(UITest)'
   m_mainMenuButton: {fileID: 2844106753419595353}
   m_titleSceneName: TitleScene
   m_exitButton: {fileID: 1503068498616849293}
@@ -410,31 +410,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3075386861989505656}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1579882695698154494}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &4006670949701488550
 GameObject:
   m_ObjectHideFlags: 0
