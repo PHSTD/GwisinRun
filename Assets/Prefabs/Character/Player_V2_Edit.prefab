@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 258bea04affe2483ab2ec233a6adf455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isDetected: 0
 --- !u!1 &642683375486263842
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +56,7 @@ GameObject:
   - component: {fileID: 8826569898667721361}
   - component: {fileID: 2685486388909143176}
   m_Layer: 6
-  m_Name: Camera
+  m_Name: UICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,10 +143,10 @@ MonoBehaviour:
   volumeTrigger: {fileID: 8607009832172469553}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -156,7 +155,7 @@ MonoBehaviour:
   subpixelMorphologicalAntialiasing:
     quality: 2
   fastApproximateAntialiasing:
-    fastMode: 0
+    fastMode: 1
     keepAlpha: 0
   fog:
     enabled: 1
@@ -301,7 +300,7 @@ MonoBehaviour:
     m_Bits: 1024
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -310,7 +309,7 @@ MonoBehaviour:
   subpixelMorphologicalAntialiasing:
     quality: 2
   fastApproximateAntialiasing:
-    fastMode: 0
+    fastMode: 1
     keepAlpha: 0
   fog:
     enabled: 1
@@ -388,6 +387,7 @@ Transform:
   - {fileID: 3672641858633234033}
   - {fileID: 5374160555119231075}
   - {fileID: 8077348278276745814}
+  - {fileID: 4202540521683608151}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &561288943936169755
@@ -559,6 +559,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e978978296d4d6eb6084c8b2f4a6a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_dropTransform: {fileID: 4202540521683608151}
+  m_dropForce: 3
   m_panel: {fileID: 0}
   m_popupText: {fileID: 0}
 --- !u!114 &2319699047227597326
@@ -609,7 +611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 258bea04affe2483ab2ec233a6adf455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isDetected: 0
 --- !u!114 &3524753106698798678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,6 +623,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be0b47e8bc9f84e4899fe9133bce1c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8425101770300241860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4202540521683608151}
+  m_Layer: 6
+  m_Name: DropPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4202540521683608151
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425101770300241860}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.178, z: 0.939}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6821452782703107798}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8993977295795288563
 GameObject:
   m_ObjectHideFlags: 0
