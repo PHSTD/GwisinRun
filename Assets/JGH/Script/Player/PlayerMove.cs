@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
 
     private PlayerHealth m_playerHealth;
     private PlayerController m_playerController;
-
+    private PlayerMoveState m_previousMoveState;
 
     void Start()
     {
@@ -93,6 +93,24 @@ public class PlayerMove : MonoBehaviour
             Speed = WalkSpeed;
             m_playerHealth.StaminaPlus();
         }
+        
+        if (move == Vector3.zero)
+        {
+            if(m_previousMoveState != PlayerMoveState.Idle)
+                m_previousMoveState = PlayerMoveState.Idle;
+        }
+        else if (Speed == m_runSpeed)
+        {
+            if(m_previousMoveState != PlayerMoveState.Run)
+                m_previousMoveState = PlayerMoveState.Run;
+        }
+        else if (Speed == WalkSpeed)
+        {
+            if(m_previousMoveState != PlayerMoveState.Walk)
+                m_previousMoveState = PlayerMoveState.Walk;
+        }
+        
+        GameManager.Instance.Audio.PlayMoveSound(m_previousMoveState);
 
         m_playerController.PlayerCont.Move( (Speed + ItemSpeed) * Time.deltaTime * move);
         

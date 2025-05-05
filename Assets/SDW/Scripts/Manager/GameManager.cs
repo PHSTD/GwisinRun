@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     private bool m_isCleared;
     public bool IsCleared { get => m_isCleared; set => m_isCleared = value; }
 
+    private bool m_isTitleScene = true;
+
 
     public static void CreateInstance()
     {
@@ -147,6 +149,16 @@ public class GameManager : MonoBehaviour
     {
         Scene.SceneLoader(sceneName);
         GameStart(sceneName);
+        if (sceneName == "TitleScene")
+        {
+            Audio.ChangeToTitleScene();
+            m_isTitleScene = true;
+        }
+        else if(m_isTitleScene == true)
+        {
+            Audio.ChangeToGameScene();
+            m_isTitleScene = false;
+        }
     }
 
     public void Exit()
