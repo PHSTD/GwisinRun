@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,6 +7,7 @@ public class Monster : MonoBehaviour
 {
     
     public Animator animator;
+    
     [Header ("MonsterPatrolState")]
     public GameObject[] walkPoints;             // 순찰할 위치들을 담은 배열
 
@@ -17,7 +19,6 @@ public class Monster : MonoBehaviour
     public float    stateTickDelay = 0.2f;
 
     [Header("References")]
-    public FieldOfViewSystem    fieldOfViewSystem;
     public NavMeshAgent         navMesh;
     [Header("Movement")]
     public float rotationSpeed = 5f; // 회전 속도
@@ -28,33 +29,132 @@ public class Monster : MonoBehaviour
     private bool isAttacking = false; // 공격 중 상태
     private float lastAttackTime = 0f;
 
+    private string m_currentState;
+    public string CurrentState => m_currentState;
+
     //==========================================추가 5월5일
+
+    private IMonsterState m_currentStateInstance;
+    
+    private MonsterChase m_monsterChase;
+    private MonsterSearch m_monsterSearch;
+    private MonsterPatrol m_monsterPatrol;
+    private MonsterAttack m_monsterAttack;
+    
     // Monster.cs에 추가
     [Header("Door Detection")]
     public float doorWaitTime = 5f;  // 문 앞에서 대기할 시간
     private Transform lastDoorEntered;
 
-    //==========================================
-    public  StateMachine<MonsterState> FSM { get; private set; }
-    private Coroutine           customCoroutine;
+    private Coroutine customCoroutine;
+    
+    public IMonsterState GetChaseState() => m_monsterChase;
+    public IMonsterState GetSearchState() => m_monsterSearch;
+    public void SetCurrentStateString(string stateName) => m_currentState = stateName;
+    
+    [SerializeField] private float detectionRadius = 10f;
+    [SerializeField] private LayerMask targetLayer;
+    
+    private Transform currentTarget;
+    public Transform CurrentTarget { get; private set; }
+    
+    public int attackPower = 20; // 공격력
+    
+    // // 탐지 주기
+    [SerializeField] private float m_DetectionDelay = 0.5f;
+    [SerializeField] private float m_ViewRadius = 10f;
+    [SerializeField] private float m_ViewAngle = 90f;
+    [SerializeField] private LayerMask m_TargetMask;
+    [SerializeField] private LayerMask m_ObstacleMask;
+    
+    
+    // 속성 접근자 추가
+    public float ViewRadius => m_ViewRadius;
+    public float ViewAngle => m_ViewAngle;
+    
+    
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        m_monsterPatrol = GetComponent<MonsterPatrol>();
+        if (m_monsterPatrol == null) m_monsterPatrol = gameObject.AddComponent<MonsterPatrol>();
+        m_monsterPatrol.SetMonster(this);
 
-        FSM = new StateMachine<MonsterState>();
-        FSM.AddState(new MonsterPatrolState(this));
-        FSM.AddState(new MonsterChaseState(this));
-        FSM.AddState(new MonsterSearchState(this));
-        FSM.AddState(new MonsterAttackState(this));
-        //FSM.AddState(new MonsterWaitAtDoorState(this));
-        FSM.ChangeState(MonsterState.Patrol);
-        // 이벤트 구독
-        RegisterEvents();
+        m_monsterAttack = GetComponent<MonsterAttack>();
+        if (m_monsterAttack == null) m_monsterAttack = gameObject.AddComponent<MonsterAttack>();
+        m_monsterAttack.SetMonster(this);
+
+        m_monsterChase = GetComponent<MonsterChase>();
+        if (m_monsterChase == null) m_monsterChase = gameObject.AddComponent<MonsterChase>();
+        m_monsterChase.SetMonster(this);
+
+        m_monsterSearch = GetComponent<MonsterSearch>();
+        if (m_monsterSearch == null) m_monsterSearch = gameObject.AddComponent<MonsterSearch>();
+        m_monsterSearch.SetMonster(this);
+        
+        navMesh = GetComponent<NavMeshAgent>();
+        
+        animator = GetComponent<Animator>();
+        
+    }
+    
+    public Transform FindVisibleTarget()
+    {
+        // 시야 반경 내의 타겟 검색
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, m_ViewRadius, m_TargetMask);
+
+        foreach (var collider in targetsInViewRadius)
+        {
+            Transform target = collider.transform;
+
+            if (IsTargetVisible(target))
+            {
+                return target;
+            }
+        }
+        return null;
+    }
+    
+    private bool IsTargetVisible(Transform target)
+    {
+        Vector3 origin = transform.position;
+        Vector3 dirToTarget = (target.position - origin);
+        float sqrDistanceToTarget = dirToTarget.sqrMagnitude;
+
+        // 시야각 체크
+        float angleToTarget = Vector3.Angle(transform.forward, dirToTarget.normalized);
+        if (angleToTarget > m_ViewAngle * 0.5f)
+            return false;
+
+        // 시야 거리 체크
+        if (sqrDistanceToTarget > m_ViewRadius * m_ViewRadius)
+            return false;
+
+        // 장애물 체크 (Raycast)
+        if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
+        {
+            // 장애물이 타겟보다 앞에 있는 경우
+            if (hit.transform != target)
+                return false;
+        }
+
+        return true;
+    }
+
+    private void Start()
+    {
+        ChangeState(m_monsterPatrol);
+        m_currentState = "Patrol";
     }
 
     private void Update()
     {
-        LookAtTarget(fieldOfViewSystem.currentTarget);
+        if (currentTarget != null)
+        {
+            LookAtTarget(currentTarget);
+            HandleAttackDistance(); // 또는 거리 체크 등
+        }
+        
+        LookAtTarget(currentTarget);
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
         {
             navMesh.isStopped = true;
@@ -64,18 +164,55 @@ public class Monster : MonoBehaviour
             navMesh.isStopped = false;
         }
     }
-
-    private void RegisterEvents()
+    
+    private void HandleAttackDistance()
     {
-        // 기존 이벤트 구독
-        fieldOfViewSystem.OnTargetDetected += HandleTargetDetected;
-        fieldOfViewSystem.OnTargetLost += HandleTargetLost;
-        
-        // 새 이벤트 구독
-        fieldOfViewSystem.OnTargetDistanceChanged += HandleTargetDistanceChanged;
-        fieldOfViewSystem.OnLastKnownPositionUpdated += HandleLastKnownPositionUpdated;
+        if (currentTarget == null) return;
+
+        float distance = Vector3.Distance(transform.position, currentTarget.position);
+
+        if (!isAttacking && CanAttack() && distance <= attackRange && m_currentState == "Chase")
+        {
+            Debug.Log("▶ 공격 상태 전환 시도");
+            ChangeState(m_monsterAttack);
+            m_currentState = "Attack";
+        }
+    }
+    
+    /// <summary>
+    /// 각도를 방향 벡터로 변환합니다.
+    /// </summary>
+    /// <param name="angleInDegrees">각도(도)</param>
+    /// <param name="angleIsGlobal">전역 각도 여부</param>
+    /// <returns>방향 벡터</returns>
+    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
+    {
+        if(!angleIsGlobal)
+        {
+            angleInDegrees += transform.eulerAngles.y;
+        }
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
+    
+    private void DetectTarget()
+    {
+        if (currentTarget != null) return;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, targetLayer);
+
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Player"))
+            {
+                currentTarget = hit.transform;
+                Debug.Log("타겟 감지됨");
+                ChangeState(m_monsterChase);
+                m_currentState = "Chase";
+                break;
+            }
+        }
+    }
 
     public void SetAttacking(bool attacking)
     {
@@ -98,21 +235,33 @@ public class Monster : MonoBehaviour
         lastAttackTime = Time.time;
         Debug.Log($"Monster attack started, next attack available at: {lastAttackTime + attackCooldown}");
     }
+    
+    public void ChangeState(IMonsterState newState)
+    {
+        if (isAttacking && newState != m_monsterAttack)
+            return;
 
-    private void HandleTargetDetected(Transform target)
+        if (m_currentStateInstance != null)
+            m_currentStateInstance.OnExit();
+
+        m_currentStateInstance = newState;
+        m_currentStateInstance.OnEnter();
+    }
+
+    private void SetState(Transform target)
     {
         // 공격 중에는 다른 상태로 전환되지 않도록 막음
         if (isAttacking) return;
 
-        switch(FSM.CurrentState)
+        if (target != null)
         {
-            case MonsterState.Patrol:
-                FSM.ChangeState(MonsterState.Chase);
-                break;
-            case MonsterState.Search:
-                FSM.ChangeState(MonsterState.Chase);
-                break;
-        // 이미 추적 중이거나 공격 중이면 상태 변경 필요 없음
+            ChangeState(m_monsterChase);
+            m_currentState = "Chase";
+        }
+        else
+        {
+            ChangeState(m_monsterSearch);
+            m_currentState = "Search";
         }
     }
 
@@ -121,30 +270,30 @@ public class Monster : MonoBehaviour
         // 공격 중에는 다른 상태로 전환되지 않도록 막음
         if (isAttacking) return;
 
-        // 추적 중일 때만 탐색 상태로 전환
-        if (FSM.CurrentState == MonsterState.Chase)
-        {
-            FSM.ChangeState(MonsterState.Search);
-        }
+        ChangeState(m_monsterSearch);
+        m_currentState = "Search";
     }
     
     private void HandleTargetDistanceChanged(float distance)
     {
         // 명확한 로그 추가
-        Debug.Log($"Distance changed: {distance}, Attack range: {attackRange}, Can attack: {CanAttack()}, Current state: {FSM.CurrentState}");
+        // Debug.Log($"Distance changed: {distance}, Attack range: {attackRange}, Can attack: {CanAttack()}, Current state: {FSM.CurrentState}");
+        Debug.Log($"Distance changed: {distance}, Attack range: {attackRange}, Can attack: {CanAttack()}");
         
         // 공격 가능 상태이고, 추적 중이며, 거리가 가까우면 공격
-        if (!isAttacking && CanAttack() && distance <= attackRange && FSM.CurrentState == MonsterState.Chase)
+        if (!isAttacking && CanAttack() && distance <= attackRange && m_currentState == "Chase")
         {
-            Debug.Log("Transitioning to Attack state");
-            FSM.ChangeState(MonsterState.Attack);
+            Debug.Log("▶ 공격 상태 전환 시도");
+            ChangeState(m_monsterAttack);
+            m_currentState = "Attack";
         }
+
     }
     
     private void HandleLastKnownPositionUpdated(Vector3 position)
     {
         // 탐색 시 마지막 위치 정보 활용
-        if (FSM.CurrentState == MonsterState.Search)
+        if (CurrentState == "Search")
         {
             navMesh.SetDestination(position);
         }
@@ -166,10 +315,7 @@ public class Monster : MonoBehaviour
         }
     }
     #endregion
-    // public void Update()
-    // {
-    //     FSM.Update(Time.deltaTime);
-    // }
+    
     // 상태에서 코루틴 정지 요청
     public bool IsArrived()
     {
@@ -210,4 +356,6 @@ public class Monster : MonoBehaviour
                 Time.deltaTime * rotationSpeed); // 회전 속도 조절
         }
     }
+    
+    
 }
