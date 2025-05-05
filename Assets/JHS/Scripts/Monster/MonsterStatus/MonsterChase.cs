@@ -1,10 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterChase : Monster,IMonsterState 
+public class MonsterChase : IMonsterState 
 {
     private Monster monster;
+    private float chaseTimer;
+    private float maxChaseTime = 5f;
+    
 
     public void SetMonster(Monster monster)
     {
@@ -25,9 +27,20 @@ public class MonsterChase : Monster,IMonsterState
                 if (distanceToTarget <= monster.attackRange && monster.CanAttack() && !monster.IsAttacking())
                 {
                     Debug.Log("ChaseRoutine detected attack range - changing to Attack state");
-                    // monster.FSM.ChangeState(MonsterState.Attack);
+                    monster.ChangeState(monster.GetMonsterAttack());
+                    monster.SetCurrentStateString("Attack");
                     yield break;
                 }
+            }
+            
+            // 추격 제한 시간 초과
+            chaseTimer += monster.stateTickDelay;
+            if (chaseTimer >= maxChaseTime)
+            {
+                monster.CurrentTarget = null;
+                monster.ChangeState(monster.GetSearchState());
+                monster.SetCurrentStateString("Search");
+                yield break;
             }
             
             yield return new WaitForSeconds(monster.stateTickDelay);

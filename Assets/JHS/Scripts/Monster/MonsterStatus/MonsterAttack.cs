@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterAttack : Monster, IMonsterState 
+public class MonsterAttack : IMonsterState 
 {
     
     private Monster monster;
@@ -14,7 +14,7 @@ public class MonsterAttack : Monster, IMonsterState
     
     public IEnumerator Attack()
     {
-        Debug.Log("▶ 공격 시작");
+        Debug.Log("공격 시작");
         monster.animator.SetTrigger("IsAttacking");
 
         // 애니메이션 타이밍에 맞춘 대기
@@ -31,33 +31,22 @@ public class MonsterAttack : Monster, IMonsterState
                 if (damageable != null)
                 {
                     damageable.TakeDamage(monster.attackPower);
-                    Debug.Log("✅ 데미지 적용!");
-                }
-                else
-                {
-                    Debug.LogWarning("⚠️ 대상이 IDamageable이 아님");
+                    Debug.Log("데미지 적용!");
                 }
             }
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ CurrentTarget이 null임");
-        }
 
-        yield return new WaitForSeconds(1.5f);
-
-        Debug.Log("▶ 공격 종료");
-
-        // 다음 상태로 전환
-        if (monster.CurrentTarget != null)
-        {
-            monster.ChangeState(monster.GetChaseState());
-            monster.SetCurrentStateString("Chase");
-        }
-        else
-        {
-            monster.ChangeState(monster.GetSearchState());
-            monster.SetCurrentStateString("Search");
+            yield return new WaitForSeconds(1.5f);
+            
+            if (monster.CurrentTarget != null)
+            {
+                monster.ChangeState(monster.GetChaseState());
+                monster.SetCurrentStateString("Chase");
+            }
+            else
+            {
+                monster.ChangeState(monster.GetSearchState());
+                monster.SetCurrentStateString("Search");
+            }
         }
     }
 
@@ -78,6 +67,5 @@ public class MonsterAttack : Monster, IMonsterState
 
     public void OnUpdate()
     {
-        throw new System.NotImplementedException();
     }
 }

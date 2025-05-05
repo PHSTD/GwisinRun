@@ -1569,7 +1569,7 @@ PrefabInstance:
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: fieldOfViewSystem
       value: 
-      objectReference: {fileID: 996487261}
+      objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: walkPoints.Array.size
       value: 3
@@ -1650,7 +1650,8 @@ PrefabInstance:
       propertyPath: m_ViewRadius
       value: 10
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5491169472677697319, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2414,17 +2415,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 796652407307068396, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
   m_PrefabInstance: {fileID: 661803509}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &996487261 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5491169472677697319, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
-  m_PrefabInstance: {fileID: 661803509}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3d7049106d3ead429f24f8045d9ba88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1051654672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5248,7 +5238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2018206700
 Transform:
   m_ObjectHideFlags: 0
@@ -5724,7 +5714,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 83d9487b94440e448a845a7c584a4647, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 3f62cb62e13a64ab9a1d9b2cf676d7a0, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &2077856580
 PrefabInstance:
