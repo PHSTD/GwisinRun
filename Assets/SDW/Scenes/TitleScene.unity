@@ -594,6 +594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Title Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 531877234114171102, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 845115511549190694, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -604,6 +608,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 845115511549190694, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014123485409591548, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3270060404249666493, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3784057503009690464, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
@@ -690,50 +702,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7021182911122885219, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
-      propertyPath: m_sceneName
-      value: '[Merge] LevelOneScene(UITest)'
+    - target: {fileID: 8063948815053084797, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7594778934457392791, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
+    - target: {fileID: 8063948815053084797, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7594778934457392791, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 7150571324119799527}
-    - target: {fileID: 7594778934457392791, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: PlayButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594778934457392791, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: AudioSettingUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594778934457392791, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594778934457392791, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+    - target: {fileID: 8063948815053084797, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
---- !u!114 &7150571324119799527 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1798095090334849986, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
-  m_PrefabInstance: {fileID: 7150571324119799526}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253a3b4a5976ba94c9406b6ee8534ac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

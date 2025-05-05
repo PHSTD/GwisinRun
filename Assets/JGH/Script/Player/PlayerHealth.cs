@@ -54,6 +54,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         CurrentHealth = MaxHealth;
         CurrentStamina = MaxStamina;
+
+        m_playerController = GetComponent<PlayerController>();
     }
 
     private void Start()
@@ -74,7 +76,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
-            PlayerController.Die();
+            m_playerController.Die();
         }
 
     }

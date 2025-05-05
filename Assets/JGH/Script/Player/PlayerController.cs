@@ -4,11 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Game UI")]
     [SerializeField] private GameObject m_pausedMenu;
-    
-    //# 수정 사항(20250502) -- 시작
     [SerializeField] private GameObject m_gameStartPanel;
     public static GameObject GameStartPanel;
-    //# SDW 수정 사항(20250502) -- 끝
     
     public static GameObject GameOverPanel;
     [SerializeField] private GameObject m_gameOverPanel;
@@ -34,7 +31,6 @@ public class PlayerController : MonoBehaviour
         GameOverPanel = m_gameOverPanel;
     }
 
-    //# 수정 사항(20250502) -- 시작
     void Update()
     {
         CheckPauseKeyPressed();
@@ -58,9 +54,8 @@ public class PlayerController : MonoBehaviour
             }
         }
     } 
-    //# 수정 사항(20250502) -- 끝
 
-    public static void Die()
+    public void Die()
     {
         GameOverPanel.SetActive(true);
     }

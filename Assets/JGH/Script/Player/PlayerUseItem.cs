@@ -12,29 +12,24 @@ public class PlayerUseItem : MonoBehaviour
         GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
         
         m_playerHealth = GetComponent<PlayerHealth>();
+        m_playerController = GetComponent<PlayerController>();
     }
 
     void Update()
     {
-        //# 수정 사항(20250502) -- 시작
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
             return;
-        //# 수정 사항(20250502) -- 끝
         
-        //# 수정 사항(20250503) -- 시작
         if(GameManager.Instance.Input.UseItemKeyPressed)
         {
             GameManager.Instance.Inventory.UseItem();
         }
-        //# 수정 사항(20250503) -- 끝
     }
     
     public void UseItem(string itemName, int value)
     {
-        //# 수정 사항(20250502) -- 시작
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
             return;
-        //# 수정 사항(20250502) -- 끝
         
         switch (itemName)
         {
@@ -61,7 +56,7 @@ public class PlayerUseItem : MonoBehaviour
                 if (currHealth < 0)
                 {
                     m_playerHealth.SetCurrentHealth(0);
-                    PlayerController.Die();
+                    m_playerController.Die();
                 }
                 else if (currHealth > m_playerHealth.GetMaxHealth())
                 {

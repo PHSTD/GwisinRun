@@ -7,7 +7,6 @@ public class PlayerHide : MonoBehaviour
     public bool IsDetected => m_isDetected;
 
     
-    //# 수정 사항(20250503) -- 시작
     private void Update()
     {
         if (CanStandUp())
@@ -26,7 +25,6 @@ public class PlayerHide : MonoBehaviour
         Vector3 checkPosition = transform.position + Vector3.up;
         return !Physics.CheckSphere(checkPosition, checkRadius);
     }
-    //# 수정 사항(20250503) -- 끝
 
     void OnEnable()
     {

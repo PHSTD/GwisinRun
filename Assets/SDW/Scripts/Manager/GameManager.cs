@@ -102,10 +102,25 @@ public class GameManager : MonoBehaviour
         //# Read
         m_bestTime = PlayerPrefs.GetFloat(sceneName);
         
+        Inventory.ClearInventory();
+        
         if (m_bestTime <= 1.0f)
         {
             m_bestTime = float.MaxValue;
         }
+        StartCoroutine(ClearGameOver());
+    }
+    
+    private IEnumerator ClearGameOver()
+    {
+        float timer = 0f;
+        while (timer <= 0.1f)
+        {
+            yield return null;
+            timer += Time.unscaledDeltaTime * 3f;
+        }
+        
+        m_isGameOver = false;
     }
 
     public void GameOver()

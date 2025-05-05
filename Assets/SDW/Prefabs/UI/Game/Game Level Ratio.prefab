@@ -639,6 +639,10 @@ PrefabInstance:
       propertyPath: m_inventoryContainer
       value: 
       objectReference: {fileID: 5072278088981655014}
+    - target: {fileID: 4104577495384819350, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
+      propertyPath: m_currentTimeContainer
+      value: 
+      objectReference: {fileID: 5499483249664234183}
     - target: {fileID: 4639678106599852971, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -760,6 +764,10 @@ PrefabInstance:
     - target: {fileID: 9124313016960758214, guid: e1f222c939d2ff247b9f510cac27dbb7, type: 3}
       propertyPath: m_Name
       value: Current Time Container
+      objectReference: {fileID: 0}
+    - target: {fileID: 9124313016960758214, guid: e1f222c939d2ff247b9f510cac27dbb7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
