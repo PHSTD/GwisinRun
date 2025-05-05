@@ -57,7 +57,7 @@ public class PlayerHide : MonoBehaviour
     private bool CanStandUp()
     {
         // 플레이어 머리 위 공간 체크
-        float checkRadius = 0.3f;
+        float checkRadius = 0.6f;
         Vector3 checkPosition = transform.position + Vector3.up;
         return !Physics.CheckSphere(checkPosition, checkRadius);
     }
