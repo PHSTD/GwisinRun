@@ -27,7 +27,7 @@ public class PlayerMove : MonoBehaviour
     // 앉은 상태의 스케일
     private Vector3 m_sitPlayerScale;
     // 앉은 상태인지 확인
-    public static bool IsSit;
+    public bool IsSit;
     // 앉기 키 누른 상태인지 확인
     private bool m_releasedSitKey;
 
@@ -36,13 +36,15 @@ public class PlayerMove : MonoBehaviour
     private float m_jumpHeight = 1.2f;
 
     private PlayerHealth m_playerHealth;
+    private PlayerController m_playerController;
 
 
     void Start()
     {
+        m_playerController = GetComponent<PlayerController>();
         
-        PlayerController.PlayerTransform = transform;
-        if (PlayerController.PlayerTransform == null)
+        m_playerController.PlayerTransform = transform;
+        if (m_playerController.PlayerTransform == null)
         {
             Debug.LogError("PlayerTransform이 초기화되지 않았습니다!");
             return;
@@ -50,11 +52,11 @@ public class PlayerMove : MonoBehaviour
         
         // m_originalHeight = PlayerController.PlayerCont.height;
         // 일어났을때 위치
-        m_originalHeight = PlayerController.PlayerCont.height;
+        m_originalHeight = m_playerController.PlayerCont.height;
         // 중심 위치
-        m_originalCenter = PlayerController.PlayerCont.center;
+        m_originalCenter = m_playerController.PlayerCont.center;
 
-        m_originalPlayerScale = PlayerController.PlayerTransform.localScale;
+        m_originalPlayerScale = m_playerController.PlayerTransform.localScale;
         m_sitPlayerScale = new Vector3(m_originalPlayerScale.x, m_originalPlayerScale.y * 0.5f, m_originalPlayerScale.z);
 
         m_playerHealth = GetComponent<PlayerHealth>();
@@ -64,7 +66,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
         {
-            PlayerController.PlayerCont.Move(Vector3.zero);
+            m_playerController.PlayerCont.Move(Vector3.zero);
             return;
         }
         Move();
@@ -92,18 +94,18 @@ public class PlayerMove : MonoBehaviour
             m_playerHealth.StaminaPlus();
         }
 
-        PlayerController.PlayerCont.Move( (Speed + ItemSpeed) * Time.deltaTime * move);
+        m_playerController.PlayerCont.Move( (Speed + ItemSpeed) * Time.deltaTime * move);
         
         m_velocity.y += m_fallSpeed * Time.deltaTime;
-        PlayerController.PlayerCont.Move(m_velocity * Time.deltaTime);
+        m_playerController.PlayerCont.Move(m_velocity * Time.deltaTime);
 
-        if (PlayerController.PlayerCont.isGrounded && m_velocity.y < 0)
+        if (m_playerController.PlayerCont.isGrounded && m_velocity.y < 0)
             m_velocity.y = -2f;
     }
 
     void Jump()
     {
-        if (GameManager.Instance.Input.JumpKeyPressed && PlayerController.PlayerCont.isGrounded)
+        if (GameManager.Instance.Input.JumpKeyPressed && m_playerController.PlayerCont.isGrounded)
         {
             m_velocity.y = Mathf.Sqrt(m_jumpHeight * -2f * m_fallSpeed);
         }
@@ -118,12 +120,12 @@ public class PlayerMove : MonoBehaviour
             m_releasedSitKey = true;
 
         // 키가 눌려있거나, 이미 앉은 상태인데 천장이 감지되면 계속 앉은 상태 유지
-        if (sitKeyHeld || (IsSit && PlayerController.HeadTriggerObject.IsDetected))
+        if (sitKeyHeld || (IsSit && m_playerController.HeadTriggerObject.IsDetected))
         {
             IsSit = true;
         }
         // 키를 뗐고, 천장도 감지되지 않으면 일어남
-        else if (m_releasedSitKey && !PlayerController.HeadTriggerObject.IsDetected)
+        else if (m_releasedSitKey && !m_playerController.HeadTriggerObject.IsDetected)
         {
             IsSit = false;
             m_releasedSitKey = false;
@@ -139,9 +141,9 @@ public class PlayerMove : MonoBehaviour
         Vector3 targetScale = IsSit ? m_sitPlayerScale : m_originalPlayerScale;
 
         // Lerp를 통해 부드럽게 보간 처리 (Time.deltaTime * 10f → 속도 조절용)
-        PlayerController.PlayerCont.height = Mathf.Lerp(PlayerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
-        PlayerController.PlayerCont.center = Vector3.Lerp(PlayerController.PlayerCont.center, targetCenter, Time.deltaTime * 10f);
-        PlayerController.PlayerTransform.localScale = Vector3.Lerp(PlayerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);;
+        m_playerController.PlayerCont.height = Mathf.Lerp(m_playerController.PlayerCont.height, targetHeight, Time.deltaTime * 10f);
+        m_playerController.PlayerCont.center = Vector3.Lerp(m_playerController.PlayerCont.center, targetCenter, Time.deltaTime * 10f);
+        m_playerController.PlayerTransform.localScale = Vector3.Lerp(m_playerController.PlayerTransform.localScale, targetScale, Time.deltaTime * 10f);;
     }
     
 }

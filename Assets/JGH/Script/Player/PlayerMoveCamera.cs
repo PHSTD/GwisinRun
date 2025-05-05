@@ -21,10 +21,16 @@ public class PlayerMoveCamera : MonoBehaviour
     private float m_bobAmplitudeRun = 0.25f;  // 뛰기 시 위아래 흔들림 크기
 
     private PlayerHealth m_playerHealth;
+    private PlayerController m_playerController;
+    private PlayerMove m_playerMove;
 
 
     private void Start()
     {
+        m_playerHealth = GetComponent<PlayerHealth>();
+        m_playerController = GetComponent<PlayerController>();
+        m_playerMove = GetComponent<PlayerMove>();
+        
         // PlayerCamera = m_cameraTransform.GetComponent<Camera>();
         // 메인 카메라를 찾아 저장한다
         GameObject camObj = GameObject.FindWithTag("MainCamera");
@@ -38,7 +44,6 @@ public class PlayerMoveCamera : MonoBehaviour
         // 초점 처리를 위해
         PlayerCamera.fieldOfView = m_normalFOV;
         
-        m_playerHealth = GetComponent<PlayerHealth>();
     }
 
     private void Update()
@@ -82,11 +87,11 @@ public class PlayerMoveCamera : MonoBehaviour
     {
             // 현재 이동 입력이 있고, 땅에 닿아 있으며 앉아있지 않은 상태에서만 흔들림 적용
             Vector2 moveInput = GameManager.Instance.Input.MoveInput;
-            bool isMoving = moveInput.sqrMagnitude > 0.01f && PlayerController.PlayerCont.isGrounded;
+            bool isMoving = moveInput.sqrMagnitude > 0.01f && m_playerController.PlayerCont.isGrounded;
             // 기준 카메라 위치 결정
-            Vector3 baseCamPos = PlayerMove.IsSit ? m_cameraSitPos : m_cameraDefaultPos;
+            Vector3 baseCamPos = m_playerMove.IsSit ? m_cameraSitPos : m_cameraDefaultPos;
             
-            if (isMoving && !PlayerMove.IsSit)
+            if (isMoving && !m_playerMove.IsSit)
             {
                 // 걷기와 뛰기 여부에 따라 주기(frequency)와 진폭(amplitude) 선택
                 float frequency;
