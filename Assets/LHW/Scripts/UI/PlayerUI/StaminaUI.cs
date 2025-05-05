@@ -10,19 +10,17 @@ public class StaminaUI : MonoBehaviour
 
     private PlayerHealth m_playerHealth;
 
-    Color HPColor;
-
-    void Awake()
+    void Start()
     {
         m_stImage = GetComponent<Image>();
+        m_playerHealth = GameObject.FindWithTag("Player").GetComponent<PlayerHealth>();
         m_maxStamina = m_playerHealth.GetMaxStamina();
         m_currentStamina = m_playerHealth.GetCurrentStamina();
-        
-        m_playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
     {
+        m_currentStamina = m_playerHealth.GetCurrentStamina();
         float toFill;
         toFill = (float)m_currentStamina / m_maxStamina;
 

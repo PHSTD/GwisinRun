@@ -10,19 +10,17 @@ public class HealthUI : MonoBehaviour
 
     private PlayerHealth m_playerHealth;
 
-    Color HPColor;
-
     void Start()
     {
         m_hpImage = GetComponent<Image>();
+        m_playerHealth = GameObject.FindWithTag("Player").GetComponent<PlayerHealth>();
         m_maxHealth = m_playerHealth.GetMaxHealth();
         m_currentHealth = m_playerHealth.GetCurrentHealth();
-        
-        m_playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
     {
+        m_currentHealth = m_playerHealth.GetCurrentHealth();
         float toFill;
         toFill = (float)m_currentHealth / m_maxHealth;
 
