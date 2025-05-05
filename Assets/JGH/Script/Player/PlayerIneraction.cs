@@ -57,10 +57,17 @@ public class PlayerIneraction : MonoBehaviour
 
         else if (m_detectedObject.CompareTag("InteractableObject"))
         {
-            m_popupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
-            m_panel.SetActive(true);
+            if (m_detectedObject.GetComponent<IsLockedDoor>() != null && m_detectedObject.GetComponent<IsLockedDoor>().IsLocked())
+            {
+                m_popupText.text = "잠긴 문입니다. 열쇠를 찾아주세요.";
+                m_panel.SetActive(true);
+            }
+            else
+            {
+                m_popupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
+                m_panel.SetActive(true);
+            }
         }
-        
     }
 
     void InteractWithObject()
