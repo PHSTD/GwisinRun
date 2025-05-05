@@ -131,4 +131,17 @@ public class Inventory : MonoBehaviour
         Debug.Log($"{m_selectedItemIndex + 1} 슬롯에 아이템을 버립니다.");
     }
     //# 수정 사항(20250503) -- 끝
+
+    public void ClearInventory()
+    {
+        m_selectedItemIndex = 0;
+        m_itemCount = 0;
+        for(int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == null)
+                continue;
+            items[i] = null;
+            Destroy(items[i]);
+        }
+    }
 }

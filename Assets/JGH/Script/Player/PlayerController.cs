@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     } 
     //# 수정 사항(20250502) -- 끝
 
-    public static void Die()
+    public void Die()
     {
         GameOverPanel.SetActive(true);
     }

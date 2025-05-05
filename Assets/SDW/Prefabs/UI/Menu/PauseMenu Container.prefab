@@ -492,6 +492,8 @@ MonoBehaviour:
   m_soundsSettingDialog: {fileID: 0}
   m_graphicsSettingDialog: {fileID: 0}
   m_controlsSettingDialog: {fileID: 0}
+  m_inventoryContainer: {fileID: 0}
+  m_itemContainer: {fileID: 0}
 --- !u!1 &4829364501089707799
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,7 +750,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 25aa936fb4ea1454da57c9b7a27f78a9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
