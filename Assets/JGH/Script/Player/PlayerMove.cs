@@ -35,6 +35,8 @@ public class PlayerMove : MonoBehaviour
     // 점프 높이
     private float m_jumpHeight = 1.2f;
 
+    private PlayerHealth m_playerHealth;
+
 
     void Start()
     {
@@ -82,13 +84,13 @@ public class PlayerMove : MonoBehaviour
         if (GameManager.Instance.Input.RunKeyBeingHeld)
         {
             Speed = m_runSpeed;
-            if (moveX != 0 || moveZ != 0) PlayerHealth.StaminaMinus();
-            else PlayerHealth.StaminaPlus();
+            if (moveX != 0 || moveZ != 0) m_playerHealth.StaminaMinus();
+            else m_playerHealth.StaminaPlus();
         }
         else
         {
             Speed = WalkSpeed;
-            PlayerHealth.StaminaPlus();
+            m_playerHealth.StaminaPlus();
         }
 
         PlayerController.PlayerCont.Move( (Speed + ItemSpeed) * Time.deltaTime * move);

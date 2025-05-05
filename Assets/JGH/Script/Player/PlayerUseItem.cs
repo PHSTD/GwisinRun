@@ -5,6 +5,8 @@ public class PlayerUseItem : MonoBehaviour
 {
 
     private PlayerController m_playerController;
+    private PlayerHealth m_playerHealth;
+    
     private void Start()
     {
         GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
@@ -35,29 +37,33 @@ public class PlayerUseItem : MonoBehaviour
         switch (itemName)
         {
             case "StaminaPotion":
-                PlayerHealth.CurrentStamina += value;
+                int getCurrStamina = m_playerHealth.GetCurrentStamina();
+                getCurrStamina += value;
+                m_playerHealth.SetCurrentStamina(getCurrStamina);
 
-                if (PlayerHealth.CurrentStamina < 0)
+                if (getCurrStamina < 0)
                 {
-                    PlayerHealth.CurrentStamina = 0;
+                    m_playerHealth.SetCurrentStamina(0);
                 }
-                else if (PlayerHealth.CurrentStamina > PlayerHealth.MaxStamina)
+                else if (getCurrStamina > m_playerHealth.GetMaxStamina())
                 {
-                    PlayerHealth.CurrentStamina = PlayerHealth.MaxStamina;
+                    m_playerHealth.SetCurrentStamina(m_playerHealth.GetMaxStamina());
                 }
                 break;
             
             case "HeartPotion":
-                PlayerHealth.CurrentHealth += value;
+                int currHealth = m_playerHealth.GetCurrentHealth();
+                currHealth += value;
+                m_playerHealth.SetCurrentHealth(currHealth);
 
-                if (PlayerHealth.CurrentHealth < 0)
+                if (currHealth < 0)
                 {
-                    PlayerHealth.CurrentHealth = 0;
+                    m_playerHealth.SetCurrentHealth(0);
                     PlayerController.Die();
                 }
-                else if (PlayerHealth.CurrentHealth > PlayerHealth.MaxHealth)
+                else if (currHealth > m_playerHealth.GetMaxHealth())
                 {
-                    PlayerHealth.CurrentHealth = PlayerHealth.MaxHealth;
+                    m_playerHealth.SetCurrentHealth(m_playerHealth.GetMaxHealth());
                 }
                 break;
             

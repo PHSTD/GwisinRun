@@ -20,6 +20,8 @@ public class PlayerMoveCamera : MonoBehaviour
     private float m_bobAmplitudeWalk = 0.11f; // 걷기 시 위아래 흔들림 크기
     private float m_bobAmplitudeRun = 0.25f;  // 뛰기 시 위아래 흔들림 크기
 
+    private PlayerHealth m_playerHealth;
+
 
     private void Start()
     {
@@ -90,7 +92,7 @@ public class PlayerMoveCamera : MonoBehaviour
                 float frequency;
                 float amplitude;
                 // 뛰기를 눌렀고 스태미너가 있으면 뛰기
-                if (GameManager.Instance.Input.RunKeyBeingHeld && PlayerHealth.CurrentStamina != 0)
+                if (GameManager.Instance.Input.RunKeyBeingHeld && m_playerHealth.GetCurrentStamina() != 0)
                 {
                     frequency = m_bobFrequencyRun;
                     amplitude = m_bobAmplitudeRun ;

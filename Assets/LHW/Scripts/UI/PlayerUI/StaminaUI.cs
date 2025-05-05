@@ -8,13 +8,15 @@ public class StaminaUI : MonoBehaviour
     private int m_maxStamina;
     private int m_currentStamina;
 
+    private PlayerHealth m_playerHealth;
+
     Color HPColor;
 
     void Awake()
     {
         m_stImage = GetComponent<Image>();
-        m_maxStamina = PlayerHealth.MaxStamina;
-        m_currentStamina = PlayerHealth.CurrentStamina;
+        m_maxStamina = m_playerHealth.GetMaxStamina();
+        m_currentStamina = m_playerHealth.GetCurrentStamina();
     }
 
     void Update()
