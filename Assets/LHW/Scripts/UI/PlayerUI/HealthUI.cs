@@ -8,13 +8,15 @@ public class HealthUI : MonoBehaviour
     private int m_maxHealth;
     private int m_currentHealth;
 
+    private PlayerHealth m_playerHealth;
+
     Color HPColor;
 
     void Start()
     {
         m_hpImage = GetComponent<Image>();
-        m_maxHealth = PlayerHealth.MaxHealth;
-        m_currentHealth = PlayerHealth.CurrentHealth;
+        m_maxHealth = m_playerHealth.GetMaxHealth();
+        m_currentHealth = m_playerHealth.GetCurrentHealth();
     }
 
     void Update()

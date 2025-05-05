@@ -3,12 +3,48 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("HP")]
-    public static int MaxHealth = 100; // 최대 체력
-    public static int CurrentHealth; // 현재 체력
+    private int MaxHealth = 100; // 최대 체력
+    private int CurrentHealth; // 현재 체력
+
     
     [Header("Stamina")]
-    public static int MaxStamina = 100; // 최대 스태미너
-    public static int CurrentStamina; // 현재 스태미너
+    private int MaxStamina = 100; // 최대 스태미너
+    private int CurrentStamina; // 현재 스태미너
+
+    public int GetMaxHealth()
+    {
+        return MaxHealth;
+    }
+    public int GetCurrentHealth()
+    {
+        return CurrentHealth;
+    }
+    public int GetCurrentStamina()
+    {
+        return CurrentStamina;
+    }
+    public int GetMaxStamina()
+    {
+        return MaxStamina;
+    }
+    
+    public void SetCurrentHealth(int value)
+    {
+        if (value > MaxHealth)
+        {
+            value = MaxHealth;
+        }
+        CurrentHealth = value;
+    }
+    
+    public void SetCurrentStamina(int value)
+    {
+        if (value > MaxStamina)
+        {
+            value = MaxStamina;
+        }
+        CurrentStamina = value;
+    }
     
     static float m_timer = 0f;
 
@@ -37,7 +73,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     }
 
-    public static void StaminaPlus()
+    public void StaminaPlus()
     {
         // 일정 시간 간격으로 스태미너 증가 처리 (0.05초마다 1씩 증가)
         m_timer += Time.deltaTime;
@@ -49,7 +85,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (CurrentStamina >= 100) CurrentStamina = 100;
     }
 
-    public static void StaminaMinus()
+    public void StaminaMinus()
     {
         // 일정 시간 간격으로 스태미너 감소 처리 (0.05초마다 1씩 감소)
         m_timer += Time.deltaTime;
