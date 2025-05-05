@@ -17,6 +17,8 @@ public class HealthUI : MonoBehaviour
         m_hpImage = GetComponent<Image>();
         m_maxHealth = m_playerHealth.GetMaxHealth();
         m_currentHealth = m_playerHealth.GetCurrentHealth();
+        
+        m_playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()

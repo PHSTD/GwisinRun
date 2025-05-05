@@ -37,6 +37,8 @@ public class PlayerMoveCamera : MonoBehaviour
 
         // 초점 처리를 위해
         PlayerCamera.fieldOfView = m_normalFOV;
+        
+        m_playerHealth = GetComponent<PlayerHealth>();
     }
 
     private void Update()

@@ -17,6 +17,8 @@ public class StaminaUI : MonoBehaviour
         m_stImage = GetComponent<Image>();
         m_maxStamina = m_playerHealth.GetMaxStamina();
         m_currentStamina = m_playerHealth.GetCurrentStamina();
+        
+        m_playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
