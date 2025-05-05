@@ -1014,7 +1014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5491169472677697319, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: MonsterPower
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5491169472677697319, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ViewRadius
