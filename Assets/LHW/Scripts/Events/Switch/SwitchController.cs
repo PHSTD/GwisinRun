@@ -24,6 +24,7 @@ public class SwitchController : MonoBehaviour, IInteractable
         {
             m_button.GetComponent<MeshRenderer>().material.color = Color.white;
         }
+        GameManager.Instance.Audio.PlaySound(SoundType.Switch);
     }
 
     private void boolAnimator(Animator animator)

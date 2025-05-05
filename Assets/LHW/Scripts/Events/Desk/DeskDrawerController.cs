@@ -30,9 +30,18 @@ public class DeskDrawerController : MonoBehaviour, IInteractable
         bool isOpen = animator.GetBool("IsOpen");
         isOpen = !isOpen;
         animator.SetBool("IsOpen", isOpen);
+
+        if (isOpen)
+        {
+            GameManager.Instance.Audio.PlaySound(SoundType.DrawerOpen);
+        }
+        else
+        {
+            GameManager.Instance.Audio.PlaySound(SoundType.DrawerClose);
+        }
     }
 
-    // ¾Æ¿ô¶óÀÎ ¼ÎÀÌ´õ °ü·Ã ¿À·ù·Î ¿ì¼± ÁÖ¼® Ã³¸® (¿¡¼Â»óÀÇ ¿À·ù·Î ÃßÁ¤)
+    // ï¿½Æ¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ì¼± ï¿½Ö¼ï¿½ Ã³ï¿½ï¿½ (ï¿½ï¿½ï¿½Â»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     /*
     private void ChangeMat(bool isDetected)
     {

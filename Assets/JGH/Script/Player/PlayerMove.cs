@@ -97,17 +97,31 @@ public class PlayerMove : MonoBehaviour
         if (move == Vector3.zero)
         {
             if(m_previousMoveState != PlayerMoveState.Idle)
+            {
+                if(m_previousMoveState == PlayerMoveState.Run)
+                    GameManager.Instance.Graphics.IdleAndWalkDistortion();
+                
                 m_previousMoveState = PlayerMoveState.Idle;
+            }
         }
         else if (Speed == m_runSpeed)
         {
-            if(m_previousMoveState != PlayerMoveState.Run)
+            if (m_previousMoveState != PlayerMoveState.Run)
+            {
                 m_previousMoveState = PlayerMoveState.Run;
+                GameManager.Instance.Graphics.RunDistortion();
+            }
+            
         }
         else if (Speed == WalkSpeed)
         {
-            if(m_previousMoveState != PlayerMoveState.Walk)
+            if (m_previousMoveState != PlayerMoveState.Walk)
+            {
+                if(m_previousMoveState == PlayerMoveState.Run)
+                    GameManager.Instance.Graphics.IdleAndWalkDistortion();
+                
                 m_previousMoveState = PlayerMoveState.Walk;
+            }
         }
         
         GameManager.Instance.Audio.PlayMoveSound(m_previousMoveState);

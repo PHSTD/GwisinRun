@@ -10,6 +10,7 @@ public class AudioSetting : MonoBehaviour
     
     [Header("Audio Source")]
     [SerializeField] private AudioSource m_BGMSource;
+    [SerializeField] private AudioSource m_heartBeatSource;
     [SerializeField] private AudioSource m_SFXSource;
 
     [Header("Audio Clip")]
@@ -20,6 +21,16 @@ public class AudioSetting : MonoBehaviour
     public AudioClip IdleSound;
     public AudioClip WalkSound;
     public AudioClip RunSound;
+    public AudioClip PotionSound;
+    public AudioClip GhostAttackSound;
+    public AudioClip SwitchSound;
+    public AudioClip LockedDoorSound;
+    public AudioClip GetItemSound;
+    public AudioClip DropItemSound;
+    public AudioClip DoorOpenSound;
+    public AudioClip DoorCloseSound;
+    public AudioClip DrawerOpenSound;
+    public AudioClip DrawerCloseSound;
 
     private AudioModel m_initVolume = new AudioModel(0.5f, 0.5f);
     private AudioModel m_currentVolumeDB;
@@ -82,6 +93,7 @@ public class AudioSetting : MonoBehaviour
     {
         float dB = CalculateVolumeToDB(volume);
         m_audioMixer.SetFloat("SFX", dB);
+        m_audioMixer.SetFloat("HeartBeat", dB);
         return CalculateDBToVolume(dB);
     }
 
@@ -105,6 +117,7 @@ public class AudioSetting : MonoBehaviour
     {
         m_audioMixer.SetFloat("BGM", m_currentVolumeDB.BGMVolume);
         m_audioMixer.SetFloat("SFX", m_currentVolumeDB.SFXVolume);
+        m_audioMixer.SetFloat("HeartBeat", m_currentVolumeDB.SFXVolume);
     }
 
     public void ResetVolume()
@@ -112,14 +125,14 @@ public class AudioSetting : MonoBehaviour
         VolumeInit();
     }
 
-    public void PlaySFX(AudioClip clip)
+    public void PlayClickSound()
     {
-        m_SFXSource.PlayOneShot(clip);
+        m_SFXSource.PlayOneShot(Click);
     }
 
     public void PlayMoveSound(PlayerMoveState state)
     {
-        if (m_SFXSource.isPlaying || !m_canPlay)
+        if (m_heartBeatSource.isPlaying || !m_canPlay)
             return;
 
         float delayTime = 0f;
@@ -127,27 +140,65 @@ public class AudioSetting : MonoBehaviour
         switch (state)
         {
             case PlayerMoveState.Idle:
-                m_SFXSource.clip = IdleSound;
+                m_heartBeatSource.clip = IdleSound;
                 delayTime = 0.8f;
                 break;
             case PlayerMoveState.Walk:
-                m_SFXSource.clip = WalkSound;
+                m_heartBeatSource.clip = WalkSound;
                 delayTime = 0.6f;
                 break;
             case PlayerMoveState.Run:
-                m_SFXSource.clip = RunSound;
+                m_heartBeatSource.clip = RunSound;
                 delayTime = 0.35f;
                 break;
         }
-        m_SFXSource.Play();
+        m_heartBeatSource.Play();
         m_canPlay = false;
-        StartCoroutine(PlayMoveSoundStopDeleay(delayTime));
+        StartCoroutine(PlayMoveSoundStopDelay(delayTime));
     }
     
-    IEnumerator PlayMoveSoundStopDeleay(float delayTime)
+    IEnumerator PlayMoveSoundStopDelay(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
-        m_SFXSource.Stop();
+        m_heartBeatSource.Stop();
         m_canPlay = true;
+    }
+
+    public void PlaySound(SoundType type)
+    {
+        switch (type)
+        {
+            case SoundType.Potion:
+                m_SFXSource.PlayOneShot(PotionSound);
+                break;
+            case SoundType.GhostAttack:
+                m_SFXSource.PlayOneShot(GhostAttackSound);
+                break;
+            case SoundType.Switch:
+                m_SFXSource.PlayOneShot(SwitchSound);
+                break;
+            case SoundType.LockedDoor:
+                m_SFXSource.PlayOneShot(LockedDoorSound);
+                break;
+            case SoundType.GetItem:
+                m_SFXSource.PlayOneShot(GetItemSound);
+                break;
+            case SoundType.DropItem:
+                m_SFXSource.PlayOneShot(DropItemSound);
+                break;
+            case SoundType.DoorOpen:
+                m_SFXSource.PlayOneShot(DoorOpenSound);
+                break;
+            case SoundType.DoorClose:
+                m_SFXSource.PlayOneShot(DoorCloseSound);
+                break;
+            case SoundType.DrawerOpen:
+                m_SFXSource.PlayOneShot(DrawerOpenSound);
+                break;
+            case SoundType.DrawerClose:
+                m_SFXSource.PlayOneShot(DrawerOpenSound);
+                // m_SFXSource.PlayOneShot(DrawerCloseSound);
+                break;
+        }
     }
 }
