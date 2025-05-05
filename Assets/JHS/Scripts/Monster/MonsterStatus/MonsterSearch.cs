@@ -5,37 +5,34 @@ using UnityEngine;
 public class MonsterSearch : IMonsterState 
 {
     private Monster monster;
-    private int m_searchCount;
 
     public void SetMonster(Monster monster)
     {
         this.monster = monster;
     }
     
+    private int m_searchCount;
+
     private IEnumerator SearchRoutine()
     {
-        m_searchCount = 0;
         while (true)
         {
+            Debug.Log(m_searchCount);
             Transform target = monster.FindVisibleTarget();
             if(target != null)
             {
-                monster.CurrentTarget = target;
+                Debug.Log("MonsterSearchState Chase 상태로 변경");
                 monster.ChangeState(monster.GetChaseState());
-                monster.SetCurrentStateString("Chase");
-                yield break; // 코루틴 명시적 종료
             }
             else if(monster.IsArrived())
             {
                 monster.MoveToRandomSearchPoint();
                 ++m_searchCount;
-                
                 Debug.Log($"Search Count: {m_searchCount}/{monster.searchMoveCount}");
                 if(m_searchCount > monster.searchMoveCount)
                 {
                     Debug.Log("MonsterSearchState Patrol 상태로 변경");
-                    monster.ChangeState(monster.GetMonsterPatrol());
-                    monster.SetCurrentStateString("Patrol");
+                    monster.ChangeState(monster.GetPatrolState());
                     yield break; // 코루틴 명시적 종료
                 }
             }

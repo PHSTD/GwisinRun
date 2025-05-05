@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour, IInteractable
@@ -30,10 +31,12 @@ public class DoorController : MonoBehaviour, IInteractable
             m_isClosed = m_doorAnimator.GetBool("Close");
             if (m_doortrigger1.MonsterDetected() && m_isClosed)
             {
+                GameManager.Instance.Audio.PlaySound(SoundType.DoorOpen);
                 OpenDoorCounterClockwise();
             }
             else if (m_doortrigger2.MonsterDetected() && m_isClosed)
             {
+                GameManager.Instance.Audio.PlaySound(SoundType.DoorOpen);
                 OpenDoorClockwise();
             }
             else if (m_doortrigger1.MonsterDetected() || m_doortrigger2.MonsterDetected())
@@ -51,21 +54,30 @@ public class DoorController : MonoBehaviour, IInteractable
         {
             if (m_close == true && m_doortrigger1.PlayerDetected())
             {
+                GameManager.Instance.Audio.PlaySound(SoundType.DoorOpen);
                 OpenDoorCounterClockwise();
             }
             else if (m_close == true && m_doortrigger2.PlayerDetected())
             {
+                GameManager.Instance.Audio.PlaySound(SoundType.DoorOpen);
                 OpenDoorClockwise();
             }
             else if (m_close == false)
             {
                 CloseDoor();
+                StartCoroutine(CloseDoorCoroutine());
             }
             else
             {
                 return;
             }
         }
+    }
+
+    IEnumerator CloseDoorCoroutine()
+    {
+        yield return new WaitForSeconds(0.8f);
+        GameManager.Instance.Audio.PlaySound(SoundType.DoorClose);
     }
 
     // 애니메이터 처리 부분

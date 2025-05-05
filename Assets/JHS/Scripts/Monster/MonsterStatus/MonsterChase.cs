@@ -4,9 +4,6 @@ using UnityEngine;
 public class MonsterChase : IMonsterState 
 {
     private Monster monster;
-    private float chaseTimer;
-    private float maxChaseTime = 5f;
-    
 
     public void SetMonster(Monster monster)
     {
@@ -17,9 +14,9 @@ public class MonsterChase : IMonsterState
     {
         while (true)
         {
-            if (monster.CurrentTarget != null)
+            Transform target = monster.FindVisibleTarget();
+            if (target != null)
             {
-                Transform target = monster.CurrentTarget;
                 monster.navMesh.SetDestination(target.position);
                 
                 // OnTargetDistanceChanged 이벤트가 제대로 동작하지 않을 경우를 대비한 보조 로직
@@ -27,20 +24,13 @@ public class MonsterChase : IMonsterState
                 if (distanceToTarget <= monster.attackRange && monster.CanAttack() && !monster.IsAttacking())
                 {
                     Debug.Log("ChaseRoutine detected attack range - changing to Attack state");
-                    monster.ChangeState(monster.GetMonsterAttack());
-                    monster.SetCurrentStateString("Attack");
+                    monster.ChangeState(monster.GetAttackState()); 
                     yield break;
                 }
             }
-            
-            // 추격 제한 시간 초과
-            chaseTimer += monster.stateTickDelay;
-            if (chaseTimer >= maxChaseTime)
+            else
             {
-                monster.CurrentTarget = null;
                 monster.ChangeState(monster.GetSearchState());
-                monster.SetCurrentStateString("Search");
-                yield break;
             }
             
             yield return new WaitForSeconds(monster.stateTickDelay);

@@ -74,10 +74,4 @@ public class AudioSettingUI : MonoBehaviour
         m_SFXSlider.value = SFXVolume;
         m_SFXTextValue.text = $"{(int)(SFXVolume * 100),0}%";
     }
-
-    public void PlayButton()
-    {
-        GameManager.Instance.Audio.PlaySFX(GameManager.Instance.Audio.Click);
-    }
-
 }

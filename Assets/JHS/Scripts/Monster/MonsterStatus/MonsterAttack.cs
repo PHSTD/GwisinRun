@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterAttack : IMonsterState 
@@ -40,12 +39,10 @@ public class MonsterAttack : IMonsterState
             if (monster.CurrentTarget != null)
             {
                 monster.ChangeState(monster.GetChaseState());
-                monster.SetCurrentStateString("Chase");
             }
             else
             {
                 monster.ChangeState(monster.GetSearchState());
-                monster.SetCurrentStateString("Search");
             }
         }
     }

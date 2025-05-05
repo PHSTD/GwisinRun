@@ -30,7 +30,6 @@ public class Monster : MonoBehaviour
     private float lastAttackTime = 0f;
 
     private string m_currentState;
-
     //==========================================추가 5월5일
 
     private IMonsterState m_currentStateInstance;
@@ -39,10 +38,7 @@ public class Monster : MonoBehaviour
     private MonsterSearch m_monsterSearch;
     private MonsterPatrol m_monsterPatrol;
     private MonsterAttack m_monsterAttack;
-    public IMonsterState GetChaseState() => m_monsterChase;
-    public IMonsterState GetSearchState() => m_monsterSearch;
-    public IMonsterState GetMonsterPatrol() => m_monsterPatrol;
-    public IMonsterState GetMonsterAttack() => m_monsterAttack;
+    private MonsterDoorOpen m_monsterDoorOpen;
     
     // Monster.cs에 추가
     [Header("Door Detection")]
@@ -51,17 +47,16 @@ public class Monster : MonoBehaviour
 
     private Coroutine customCoroutine;
     
-    public void SetCurrentStateString(string stateName) => m_currentState = stateName;
+    public IMonsterState GetChaseState() => m_monsterChase;
+    public IMonsterState GetSearchState() => m_monsterSearch;
+    public IMonsterState GetPatrolState() => m_monsterPatrol;
+    public IMonsterState GetAttackState() => m_monsterAttack;
     
     [SerializeField] private float detectionRadius = 10f;
     [SerializeField] private LayerMask targetLayer;
     
     private Transform currentTarget;
-    public Transform CurrentTarget
-    {
-        get => currentTarget;
-        set => currentTarget = value;
-    }
+    public Transform CurrentTarget { get; private set; }
     
     public int attackPower = 20; // 공격력
     
@@ -91,6 +86,9 @@ public class Monster : MonoBehaviour
 
         m_monsterSearch = new MonsterSearch();
         m_monsterSearch.SetMonster(this);
+
+        // m_monsterDoorOpen = new MonsterDoorOpen();
+        // m_monsterDoorOpen.SetMonster(this);
         
         navMesh = GetComponent<NavMeshAgent>();
         
@@ -98,6 +96,7 @@ public class Monster : MonoBehaviour
         
     }
     
+    //시야 반경 내에서 모든 오브젝트를 가져온뒤 플레이어만 지정해서 IsTargetVisible 호출출
     public Transform FindVisibleTarget()
     {
         // 시야 반경 내의 타겟 검색
@@ -127,8 +126,8 @@ public class Monster : MonoBehaviour
             return false;
 
         // 시야 거리 체크
-        if (sqrDistanceToTarget > m_ViewRadius * m_ViewRadius)
-            return false;
+        // if (sqrDistanceToTarget > m_ViewRadius * m_ViewRadius)
+        //     return false;
 
         // 장애물 체크 (Raycast)
         if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
@@ -140,7 +139,10 @@ public class Monster : MonoBehaviour
 
         return true;
     }
-
+    
+    //플레이어 체크시 걸리는 레이에 문이 있다면
+    //문 타겟을 가져온뒤 문 상태로 이동
+    //문 데이터구조를 가져올 수 있는 함수를 만들어야 함
     private void Start()
     {
         ChangeState(m_monsterPatrol);
@@ -149,10 +151,13 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
+        if (currentTarget != null)
+        {
+            LookAtTarget(currentTarget);
+            HandleAttackDistance(); // 또는 거리 체크 등
+        }
         
         LookAtTarget(currentTarget);
-        HandleAttackDistance(); // 또는 거리 체크 등
-        
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
         {
             navMesh.isStopped = true;

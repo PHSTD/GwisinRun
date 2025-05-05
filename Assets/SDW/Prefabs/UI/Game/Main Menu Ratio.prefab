@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3819421780675891460}
   - component: {fileID: 6902108393749089916}
+  - component: {fileID: 7764970252320177484}
   m_Layer: 5
   m_Name: Main Menu Ratio
   m_TagString: Untagged
@@ -55,6 +56,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 3
   m_AspectRatio: 0.001
+--- !u!114 &7764970252320177484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736379428785602296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12230c8dc3a38454c8846b11bee49f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6766898416421923657
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,11 +273,6 @@ RectTransform:
 --- !u!1 &2433452961418874355 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2428002434018665351, guid: 2a4bf489d3ef8b84b9cf208bf16bde32, type: 3}
-  m_PrefabInstance: {fileID: 32831188759080564}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2520356047359226070 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2490131820047457954, guid: 2a4bf489d3ef8b84b9cf208bf16bde32, type: 3}
   m_PrefabInstance: {fileID: 32831188759080564}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &841543428235335519
@@ -517,10 +525,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 9163806668846964367}
-    - target: {fileID: 7239450939533501357, guid: fe08b1a3d16ec144b9c7c5b0943939bd, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 2520356047359226070}
     - target: {fileID: 7930840794644653368, guid: fe08b1a3d16ec144b9c7c5b0943939bd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
