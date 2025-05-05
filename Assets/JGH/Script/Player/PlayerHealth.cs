@@ -49,11 +49,17 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     static float m_timer = 0f;
 
     private PlayerController m_playerController;
+    
+    private void Awake()
+    {
+        CurrentHealth = MaxHealth;
+        CurrentStamina = MaxStamina;
+    }
 
     private void Start()
     {
         CurrentHealth = MaxHealth;
-        CurrentStamina= MaxStamina;
+        CurrentStamina = MaxStamina;
     }
 
     public void TakeDamage(int amount)
@@ -73,7 +79,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     }
 
-    public void StaminaPlus()
+    public int StaminaPlus()
     {
         // 일정 시간 간격으로 스태미너 증가 처리 (0.05초마다 1씩 증가)
         m_timer += Time.deltaTime;
@@ -83,9 +89,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             m_timer = 0f;
         }
         if (CurrentStamina >= 100) CurrentStamina = 100;
+        
+        return CurrentStamina;
     }
 
-    public void StaminaMinus()
+    public int StaminaMinus()
     {
         // 일정 시간 간격으로 스태미너 감소 처리 (0.05초마다 1씩 감소)
         m_timer += Time.deltaTime;
@@ -102,7 +110,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
             // 완전히 탈진하면 강제로 걷기 속도로 고정
             PlayerMove.Speed = PlayerMove.WalkSpeed;
-            return;
+            return 0;
         }
 
         // 현재 스태미너 비율 
@@ -121,5 +129,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             // 보간된 속도를 적용
             PlayerMove.Speed = targetSpeed;
         }
+
+        return CurrentStamina;
     }
 }

@@ -10,6 +10,8 @@ public class PlayerUseItem : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
+        
+        m_playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()

@@ -57,6 +57,7 @@ public class PlayerMove : MonoBehaviour
         m_originalPlayerScale = PlayerController.PlayerTransform.localScale;
         m_sitPlayerScale = new Vector3(m_originalPlayerScale.x, m_originalPlayerScale.y * 0.5f, m_originalPlayerScale.z);
 
+        m_playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
