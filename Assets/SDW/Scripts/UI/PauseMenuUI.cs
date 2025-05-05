@@ -30,6 +30,7 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private GameObject m_controlsSettingDialog;
     [SerializeField] private GameObject m_inventoryContainer;
     [SerializeField] private GameObject m_itemContainer;
+    [SerializeField] private GameObject m_playerStatusUI;
     
     private void OnEnable()
     {
@@ -42,6 +43,7 @@ public class PauseMenuUI : MonoBehaviour
         m_currentTimeContainer.SetActive(false);
         m_inventoryContainer.SetActive(false);
         m_itemContainer.SetActive(false);
+        m_playerStatusUI.SetActive(false);
         
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
         m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_sceneName));
@@ -62,6 +64,7 @@ public class PauseMenuUI : MonoBehaviour
         m_currentTimeContainer.SetActive(true);
         m_inventoryContainer.SetActive(true);
         m_itemContainer.SetActive(true);
+        m_playerStatusUI.SetActive(true);
         
         m_inputSetting.LoadBinding();
         
