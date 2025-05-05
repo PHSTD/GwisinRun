@@ -40,6 +40,7 @@ public class Monster : MonoBehaviour
     private MonsterSearch m_monsterSearch;
     private MonsterPatrol m_monsterPatrol;
     private MonsterAttack m_monsterAttack;
+    private MonsterDoorOpen m_monsterDoorOpen;
     
     // Monster.cs에 추가
     [Header("Door Detection")]
@@ -50,6 +51,9 @@ public class Monster : MonoBehaviour
     
     public IMonsterState GetChaseState() => m_monsterChase;
     public IMonsterState GetSearchState() => m_monsterSearch;
+    public IMonsterState GetPatrolState() => m_monsterPatrol;
+    public IMonsterState GetAttackState() => m_monsterAttack;
+    public IMonsterState GetDoorOpenState() => m_monsterDoorOpen;
     public void SetCurrentStateString(string stateName) => m_currentState = stateName;
     
     [SerializeField] private float detectionRadius = 10f;
@@ -83,13 +87,14 @@ public class Monster : MonoBehaviour
         if (m_monsterAttack == null) m_monsterAttack = gameObject.AddComponent<MonsterAttack>();
         m_monsterAttack.SetMonster(this);
 
-        m_monsterChase = GetComponent<MonsterChase>();
-        if (m_monsterChase == null) m_monsterChase = gameObject.AddComponent<MonsterChase>();
+        m_monsterChase = new MonsterChase();
         m_monsterChase.SetMonster(this);
 
-        m_monsterSearch = GetComponent<MonsterSearch>();
-        if (m_monsterSearch == null) m_monsterSearch = gameObject.AddComponent<MonsterSearch>();
+        m_monsterSearch = new MonsterSearch();
         m_monsterSearch.SetMonster(this);
+
+        m_monsterDoorOpen = new MonsterDoorOpen();
+        m_monsterDoorOpen.SetMonster(this);
         
         navMesh = GetComponent<NavMeshAgent>();
         
@@ -97,6 +102,7 @@ public class Monster : MonoBehaviour
         
     }
     
+    //시야 반경 내에서 모든 오브젝트를 가져온뒤 플레이어만 지정해서 IsTargetVisible 호출출
     public Transform FindVisibleTarget()
     {
         // 시야 반경 내의 타겟 검색
@@ -126,8 +132,8 @@ public class Monster : MonoBehaviour
             return false;
 
         // 시야 거리 체크
-        if (sqrDistanceToTarget > m_ViewRadius * m_ViewRadius)
-            return false;
+        // if (sqrDistanceToTarget > m_ViewRadius * m_ViewRadius)
+        //     return false;
 
         // 장애물 체크 (Raycast)
         if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
@@ -139,7 +145,51 @@ public class Monster : MonoBehaviour
 
         return true;
     }
+    //플레이어 체크시 걸리는 레이에 문이 있다면
+    //문 타겟을 가져온뒤 문 상태로 이동
+    //문 데이터구조를 가져올 수 있는 함수를 만들어야 함
+    //
 
+    public Transform FindVisibleTarget(out DoorController doorController)
+    {
+        doorController = null;
+        // 시야 반경 내의 타겟 검색
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, m_ViewRadius, m_TargetMask);
+
+        foreach (var collider in targetsInViewRadius)
+        {
+            Transform target = collider.transform;
+            Vector3 origin = transform.position;
+            Vector3 dirToTarget = (target.position - origin);
+            float sqrDistanceToTarget = dirToTarget.sqrMagnitude;
+            // 시야각 체크
+            float angleToTarget = Vector3.Angle(transform.forward, dirToTarget.normalized);
+            if (angleToTarget > m_ViewAngle * 0.5f)
+                continue;
+            if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, 
+                Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
+            {
+                // 장애물이 타겟보다 앞에 있는 경우
+                if (hit.transform != target)
+                {
+                    
+                    Transform door = hit.transform;
+                    if(door != null)
+                    {
+                          
+                        
+                        Debug.Log("문이 시야를 가로막고 있습니다: " + door);
+                    }
+                    continue;
+                }
+            }
+            //모든 체크를 통과했으면 타겟이 보인다
+            CurrentTarget = target;
+            return target;
+        }
+        CurrentTarget = null;
+        return null;
+    }
     private void Start()
     {
         ChangeState(m_monsterPatrol);

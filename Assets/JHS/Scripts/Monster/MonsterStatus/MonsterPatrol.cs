@@ -37,12 +37,18 @@ public class MonsterPatrol : Monster, IMonsterState
     {
         while (true)
         {
-            // 타겟 감지는 FieldOfViewSystem에서 이벤트로 처리하므로 제거
-            // 단순히 패트롤 로직만 유지
+            Transform target = monster.FindVisibleTarget();
+            if(target != null)
+            {
+                monster.ChangeState(monster.GetChaseState());
+            }
+            
+            // 패트롤 로직
             if (monster.IsArrived())
             {
                 repeatPatrol();
             }
+
             yield return new WaitForSeconds(monster.stateTickDelay);
         }
     }

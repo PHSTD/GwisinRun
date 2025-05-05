@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterSearch : Monster, IMonsterState 
+public class MonsterSearch : IMonsterState 
 {
     private Monster monster;
 
@@ -22,8 +22,7 @@ public class MonsterSearch : Monster, IMonsterState
             if(target != null)
             {
                 Debug.Log("MonsterSearchState Chase 상태로 변경");
-                // monster.FSM.ChangeState(MonsterState.Chase);
-                yield break; // 코루틴 명시적 종료
+                monster.ChangeState(monster.GetChaseState());
             }
             else if(monster.IsArrived())
             {
@@ -33,7 +32,7 @@ public class MonsterSearch : Monster, IMonsterState
                 if(m_searchCount > monster.searchMoveCount)
                 {
                     Debug.Log("MonsterSearchState Patrol 상태로 변경");
-                    // monster.FSM.ChangeState(MonsterState.Patrol);
+                    monster.ChangeState(monster.GetPatrolState());
                     yield break; // 코루틴 명시적 종료
                 }
             }
