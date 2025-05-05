@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterChase : Monster,IMonsterState 
+public class MonsterChase : IMonsterState 
 {
     private Monster monster;
 
@@ -15,9 +15,10 @@ public class MonsterChase : Monster,IMonsterState
     {
         while (true)
         {
-            if (monster.CurrentTarget != null)
+            DoorController door;
+            Transform target = monster.FindVisibleTarget(out door);
+            if (target != null)
             {
-                Transform target = monster.CurrentTarget;
                 monster.navMesh.SetDestination(target.position);
                 
                 // OnTargetDistanceChanged 이벤트가 제대로 동작하지 않을 경우를 대비한 보조 로직
@@ -25,9 +26,17 @@ public class MonsterChase : Monster,IMonsterState
                 if (distanceToTarget <= monster.attackRange && monster.CanAttack() && !monster.IsAttacking())
                 {
                     Debug.Log("ChaseRoutine detected attack range - changing to Attack state");
-                    // monster.FSM.ChangeState(MonsterState.Attack);
+                    monster.ChangeState(monster.GetAttackState()); 
                     yield break;
                 }
+            }
+            else if(door != null)
+            {   
+                monster.ChangeState(monster.GetDoorOpenState());
+            }
+            else
+            {
+                monster.ChangeState(monster.GetSearchState());
             }
             
             yield return new WaitForSeconds(monster.stateTickDelay);
