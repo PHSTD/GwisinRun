@@ -10,7 +10,8 @@ public enum MonsterState
     Patrol,
     Chase,
     Search,
-    Attack
+    Attack,
+    WaitAtDoor  // 추가된 상태
 }
 
 
@@ -245,4 +246,7 @@ public class MonsterAttackState : FsmState<MonsterState>
             monster.FSM.ChangeState(MonsterState.Search);
         }
     }
+
+
 }
+
