@@ -391,8 +391,12 @@ MonoBehaviour:
   m_audioMixer: {fileID: 24100000, guid: 3426ce1bdc9e6cc4abf0ca094a8aa1c6, type: 2}
   m_BGMSource: {fileID: 7796498002444201574}
   m_SFXSource: {fileID: 6648308706414974984}
-  Background: {fileID: 8300000, guid: 37a4f289bc951e84382faba17679e81b, type: 3}
+  TitleBackground: {fileID: 8300000, guid: c9883c1ebf8ac4bdab6f329b9ca13625, type: 3}
+  SceneBackground: {fileID: 8300000, guid: 54e73de44f5a8184b99deb711665b08c, type: 3}
   Click: {fileID: 8300000, guid: 7ba4e8cc38627344fbf763eec1b9f656, type: 3}
+  IdleSound: {fileID: 8300000, guid: f5b70d450f3224aa087129fecf0b708b, type: 3}
+  WalkSound: {fileID: 8300000, guid: eed2ff013633741069d8c9127eb44f90, type: 3}
+  RunSound: {fileID: 8300000, guid: c8cb7a2a50e8c421286ace7166f9a383, type: 3}
 --- !u!114 &3755818551790341460
 MonoBehaviour:
   m_ObjectHideFlags: 0
