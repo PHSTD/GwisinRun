@@ -12,28 +12,28 @@ public class PlayerIneration : MonoBehaviour
     [Header("Drop Position")]
     [SerializeField] private Transform m_dropTransform;
     [SerializeField] private float m_dropForce = 5f;
-    
+
     private Coroutine m_interactionCoroutine;
     private GameObject m_detectedObject;
-    
+
     //# 수정 사항(20250503) -- 시작
     [SerializeField] GameObject m_panel;
     [SerializeField] private TMP_Text m_popupText;
     //# 수정 사항(20250503) -- 끝
 
-    
+
     void Update()
     {
         //# 수정 사항(20250502) -- 시작
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
             return;
         //# 수정 사항(20250502) -- 끝
-        
+
         //# 수정 사항(20250503) -- 시작
         DetectInteractableObjectByRay();
-        
+
         DisplayInteractableObjectUI();
-        
+
         if (m_detectedObject != null && GameManager.Instance.Input.InteractionKeyPressed)
         {
             InteractWithObject();
@@ -45,7 +45,7 @@ public class PlayerIneration : MonoBehaviour
         }
         //# 수정 사항(20250503) -- 끝
     }
-    
+
     //# 수정 사항(20250503) -- 시작
     private void DisplayInteractableObjectUI()
     {
@@ -54,7 +54,7 @@ public class PlayerIneration : MonoBehaviour
             m_panel.SetActive(false);
             return;
         }
-        
+
         var interactionKey = PlayerPrefs.GetString("Interaction");
         if (m_detectedObject.CompareTag("Item"))
         {
@@ -64,10 +64,18 @@ public class PlayerIneration : MonoBehaviour
 
         else if (m_detectedObject.CompareTag("InteractableObject"))
         {
-            m_popupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
-            m_panel.SetActive(true);
+            if (m_detectedObject.GetComponent<IsLockedDoor>() != null && m_detectedObject.GetComponent<IsLockedDoor>().IsLocked())
+            {
+                m_popupText.text = "잠긴 문입니다. 열쇠를 찾아주세요.";
+                m_panel.SetActive(true);
+            }
+            else
+            {
+                m_popupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
+                m_panel.SetActive(true);
+            }
         }
-        
+
     }
 
     void InteractWithObject()
@@ -76,7 +84,7 @@ public class PlayerIneration : MonoBehaviour
 
         if (interactableObject == null)
             return;
-        
+
         if (m_interactionCoroutine == null)
         {
             interactableObject.Interact();
@@ -96,7 +104,7 @@ public class PlayerIneration : MonoBehaviour
                 m_detectedObject = null;
                 return;
             }
-            
+
             m_detectedObject = hitInfo.collider.gameObject;
         }
     }
@@ -105,9 +113,9 @@ public class PlayerIneration : MonoBehaviour
     {
         Debug.Log($"Forward : {transform.forward}");
         GameManager.Instance.Inventory.DropItem(m_dropTransform.position, transform.forward, m_dropForce);
-        
+
     }
-    
+
     IEnumerator InteractionDelay()
     {
         yield return new WaitForSeconds(0.1f);
