@@ -13,16 +13,36 @@ public class AudioSetting : MonoBehaviour
     [SerializeField] private AudioSource m_SFXSource;
 
     [Header("Audio Clip")]
-    public AudioClip Background;
+    public AudioClip TitleBackground;
+    public AudioClip SceneBackground;
+    
     public AudioClip Click;
+    public AudioClip IdleSound;
+    public AudioClip WalkSound;
+    public AudioClip RunSound;
 
     private AudioModel m_initVolume = new AudioModel(0.5f, 0.5f);
     private AudioModel m_currentVolumeDB;
+    private bool m_canPlay = true;
 
     private void Start()
     {
         VolumeInit();
-        m_BGMSource.clip = Background;
+        m_BGMSource.clip = TitleBackground;
+        m_BGMSource.Play();
+    }
+
+    public void ChangeToTitleScene()
+    {
+        m_BGMSource.Stop();
+        m_BGMSource.clip = TitleBackground;
+        m_BGMSource.Play();
+    }
+
+    public void ChangeToGameScene()
+    {
+        m_BGMSource.Stop();
+        m_BGMSource.clip = SceneBackground;
         m_BGMSource.Play();
     }
     
@@ -95,5 +115,39 @@ public class AudioSetting : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         m_SFXSource.PlayOneShot(clip);
+    }
+
+    public void PlayMoveSound(PlayerMoveState state)
+    {
+        if (m_SFXSource.isPlaying || !m_canPlay)
+            return;
+
+        float delayTime = 0f;
+        
+        switch (state)
+        {
+            case PlayerMoveState.Idle:
+                m_SFXSource.clip = IdleSound;
+                delayTime = 0.8f;
+                break;
+            case PlayerMoveState.Walk:
+                m_SFXSource.clip = WalkSound;
+                delayTime = 0.6f;
+                break;
+            case PlayerMoveState.Run:
+                m_SFXSource.clip = RunSound;
+                delayTime = 0.35f;
+                break;
+        }
+        m_SFXSource.Play();
+        m_canPlay = false;
+        StartCoroutine(PlayMoveSoundStopDeleay(delayTime));
+    }
+    
+    IEnumerator PlayMoveSoundStopDeleay(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        m_SFXSource.Stop();
+        m_canPlay = true;
     }
 }
