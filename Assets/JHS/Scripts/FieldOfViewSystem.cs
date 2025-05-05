@@ -23,6 +23,16 @@ public class FieldOfViewSystem : MonoBehaviour
     [SerializeField] private float m_ViewAngle = 90f;
     [SerializeField] private LayerMask m_TargetMask;
     [SerializeField] private LayerMask m_ObstacleMask;
+
+
+
+
+
+    // FieldOfViewSystem.cs에 추가
+    [SerializeField] private float targetMemoryDuration = 3.0f; // 타겟이 사라진 후 기억하는 시간
+    private float targetLostTimer = 0f;
+    private bool isTargetTemporarilyLost = false;
+    private Vector3 lastKnownDirection;     
     
     // (250502) 데미지 변수 추가 :: S
     [Header("MonsterAbility")]
@@ -39,34 +49,57 @@ public class FieldOfViewSystem : MonoBehaviour
     {
         while(true)
         {
+
             var newTarget = FindVisibleTarget();
             
-            // 타겟 발견/손실 이벤트
+            // 타겟 발견 이벤트 (빠진 부분 추가)
             if(newTarget != null && currentTarget == null)
             {
                 currentTarget = newTarget;
                 LastKnownPosition = newTarget.position;
+                isTargetTemporarilyLost = false;
+                targetLostTimer = 0f;
                 OnTargetDetected?.Invoke(newTarget);
             }
-            else if(newTarget == null && currentTarget != null)
+            // 타겟 손실 - 타이머 시작
+            else if(newTarget == null && currentTarget != null && !isTargetTemporarilyLost)
             {
-                OnTargetLost?.Invoke();
-                currentTarget = null;
+                isTargetTemporarilyLost = true;
+                targetLostTimer = 0f;
+                lastKnownDirection = (currentTarget.position - transform.position).normalized;
+            }
+            // 타겟이 다시 시야에 들어옴
+            else if(newTarget != null && isTargetTemporarilyLost)
+            {
+                isTargetTemporarilyLost = false;
+                targetLostTimer = 0f;
+                currentTarget = newTarget;
+            }
+            
+            // 타겟이 일시적으로 사라졌을 때 타이머 업데이트
+            if(isTargetTemporarilyLost)
+            {
+                targetLostTimer += m_DetectionDelay;
+                if(targetLostTimer >= targetMemoryDuration)
+                {
+                    OnTargetLost?.Invoke();
+                    currentTarget = null;
+                    isTargetTemporarilyLost = false;
+                }
             }
             
             // 타겟이 있을 때 추가 정보 업데이트
             if(currentTarget != null)
             {
+                // 원래 코드와 동일한 부분
                 float newDistance = Vector3.Distance(transform.position, currentTarget.position);
                 
-                // 거리 변화 감지
                 if(Mathf.Abs(newDistance - DistanceToTarget) > 0.5f)
                 {
                     DistanceToTarget = newDistance;
                     OnTargetDistanceChanged?.Invoke(DistanceToTarget);
                 }
                 
-                // 마지막 위치 업데이트
                 if(Vector3.Distance(LastKnownPosition, currentTarget.position) > 1f)
                 {
                     LastKnownPosition = currentTarget.position;

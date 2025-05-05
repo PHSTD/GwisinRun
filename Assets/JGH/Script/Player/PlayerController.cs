@@ -12,21 +12,18 @@ public class PlayerController : MonoBehaviour
     
     [Header("Basic Setting")]
     // PlayerController
-    public static CharacterController PlayerCont;
+    [HideInInspector] public CharacterController PlayerCont;
     // Player 위치
-    public static Transform PlayerTransform;
+    [HideInInspector] public Transform PlayerTransform;
     // 머리 충돌 판정 오브젝트
-    public static PlayerHide HeadTriggerObject;
+    [HideInInspector] public PlayerHide HeadTriggerObject;
 
     private void Awake()
     {
         PlayerCont = GetComponent<CharacterController>();
-        PlayerTransform = transform;
         HeadTriggerObject = GetComponentInChildren<PlayerHide>();
-    }
-
-    private void Start()
-    {
+        PlayerTransform = transform;
+        
         GameStartPanel = m_gameStartPanel;
         GameOverPanel = m_gameOverPanel;
     }

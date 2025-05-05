@@ -27,6 +27,14 @@ public class Monster : MonoBehaviour
     public float attackCooldown = 2.0f;
     private bool isAttacking = false; // 공격 중 상태
     private float lastAttackTime = 0f;
+
+    //==========================================추가 5월5일
+    // Monster.cs에 추가
+    [Header("Door Detection")]
+    public float doorWaitTime = 5f;  // 문 앞에서 대기할 시간
+    private Transform lastDoorEntered;
+
+    //==========================================
     public  StateMachine<MonsterState> FSM { get; private set; }
     private Coroutine           customCoroutine;
     private void Awake()
@@ -38,6 +46,7 @@ public class Monster : MonoBehaviour
         FSM.AddState(new MonsterChaseState(this));
         FSM.AddState(new MonsterSearchState(this));
         FSM.AddState(new MonsterAttackState(this));
+        //FSM.AddState(new MonsterWaitAtDoorState(this));
         FSM.ChangeState(MonsterState.Patrol);
         // 이벤트 구독
         RegisterEvents();

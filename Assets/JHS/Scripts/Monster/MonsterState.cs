@@ -10,7 +10,8 @@ public enum MonsterState
     Patrol,
     Chase,
     Search,
-    Attack
+    Attack,
+    WaitAtDoor  // 추가된 상태
 }
 
 
@@ -206,7 +207,7 @@ public class MonsterAttackState : FsmState<MonsterState>
         monster.animator.SetTrigger("IsAttacking");
         
         // 애니메이션 타이밍에 맞춰 데미지 처리
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         
         if (monster.fieldOfViewSystem.currentTarget != null)
         {
@@ -245,4 +246,7 @@ public class MonsterAttackState : FsmState<MonsterState>
             monster.FSM.ChangeState(MonsterState.Search);
         }
     }
+
+
 }
+
