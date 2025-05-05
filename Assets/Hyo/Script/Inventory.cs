@@ -65,6 +65,7 @@ public class Inventory : MonoBehaviour
             item.gameObject.SetActive(false);
             OnAddItem?.Invoke(i, items[i]);
             m_itemCount++;
+            GameManager.Instance.Audio.PlaySound(SoundType.GetItem);
             break;
         }
         
@@ -87,6 +88,8 @@ public class Inventory : MonoBehaviour
             
             items[m_selectedItemIndex] = null;
             item.Use();
+            //# 현재는 사용 가능한 아이템이 표션이기에 포션으로 처리
+            GameManager.Instance.Audio.PlaySound(SoundType.Potion);
             m_itemCount--;
         }
     }
@@ -104,6 +107,7 @@ public class Inventory : MonoBehaviour
                 Destroy(items[i].gameObject);
                 items[i] = null;
                 m_itemCount--;
+                GameManager.Instance.Audio.PlaySound(SoundType.LockedDoor);
                 return true;
             }
         }
@@ -126,7 +130,7 @@ public class Inventory : MonoBehaviour
         items[m_selectedItemIndex] = null;
         
         m_itemCount--;
-        Debug.Log($"{m_selectedItemIndex + 1} 슬롯에 아이템을 버립니다.");
+        GameManager.Instance.Audio.PlaySound(SoundType.DropItem);
     }
 
     public void ClearInventory()

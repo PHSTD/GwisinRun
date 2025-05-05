@@ -205,7 +205,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: -3610262973815887109, guid: f8c815d93633e15449575173ff42974a, type: 3}
         m_TargetAssemblyTypeName: AudioSetting, Assembly-CSharp
-        m_MethodName: PlaySFX
+        m_MethodName: PlayClickSound
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 7ba4e8cc38627344fbf763eec1b9f656, type: 3}

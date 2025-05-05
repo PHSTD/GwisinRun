@@ -33,6 +33,20 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-12395175875390712
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 915d3457fc83e46458bf53d99c65cafc
+  m_EffectName: Attenuation
+  m_MixLevel: 0f795ebed47116248b6ae711d4217f72
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -58,6 +72,7 @@ AudioMixerController:
     - dcba92d13fd1b564d81ff57c886f3d30
     - 801a6996e12f0f142af235f24b409da1
     - 70ff7bc1834523c40babce51865b83e9
+    - b397e28eacecb7b4c9fe1eb72732bf8d
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -73,6 +88,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -2168442838328055271}
   - {fileID: 5874736212905522767}
+  - {fileID: 1305757791894703126}
   m_Volume: e152454f7b8a3ab4f9acc6db79812cb8
   m_Pitch: 207218ebddcc4c74ba92bdd619f16dfc
   m_Send: 00000000000000000000000000000000
@@ -108,6 +124,25 @@ AudioMixerSnapshotController:
   m_FloatValues:
     816e1dbb83048ec47927f32e56b1c0dd: 0
   m_TransitionOverrides: {}
+--- !u!243 &1305757791894703126
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HeartBeat
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: b397e28eacecb7b4c9fe1eb72732bf8d
+  m_Children: []
+  m_Volume: b086d501659c3cd49a2e9c6b79e981f1
+  m_Pitch: d79e3609c48950b4084ad537cfa6a911
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -12395175875390712}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &3422791377191014509
 AudioMixerEffectController:
   m_ObjectHideFlags: 3

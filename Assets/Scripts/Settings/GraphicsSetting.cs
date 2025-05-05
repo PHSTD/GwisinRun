@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Serialization;
@@ -12,6 +14,12 @@ public class GraphicsSetting : MonoBehaviour
     [SerializeField] private PostProcessProfile m_UIBrightness;
     [SerializeField] private PostProcessProfile m_mainCameraProfile;
     [SerializeField] private PostProcessLayer m_postProcessLayer;
+    [SerializeField] private PostProcessVolume m_mainCameraVolume;
+    [SerializeField] private float m_idleDistortion = 40f;
+    [SerializeField] private float m_runDistortion = -30f;
+    
+    private LensDistortion m_lensDistortion;
+    
     
     private GraphicsModel m_defaultSetting;
     public GraphicsModel DefaultSetting => m_defaultSetting;
@@ -42,6 +50,7 @@ public class GraphicsSetting : MonoBehaviour
         m_mainCameraProfile.TryGetSettings(out m_mainCameraExposure);
 
         m_postProcessLayer = Camera.main.GetComponent<PostProcessLayer>();
+        m_mainCameraVolume.profile.TryGetSettings(out m_lensDistortion);
 
         // SetBrightness(m_defaultSetting.Brightness);
         // SetFullScreen(m_defaultSetting.IsFullScreen);
@@ -123,5 +132,36 @@ public class GraphicsSetting : MonoBehaviour
 
         index = currentResolutionIndex;
         return options;
+    }
+
+    public void RunDistortion()
+    {
+        if (m_lensDistortion != null)
+        {
+            StartCoroutine(ChangeDistortion(true));
+        }
+    }
+
+    public void IdleAndWalkDistortion()
+    {
+        if (m_lensDistortion != null)
+        {
+            StartCoroutine(ChangeDistortion(false));
+        }
+    }
+    
+    private IEnumerator ChangeDistortion(bool isRun)
+    {
+        float timer = 0f;
+        while (timer <= 2f)
+        {
+            yield return null;
+            timer += Time.unscaledDeltaTime * 3f;
+            
+            // Fade In과 Fade Out 효과
+            m_lensDistortion.intensity.value =
+                isRun ? Mathf.Lerp(m_lensDistortion.intensity.value, m_runDistortion, timer)
+                    : Mathf.Lerp(m_lensDistortion.intensity.value, m_idleDistortion,timer);
+        }
     }
 }
