@@ -41,6 +41,16 @@ public class FieldOfViewSystem : MonoBehaviour
         {
             var newTarget = FindVisibleTarget();
             
+            if (newTarget != null)
+            {
+                var hideComp = newTarget.GetComponent<PlayerHide>();
+                if (hideComp != null && hideComp.IsDetected)
+                {
+                    // 플레이어는 숨었기 때문에 감지하지 않음
+                    newTarget = null;
+                }
+            }
+            
             // 타겟 발견/손실 이벤트
             if(newTarget != null && currentTarget == null)
             {
