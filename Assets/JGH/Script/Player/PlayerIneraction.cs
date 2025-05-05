@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlayerIneration : MonoBehaviour
+public class PlayerIneraction : MonoBehaviour
 {
     [Header("RayCast Distance")]
     private float m_raycastDistance = 1.8f;
@@ -16,20 +16,15 @@ public class PlayerIneration : MonoBehaviour
     private Coroutine m_interactionCoroutine;
     private GameObject m_detectedObject;
     
-    //# 수정 사항(20250503) -- 시작
     [SerializeField] GameObject m_panel;
     [SerializeField] private TMP_Text m_popupText;
-    //# 수정 사항(20250503) -- 끝
 
     
     void Update()
     {
-        //# 수정 사항(20250502) -- 시작
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
             return;
-        //# 수정 사항(20250502) -- 끝
         
-        //# 수정 사항(20250503) -- 시작
         DetectInteractableObjectByRay();
         
         DisplayInteractableObjectUI();
@@ -43,10 +38,8 @@ public class PlayerIneration : MonoBehaviour
         {
             DropItem();
         }
-        //# 수정 사항(20250503) -- 끝
     }
     
-    //# 수정 사항(20250503) -- 시작
     private void DisplayInteractableObjectUI()
     {
         if (m_detectedObject == null)
@@ -83,7 +76,6 @@ public class PlayerIneration : MonoBehaviour
             m_interactionCoroutine = StartCoroutine(InteractionDelay());
         }
     }
-    //# 수정 사항(20250503) -- 끝
 
     void DetectInteractableObjectByRay()
     {

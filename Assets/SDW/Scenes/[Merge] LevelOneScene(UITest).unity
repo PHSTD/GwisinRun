@@ -1018,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5491169472677697319, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ViewRadius
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1299,7 +1299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1572906490066015524, guid: aeb49bdfbf6f75d418bb5157d6257098, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6865881262185111399, guid: aeb49bdfbf6f75d418bb5157d6257098, type: 3}
       propertyPath: m_Name
@@ -6229,6 +6229,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1542063872582151333, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
+      propertyPath: m_panel
+      value: 
+      objectReference: {fileID: 2054905898}
+    - target: {fileID: 1542063872582151333, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
+      propertyPath: m_popupText
+      value: 
+      objectReference: {fileID: 2054905897}
     - target: {fileID: 5898414512436737983, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_Name
       value: Player_V2_Edit
