@@ -65,6 +65,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: 816e1dbb83048ec47927f32e56b1c0dd
     name: BGM
+  - guid: b086d501659c3cd49a2e9c6b79e981f1
+    name: HeartBeat
   - guid: 4b733857154922d489850b56e7d01496
     name: SFX
   m_AudioMixerGroupViews:
