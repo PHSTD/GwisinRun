@@ -51,7 +51,6 @@ public class Monster : MonoBehaviour
     private MonsterSearch m_monsterSearch;
     private MonsterPatrol m_monsterPatrol;
     private MonsterAttack m_monsterAttack;
-    private MonsterDoorOpen m_monsterDoorOpen;
     
     private Coroutine customCoroutine;
     
@@ -183,7 +182,6 @@ public class Monster : MonoBehaviour
         {
             Debug.Log("▶ 공격 상태 전환 시도");
             ChangeState(m_monsterAttack);
-            // m_currentState = "Attack";
         }
     }
     

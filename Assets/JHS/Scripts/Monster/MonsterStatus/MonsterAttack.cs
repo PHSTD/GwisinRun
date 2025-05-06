@@ -13,7 +13,6 @@ public class MonsterAttack : IMonsterState
     
     public IEnumerator Attack()
     {
-        Debug.Log("💥 Attack 루프 반복 중");
         while (monster.GetCurrentStateInstance() == monster.GetAttackState())
         {
             monster.animator.SetTrigger("IsAttacking");
@@ -26,10 +25,10 @@ public class MonsterAttack : IMonsterState
                 
                 if (distance > monster.attackRange * 1.5f)
                 {
-                    Debug.Log("❗ Search 상태로 이동 조건 충족");
+                    Debug.Log("Search 상태로 이동 조건 충족");
                     // 너무 멀어졌을 경우 Search 상태로 전환
                     monster.ChangeState(monster.GetSearchState());
-                    Debug.Log("⚠️ yield break 직전 상태 확인: " + monster.GetCurrentStateInstance()?.GetType().Name);
+                    Debug.Log("yield break 직전 상태 확인: " + monster.GetCurrentStateInstance()?.GetType().Name);
                     yield break;
                 }
 
