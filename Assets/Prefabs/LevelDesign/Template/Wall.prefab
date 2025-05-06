@@ -81,6 +81,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 396687764761822300, guid: 2f96be8eb09002145b0c94cf56e90287, type: 3}
+      propertyPath: m_Size.z
+      value: 0.6144718
+      objectReference: {fileID: 0}
+    - target: {fileID: 396687764761822300, guid: 2f96be8eb09002145b0c94cf56e90287, type: 3}
+      propertyPath: m_Center.z
+      value: -0.19276452
+      objectReference: {fileID: 0}
     - target: {fileID: 3844427575429474379, guid: 2f96be8eb09002145b0c94cf56e90287, type: 3}
       propertyPath: m_Name
       value: wall_straight_v2
@@ -142,6 +150,14 @@ PrefabInstance:
     - target: {fileID: 386216784077527534, guid: 2f96be8eb09002145b0c94cf56e90287, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 396687764761822300, guid: 2f96be8eb09002145b0c94cf56e90287, type: 3}
+      propertyPath: m_Size.z
+      value: 0.6456277
+      objectReference: {fileID: 0}
+    - target: {fileID: 396687764761822300, guid: 2f96be8eb09002145b0c94cf56e90287, type: 3}
+      propertyPath: m_Center.z
+      value: -0.1771867
       objectReference: {fileID: 0}
     - target: {fileID: 3844427575429474379, guid: 2f96be8eb09002145b0c94cf56e90287, type: 3}
       propertyPath: m_Name
