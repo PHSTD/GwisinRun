@@ -351,6 +351,7 @@ GameObject:
   - component: {fileID: 3868710849189084132}
   - component: {fileID: 6108117071875331509}
   - component: {fileID: 7874062914918768279}
+  - component: {fileID: 1848396000002891434}
   m_Layer: 0
   m_Name: desk_drawer_01
   m_TagString: InteractableObject
@@ -562,6 +563,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.578706, y: 0.3033501, z: 0.032359302}
   m_Center: {x: -1.0058678, y: 0.84358054, z: 0.5551257}
+--- !u!114 &1848396000002891434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2588970998473046858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: 120a51c65de71ef48b3914e89022c45e, type: 2}
+  m_material2: {fileID: 2100000, guid: b23fa0c0d0bd1bf41b603c6d40886e7c, type: 2}
+  m_renderer: {fileID: 3729471931289260081}
 --- !u!1 &3431524270959583055
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,6 +649,7 @@ GameObject:
   - component: {fileID: 105151811004725848}
   - component: {fileID: 898788798971012293}
   - component: {fileID: 4540772006912295831}
+  - component: {fileID: 6443928066731840891}
   m_Layer: 0
   m_Name: desk_drawer_02
   m_TagString: InteractableObject
@@ -844,6 +861,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.578706, y: 0.3747819, z: 0.018828213}
   m_Center: {x: -1.0058678, y: 0.38149908, z: 0.557637}
+--- !u!114 &6443928066731840891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688820984673606589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: 120a51c65de71ef48b3914e89022c45e, type: 2}
+  m_material2: {fileID: 2100000, guid: b23fa0c0d0bd1bf41b603c6d40886e7c, type: 2}
+  m_renderer: {fileID: 4241038408651617731}
 --- !u!1 &4106817509561079751
 GameObject:
   m_ObjectHideFlags: 0
