@@ -72,9 +72,9 @@ public class PlayerMoveCamera : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        transform.Rotate(mouseX * 2f * Vector3.up);
+        transform.Rotate(mouseX * GameManager.Instance.Input.MouseSensitivity * Vector3.up);
 
-        float rotationX = m_cameraTransform.localEulerAngles.x - mouseY * 2f;
+        float rotationX = m_cameraTransform.localEulerAngles.x - mouseY * GameManager.Instance.Input.MouseSensitivity;
         if (rotationX > 180) rotationX -= 360;
         rotationX = Mathf.Clamp(rotationX, -80, 80);
         m_cameraTransform.localEulerAngles = new Vector3(rotationX, 0, 0);

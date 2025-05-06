@@ -37,6 +37,8 @@ public class InputManager : MonoBehaviour
     private bool m_isUpdateable;
     private KeyControl m_lastPressedKey;
     private double m_lastPressedTime = double.MinValue;
+    private float m_mouseSensitivity = 1f;
+    public float MouseSensitivity => m_mouseSensitivity;
 
     private void Awake()
     {
@@ -109,12 +111,9 @@ public class InputManager : MonoBehaviour
         }
         ItemsActionPressed = m_itemsAction.WasPressedThisFrame();
     }
-    //
-    // private void OnInteractionStarted(InputAction.CallbackContext context)
-    // {
-    //     var control = context.control;
-    //
-    //     int index = int.Parse(control.name) - 1;
-    //     ItemKeyPressed[index] = true;
-    // }
+
+    public void SetMouseSensitivity(float value)
+    {
+        m_mouseSensitivity = value;
+    }
 }
