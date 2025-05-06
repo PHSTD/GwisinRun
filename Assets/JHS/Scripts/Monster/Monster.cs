@@ -37,7 +37,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private float lastAttackTime = 0f;
+    private float lastAttackTime = 1f;
     //==========================================추가 5월5일
 
     private IMonsterState m_currentStateInstance;
@@ -62,12 +62,20 @@ public class Monster : MonoBehaviour
     
     public int attackPower = 20; // 공격력
     
+    
+    // 애니매이션 공격 속도 관련
+    [SerializeField] private string attackAnimationName = "ghost_attack"; // 애니메이션 이름 (Animator에 있는 이름)
+    public string AttackAnimationName => attackAnimationName;
+    private float attackHitTimingRatio = 0.6f; // 타격 시점 (60% 지점)
+    public float AttackHitTimingRatio => attackHitTimingRatio;
+    
+    
     // // 탐지 주기
-    [SerializeField] private float m_DetectionDelay = 0.5f;
-    [SerializeField] private float m_ViewRadius = 10f;
-    [SerializeField] private float m_ViewAngle = 90f;
-    [SerializeField] private LayerMask m_TargetMask;
-    [SerializeField] private LayerMask m_ObstacleMask;
+   [SerializeField] private float m_DetectionDelay = 1f;
+   [SerializeField] private float m_ViewRadius = 5.0f;
+   [SerializeField] private float m_ViewAngle = 360.0f;
+   [SerializeField] private LayerMask m_TargetMask;
+   [SerializeField] private LayerMask m_ObstacleMask;
     
     public IMonsterState GetCurrentStateInstance() => m_currentStateInstance;
     
@@ -105,21 +113,36 @@ public class Monster : MonoBehaviour
         {
             Transform target = collider.transform;
 
-            if (IsTargetVisible(target))
+            if (!IsTargetVisible(target))
+                continue;
+
+            PlayerHide hide = target.GetComponent<PlayerHide>();
+            PlayerMove move = target.GetComponent<PlayerMove>();
+            if (hide != null && move != null)
             {
-                currentTarget = target; 
-                return target;
+                var currentState = GetCurrentStateInstance();
+
+                // 조건: 앉아있고, 숨는 오브젝트에 있고, 현재 상태가 Chase나 Attack이 아닌 경우
+                if (move.IsSit && hide.IsTrulyHiding())
+                {
+                    if (currentState != GetChaseState() && currentState != GetAttackState())
+                    {
+                        Debug.Log("[시야차단] 앉아서 숨은 상태 → Patrol/Search 인식 불가");
+                        continue;
+                    }
+                }
             }
+
+            Debug.Log("🎯 플레이어 인식 성공");
+            currentTarget = target;
+            return target;
         }
+
+        //  시야 안에 아무도 없음
         currentTarget = null;
         return null;
     }
-    
-    public void SetCurrentTarget(Transform target)
-    {
-        currentTarget = target;
-    }
-    
+
     private bool IsTargetVisible(Transform target)
     {
         Vector3 origin = transform.position;
@@ -127,9 +150,9 @@ public class Monster : MonoBehaviour
         float sqrDistanceToTarget = dirToTarget.sqrMagnitude;
 
         // 시야각 체크
-        float angleToTarget = Vector3.Angle(transform.forward, dirToTarget.normalized);
-        if (angleToTarget > m_ViewAngle * 0.5f)
-            return false;
+        // float angleToTarget = Vector3.Angle(transform.forward, dirToTarget.normalized);
+        // if (angleToTarget > m_ViewAngle * 0.5f)
+            // return false;
 
         // 장애물 체크 (Raycast)
         if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
@@ -142,9 +165,6 @@ public class Monster : MonoBehaviour
         return true;
     }
     
-    //플레이어 체크시 걸리는 레이에 문이 있다면
-    //문 타겟을 가져온뒤 문 상태로 이동
-    //문 데이터구조를 가져올 수 있는 함수를 만들어야 함
     private void Start()
     {
         ChangeState(m_monsterPatrol);
@@ -155,12 +175,15 @@ public class Monster : MonoBehaviour
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
         {
             navMesh.isStopped = true;
+            animator.speed = 0f;
         }
         else
         {
+            navMesh.isStopped = false;
+            animator.speed = 1f; // 다시 재생
+            
             LookAtTarget(CurrentTarget);
             HandleAttackDistance(); // 또는 거리 체크 등
-            navMesh.isStopped = false;
         }
         
         Debug.Log($"[UPDATE] IsPaused={GameManager.Instance.IsPaused}, IsCleared={GameManager.Instance.IsCleared}, IsGameOver={GameManager.Instance.IsGameOver}");
@@ -299,6 +322,5 @@ public class Monster : MonoBehaviour
                 Time.deltaTime * rotationSpeed); // 회전 속도 조절
         }
     }
-    
     
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMoveCamera : MonoBehaviour
@@ -23,6 +24,10 @@ public class PlayerMoveCamera : MonoBehaviour
     private PlayerHealth m_playerHealth;
     private PlayerController m_playerController;
     private PlayerMove m_playerMove;
+    
+    
+    // 공격 받으면 공격한 몬스터한데 시선 고정
+    private Coroutine m_focusRoutine;
 
 
     private void Start()
@@ -44,6 +49,60 @@ public class PlayerMoveCamera : MonoBehaviour
         // 초점 처리를 위해
         PlayerCamera.fieldOfView = m_normalFOV;
         
+    }
+    
+    public void LookAtTemporarily(Transform target, float duration)
+    {
+        if (target == null) return;
+
+        if (m_focusRoutine != null)
+            StopCoroutine(m_focusRoutine);
+
+        m_focusRoutine = StartCoroutine(FocusRoutine(target, duration));
+    }
+    private IEnumerator FocusRoutine(Transform target, float duration)
+    {
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            if (target == null) yield break;
+
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+            // 카메라 본체를 부드럽게 회전
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        m_focusRoutine = null;
+    }
+    
+    
+    public void ShakeCamera(float duration = 0.3f, float magnitude = 0.2f)
+    {
+        StartCoroutine(ShakeRoutine(duration, magnitude));
+    }
+    
+    private IEnumerator ShakeRoutine(float duration, float magnitude)
+    {
+        Vector3 originalPos = m_cameraTransform.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float offsetX = Random.Range(-1f, 1f) * magnitude;
+            float offsetY = Random.Range(-1f, 1f) * magnitude;
+
+            m_cameraTransform.localPosition = originalPos + new Vector3(offsetX, offsetY, 0);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        m_cameraTransform.localPosition = originalPos;
     }
 
     private void Update()

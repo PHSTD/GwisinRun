@@ -63,11 +63,10 @@ public class MonsterPatrol : IMonsterState
         }
         
         // 빠른 이동 속도 적용
-        monster.navMesh.speed = 10.0f;
+        monster.navMesh.speed = 5.0f;
         
         // 애니메이션 속도 빠르게
         monster.animator.speed = 2.0f; 
-        
         monster.StartCustomCoroutine(PatrolRoutine());
     }
 
@@ -78,5 +77,15 @@ public class MonsterPatrol : IMonsterState
 
     public void OnUpdate()
     {
+        var target = monster.FindVisibleTarget();
+        if (target != null)
+        {
+            Debug.Log("타겟 발견! Chase로 전환 시도");
+            monster.ChangeState(monster.GetChaseState());
+            return;
+        }
+
+        Debug.Log("타겟 없음, 계속 Patrol");
     }
+
 }

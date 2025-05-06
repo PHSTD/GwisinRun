@@ -44,7 +44,7 @@ public class MonsterChase : IMonsterState
         Debug.Log(">> Chase 상태 진입");
         
         // 빠른 이동 속도 적용
-        monster.navMesh.speed = 10.0f;
+        monster.navMesh.speed = 7.0f;
         
         // 애니메이션 속도 빠르게
         monster.animator.speed = 2.0f;
@@ -60,5 +60,5 @@ public class MonsterChase : IMonsterState
     public void OnUpdate()
     {
     }
-    
+
 }
