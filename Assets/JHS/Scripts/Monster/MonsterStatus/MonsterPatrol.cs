@@ -40,6 +40,7 @@ public class MonsterPatrol : IMonsterState
             if(target != null)
             {
                 monster.ChangeState(monster.GetChaseState());
+                // monster.GetCurrentState = "Chase";
             }
             
             // 패트롤 로직
@@ -61,6 +62,7 @@ public class MonsterPatrol : IMonsterState
             //포인트가 없으므로 추가해야합니다.
             Debug.Log("포인트가 없으므로 추가해야합니다.");
         }
+        // 애니메이션 속도 빠르게
         monster.StartCustomCoroutine(PatrolRoutine());
     }
 

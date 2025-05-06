@@ -3041,7 +3041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_TargetMask.m_Bits
-      value: 256
+      value: 320
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ObstacleMask.m_Bits

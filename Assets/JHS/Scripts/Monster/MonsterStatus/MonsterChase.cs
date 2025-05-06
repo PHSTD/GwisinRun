@@ -25,12 +25,14 @@ public class MonsterChase : IMonsterState
                 {
                     Debug.Log("ChaseRoutine detected attack range - changing to Attack state");
                     monster.ChangeState(monster.GetAttackState()); 
+                    // monster.GetCurrentState = "Attack";
                     yield break;
                 }
             }
             else
             {
                 monster.ChangeState(monster.GetSearchState());
+                // monster.GetCurrentState = "Search";
             }
             
             yield return new WaitForSeconds(monster.stateTickDelay);
@@ -39,6 +41,8 @@ public class MonsterChase : IMonsterState
 
     public void OnEnter()
     {
+        // 애니메이션 속도 빠르게
+        monster.animator.speed = 2.0f;
         monster.StartCustomCoroutine(ChaseRoutine());
     }
 

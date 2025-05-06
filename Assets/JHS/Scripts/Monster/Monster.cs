@@ -25,11 +25,13 @@ public class Monster : MonoBehaviour
     //===========================================================
     [Header("Combat Settings")]
     public float attackRange = 2.0f;
-    public float attackCooldown = 2.0f;
+    // 공격속도 조절
+    public float attackCooldown = 0.5f;
     private bool isAttacking = false; // 공격 중 상태
     private float lastAttackTime = 0f;
 
     private string m_currentState;
+    public string GetCurrentState => m_currentState;
     //==========================================추가 5월5일
 
     private IMonsterState m_currentStateInstance;
@@ -56,7 +58,7 @@ public class Monster : MonoBehaviour
     [SerializeField] private LayerMask targetLayer;
     
     private Transform currentTarget;
-    public Transform CurrentTarget { get; private set; }
+    public Transform CurrentTarget { get => currentTarget; }
     
     public int attackPower = 20; // 공격력
     
@@ -67,6 +69,8 @@ public class Monster : MonoBehaviour
     [SerializeField] private LayerMask m_TargetMask;
     [SerializeField] private LayerMask m_ObstacleMask;
     
+    public IMonsterState GetCurrentStateInstance() => m_currentStateInstance;
+    
     
     // 속성 접근자 추가
     public float ViewRadius => m_ViewRadius;
@@ -75,6 +79,9 @@ public class Monster : MonoBehaviour
     
     private void Awake()
     {
+        navMesh = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        
         m_monsterPatrol = new MonsterPatrol();
         m_monsterPatrol.SetMonster(this);
 
@@ -89,11 +96,6 @@ public class Monster : MonoBehaviour
 
         // m_monsterDoorOpen = new MonsterDoorOpen();
         // m_monsterDoorOpen.SetMonster(this);
-        
-        navMesh = GetComponent<NavMeshAgent>();
-        
-        animator = GetComponent<Animator>();
-        
     }
     
     //시야 반경 내에서 모든 오브젝트를 가져온뒤 플레이어만 지정해서 IsTargetVisible 호출출
@@ -108,9 +110,11 @@ public class Monster : MonoBehaviour
 
             if (IsTargetVisible(target))
             {
+                currentTarget = target; 
                 return target;
             }
         }
+        currentTarget = null;
         return null;
     }
     
@@ -146,39 +150,35 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         ChangeState(m_monsterPatrol);
-        m_currentState = "Patrol";
+        // m_currentState = "Patrol";
     }
 
     private void Update()
     {
-        if (currentTarget != null)
-        {
-            LookAtTarget(currentTarget);
-            HandleAttackDistance(); // 또는 거리 체크 등
-        }
-        
-        LookAtTarget(currentTarget);
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
         {
             navMesh.isStopped = true;
         }
         else
         {
+            LookAtTarget(CurrentTarget);
+            HandleAttackDistance(); // 또는 거리 체크 등
             navMesh.isStopped = false;
         }
     }
     
     private void HandleAttackDistance()
     {
-        if (currentTarget == null) return;
+        if (CurrentTarget == null) return;
 
-        float distance = Vector3.Distance(transform.position, currentTarget.position);
+        float distance = Vector3.Distance(transform.position, CurrentTarget.position);
 
-        if (!isAttacking && CanAttack() && distance <= attackRange && m_currentState == "Chase")
+        // if (!isAttacking && CanAttack() && distance <= attackRange && GetCurrentState == "Chase")
+        if (!isAttacking && CanAttack() && distance <= attackRange)
         {
             Debug.Log("▶ 공격 상태 전환 시도");
             ChangeState(m_monsterAttack);
-            m_currentState = "Attack";
+            // m_currentState = "Attack";
         }
     }
     
@@ -229,6 +229,11 @@ public class Monster : MonoBehaviour
 
         m_currentStateInstance = newState;
         m_currentStateInstance.OnEnter();
+        
+        // if (newState == m_monsterChase) m_currentState = "Chase";
+        // else if (newState == m_monsterPatrol) m_currentState = "Patrol";
+        // else if (newState == m_monsterAttack) m_currentState = "Attack";
+        // else if (newState == m_monsterSearch) m_currentState = "Search";
     }
 
     #region Coroutine Control

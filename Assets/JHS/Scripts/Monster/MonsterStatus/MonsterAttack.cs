@@ -13,37 +13,37 @@ public class MonsterAttack : IMonsterState
     
     public IEnumerator Attack()
     {
-        Debug.Log("공격 시작");
-        monster.animator.SetTrigger("IsAttacking");
-
-        // 애니메이션 타이밍에 맞춘 대기
-        yield return new WaitForSeconds(1.5f);
-
-        if (monster.CurrentTarget != null)
+        while (monster.GetCurrentStateInstance() == this)
         {
-            float distance = Vector3.Distance(monster.transform.position, monster.CurrentTarget.position);
-            Debug.Log($"▶ 공격 거리 체크: {distance} / {monster.attackRange * 1.2f}");
-
-            if (distance <= monster.attackRange * 1.2f)
-            {
-                IDamageable damageable = monster.CurrentTarget.GetComponent<IDamageable>();
-                if (damageable != null)
-                {
-                    damageable.TakeDamage(monster.attackPower);
-                    Debug.Log("데미지 적용!");
-                }
-            }
-
-            yield return new WaitForSeconds(1.5f);
             
             if (monster.CurrentTarget != null)
             {
-                monster.ChangeState(monster.GetChaseState());
+                // 반복 간격
+                yield return new WaitForSeconds(0.001f);
+
+                float distance = Vector3.Distance(monster.transform.position, monster.CurrentTarget.position);
+
+                if (distance <= monster.attackRange * 1.2f && monster.CanAttack())
+                {
+                    
+                    IDamageable damageable = monster.CurrentTarget.GetComponent<IDamageable>();
+                    if (damageable != null)
+                    {
+
+                        monster.animator.SetTrigger("IsAttacking");
+                        damageable.TakeDamage(monster.attackPower);
+                    }
+
+                    monster.StartAttack(); // 쿨다운 시간 초기화
+                }
             }
             else
             {
                 monster.ChangeState(monster.GetSearchState());
+                yield break;
             }
+            
+
         }
     }
 
@@ -52,6 +52,10 @@ public class MonsterAttack : IMonsterState
         Debug.Log("MonsterAttackState 시작");
         monster.SetAttacking(true);
         monster.StartAttack(); // 공격 시작 시간 기록
+        
+        // 애니메이션 속도 빠르게
+        monster.animator.speed = 2.0f;
+        
         monster.StartCustomCoroutine(Attack());
     }
 
@@ -59,6 +63,10 @@ public class MonsterAttack : IMonsterState
     {
         Debug.Log("MonsterAttackState 종료");
         monster.SetAttacking(false); // 중요: 공격 상태 해제
+        
+        // 속도 원래대로 복구
+        // monster.animator.speed = 1.0f;
+        
         monster.StopCustomCoroutine();
     }
 

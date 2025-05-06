@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterSearch : IMonsterState 
@@ -23,6 +22,7 @@ public class MonsterSearch : IMonsterState
             {
                 Debug.Log("MonsterSearchState Chase 상태로 변경");
                 monster.ChangeState(monster.GetChaseState());
+                // monster.GetCurrentState = "Chase";
             }
             else if(monster.IsArrived())
             {
@@ -33,6 +33,7 @@ public class MonsterSearch : IMonsterState
                 {
                     Debug.Log("MonsterSearchState Patrol 상태로 변경");
                     monster.ChangeState(monster.GetPatrolState());
+                    // monster.GetCurrentState = "Patrol";
                     yield break; // 코루틴 명시적 종료
                 }
             }
@@ -44,6 +45,7 @@ public class MonsterSearch : IMonsterState
     public void OnEnter()
     {
         m_searchCount = 0;
+        // 애니메이션 속도 빠르게
         monster.StartCustomCoroutine(SearchRoutine());
         Debug.Log("MonsterSearchState 실행됨 초기화됨됨" + m_searchCount);
     }

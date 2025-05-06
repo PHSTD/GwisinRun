@@ -506,7 +506,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6092471545679506438, guid: 13507713063713c46a8deece6e66ec77, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 759554894}
   m_SourcePrefab: {fileID: 100100000, guid: 13507713063713c46a8deece6e66ec77, type: 3}
 --- !u!1 &105838055 stripped
 GameObject:
@@ -659,6 +662,27 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 576964479}
   m_SourcePrefab: {fileID: 100100000, guid: ba9b55eaeae4e9f4fad207ca9b3d6252, type: 3}
+--- !u!1 &174507137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4958132506786088829, guid: 9cb073262092f68459a7fbcd8538593a, type: 3}
+  m_PrefabInstance: {fileID: 1253795282}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &174507142
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174507137}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.60800004, y: 1.1470001, z: 0.208}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.49400002, y: 1.2, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &182768628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1971192631110312, guid: ba9b55eaeae4e9f4fad207ca9b3d6252, type: 3}
@@ -1609,6 +1633,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 996487261}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
+      propertyPath: m_TargetMask.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
+      propertyPath: m_ObstacleMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: walkPoints.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -1917,6 +1949,27 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2090808946}
   m_SourcePrefab: {fileID: 100100000, guid: ba9b55eaeae4e9f4fad207ca9b3d6252, type: 3}
+--- !u!1 &759554889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6092471545679506438, guid: 13507713063713c46a8deece6e66ec77, type: 3}
+  m_PrefabInstance: {fileID: 102156789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &759554894
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759554889}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &794453600 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3172837452674400779, guid: 1c46016ffa449d449b2c81007cf413c4, type: 3}
@@ -3033,7 +3086,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4958132506786088829, guid: 9cb073262092f68459a7fbcd8538593a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 174507142}
   m_SourcePrefab: {fileID: 100100000, guid: 9cb073262092f68459a7fbcd8538593a, type: 3}
 --- !u!1 &1262441825 stripped
 GameObject:
@@ -5362,7 +5418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2018206700
 Transform:
   m_ObjectHideFlags: 0
@@ -5838,7 +5894,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 83d9487b94440e448a845a7c584a4647, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 40992dc2c4ea84acfa0140cb311ca3c8, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &2077856580
 PrefabInstance:
