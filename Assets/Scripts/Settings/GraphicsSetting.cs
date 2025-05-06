@@ -19,7 +19,6 @@ public class GraphicsSetting : MonoBehaviour
     [SerializeField] private float m_runDistortion = -40f;
     
     private LensDistortion m_lensDistortion;
-    private bool m_canChangeDistortion = true;
     private Coroutine m_distortionCoroutine = null;
     
     
