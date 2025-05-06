@@ -42,17 +42,6 @@ public class DeskDrawerController : MonoBehaviour, IInteractable
             yield return new WaitForSeconds(0.7f);
             animator.SetBool("IsOpen", isOpen);
         }
-
-        /*
-        if (isOpen)
-        {
-            GameManager.Instance.Audio.PlaySound(SoundType.DrawerOpen);
-        }
-        else
-        {
-            GameManager.Instance.Audio.PlaySound(SoundType.DrawerClose);
-        }
-        */
     }
 
     private void DrawerSound()
