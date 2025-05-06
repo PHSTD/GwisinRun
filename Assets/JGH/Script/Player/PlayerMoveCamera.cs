@@ -80,6 +80,30 @@ public class PlayerMoveCamera : MonoBehaviour
 
         m_focusRoutine = null;
     }
+    
+    
+    public void ShakeCamera(float duration = 0.3f, float magnitude = 0.2f)
+    {
+        StartCoroutine(ShakeRoutine(duration, magnitude));
+    }
+    
+    private IEnumerator ShakeRoutine(float duration, float magnitude)
+    {
+        Vector3 originalPos = m_cameraTransform.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float offsetX = Random.Range(-1f, 1f) * magnitude;
+            float offsetY = Random.Range(-1f, 1f) * magnitude;
+
+            m_cameraTransform.localPosition = originalPos + new Vector3(offsetX, offsetY, 0);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        m_cameraTransform.localPosition = originalPos;
+    }
 
     private void Update()
     {
