@@ -4,23 +4,13 @@ using UnityEngine;
 
 public class DeskDrawerController : MonoBehaviour, IInteractable
 {
-    private Animator m_animator;
-    // private Material[] mat = new Material[2];
-    // private bool isDetected = false;
-    // [SerializeField] private Material m_material1;
-    // [SerializeField] private Material m_material2;
+    private Animator m_animator;    
 
     void Awake()
     {
         m_animator = GetComponent<Animator>();
-        // mat[0] = m_material1;
-        // mat[1] = m_material2;
     }
 
-    private void Update()
-    {
-        //ChangeMat(isDetected);
-    }
 
     public void Interact()
     {
@@ -56,31 +46,4 @@ public class DeskDrawerController : MonoBehaviour, IInteractable
             GameManager.Instance.Audio.PlaySound(SoundType.DrawerClose);
         }
     }
-
-    // �ƿ����� ���̴� ���� ������ �켱 �ּ� ó�� (���»��� ������ ����)
-    /*
-    private void ChangeMat(bool isDetected)
-    {
-        if(isDetected)
-        {
-            gameObject.GetComponent<MeshRenderer>().material = mat[1];
-        }
-        else
-        {
-            gameObject.GetComponent<MeshRenderer>().material = mat[0];
-        }
-    }
-
-    public bool OutlineOn()
-    {
-        isDetected = true;
-        return isDetected;
-    }
-
-    public bool OutlineOff()
-    {
-        isDetected = false;
-        return false;
-    }
-    */
 }
