@@ -51,7 +51,6 @@ public class MonsterSearch : IMonsterState
         
         monster.SetAttacking(false); 
         
-        monster.SetCurrentTarget(null);
         
         monster.MoveToRandomSearchPoint();
         

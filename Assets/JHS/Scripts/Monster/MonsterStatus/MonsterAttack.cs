@@ -70,9 +70,9 @@ public class MonsterAttack : IMonsterState
                 yield return new WaitForSeconds(remainingTime);
 
             // 추가 쿨다운 대기 (원한다면 여기에 attackCooldown - clipLength 넣기)
-            // float wait = Mathf.Max(0, monster.attackCooldown - clipLength);
-            // if (wait > 0f)
-                // yield return new WaitForSeconds(wait);
+            float wait = Mathf.Max(0, monster.attackCooldown - clipLength);
+            if (wait > 0f)
+                yield return new WaitForSeconds(wait);
         }
     }
 

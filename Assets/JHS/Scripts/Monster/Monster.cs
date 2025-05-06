@@ -26,7 +26,7 @@ public class Monster : MonoBehaviour
     [Header("Combat Settings")]
     public float attackRange = 2.0f;
     // 공격속도 조절
-    public float attackCooldown = 2f;
+    public float attackCooldown = 1f;
     private bool isAttacking = false; // 공격 중 상태
     public bool IsAttacking
     {
@@ -37,7 +37,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private float lastAttackTime = 0f;
+    private float lastAttackTime = 1f;
     //==========================================추가 5월5일
 
     private IMonsterState m_currentStateInstance;
@@ -64,18 +64,18 @@ public class Monster : MonoBehaviour
     
     
     // 애니매이션 공격 속도 관련
-    private string attackAnimationName = "ghost_attack"; // 애니메이션 이름 (Animator에 있는 이름)
+    [SerializeField] private string attackAnimationName = "ghost_attack"; // 애니메이션 이름 (Animator에 있는 이름)
     public string AttackAnimationName => attackAnimationName;
-    private float attackHitTimingRatio = 0.4f; // 타격 시점 (40% 지점)
+    private float attackHitTimingRatio = 0.6f; // 타격 시점 (60% 지점)
     public float AttackHitTimingRatio => attackHitTimingRatio;
     
     
     // // 탐지 주기
-    [SerializeField] private float m_DetectionDelay = 0.5f;
-    [SerializeField] private float m_ViewRadius = 10f;
-    [SerializeField] private float m_ViewAngle = 90f;
-    [SerializeField] private LayerMask m_TargetMask;
-    [SerializeField] private LayerMask m_ObstacleMask;
+   [SerializeField] private float m_DetectionDelay = 1f;
+   [SerializeField] private float m_ViewRadius = 5.0f;
+   [SerializeField] private float m_ViewAngle = 360.0f;
+   [SerializeField] private LayerMask m_TargetMask;
+   [SerializeField] private LayerMask m_ObstacleMask;
     
     public IMonsterState GetCurrentStateInstance() => m_currentStateInstance;
     
@@ -113,38 +113,36 @@ public class Monster : MonoBehaviour
         {
             Transform target = collider.transform;
 
-            if (IsTargetVisible(target))
+            if (!IsTargetVisible(target))
+                continue;
+
+            PlayerHide hide = target.GetComponent<PlayerHide>();
+            PlayerMove move = target.GetComponent<PlayerMove>();
+            if (hide != null && move != null)
             {
-                PlayerHide hide = target.GetComponent<PlayerHide>();
+                var currentState = GetCurrentStateInstance();
 
-                // 숨은 상태인데 상태가 Patrol 또는 Search인 경우 무시
-                if (hide != null && hide.IsDetected)
+                // 조건: 앉아있고, 숨는 오브젝트에 있고, 현재 상태가 Chase나 Attack이 아닌 경우
+                if (move.IsSit && hide.IsTrulyHiding())
                 {
-                    var currentState = GetCurrentStateInstance();
-
-                    if (currentState != m_monsterAttack && currentState != m_monsterChase)
+                    if (currentState != GetChaseState() && currentState != GetAttackState())
                     {
-                        Debug.Log("숨은 플레이어는 인식 못함 (Patrol/Search 상태)");
-                        continue; // 찾지 못한 것처럼 넘어감
+                        Debug.Log("[시야차단] 앉아서 숨은 상태 → Patrol/Search 인식 불가");
+                        continue;
                     }
                 }
-
-                // 인식 성공
-                
-                
-                currentTarget = target; 
-                return target;
             }
+
+            Debug.Log("🎯 플레이어 인식 성공");
+            currentTarget = target;
+            return target;
         }
+
+        //  시야 안에 아무도 없음
         currentTarget = null;
         return null;
     }
-    
-    public void SetCurrentTarget(Transform target)
-    {
-        currentTarget = target;
-    }
-    
+
     private bool IsTargetVisible(Transform target)
     {
         Vector3 origin = transform.position;
