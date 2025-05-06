@@ -16,6 +16,7 @@ public class PlayerIneraction : MonoBehaviour
     
     private Coroutine m_interactionCoroutine;
     private GameObject m_detectedObject;
+    private GameObject m_previousDetectedObject;
     
     [Header("Interaction UI")]
     [SerializeField] GameObject m_ineractionPanel;
@@ -44,8 +45,12 @@ public class PlayerIneraction : MonoBehaviour
     
     private void DisplayInteractableObjectUI()
     {
-        if (m_detectedObject == null)
+        if (m_detectedObject == null )
         {
+            if (m_previousDetectedObject != null && m_previousDetectedObject.GetComponent<OutlineController>() != null)
+            {
+                m_previousDetectedObject.GetComponent<OutlineController>().OutlineOff();
+            }
             m_ineractionPanel.SetActive(false);
             return;
         }
@@ -55,6 +60,7 @@ public class PlayerIneraction : MonoBehaviour
         {
             m_interactionPopupText.text = $"아이템을 얻으려면 [{interactionKey}]를 누르세요.";
             m_ineractionPanel.SetActive(true);
+            m_previousDetectedObject = m_detectedObject;
         }
 
         else if (m_detectedObject.CompareTag("InteractableObject"))
@@ -76,6 +82,16 @@ public class PlayerIneraction : MonoBehaviour
                 m_interactionPopupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
                 m_ineractionPanel.SetActive(true);
             }
+            m_previousDetectedObject = m_detectedObject;
+        }
+        else
+        {
+            if (m_previousDetectedObject != null && m_previousDetectedObject.GetComponent<OutlineController>() != null)
+            {
+                m_previousDetectedObject.GetComponent<OutlineController>().OutlineOff();
+            }
+            m_ineractionPanel.SetActive(false);
+            m_previousDetectedObject = m_detectedObject;
         }
         
     }

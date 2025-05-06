@@ -44,6 +44,7 @@ public class MonsterAttack : IMonsterState
             // 타격 타이밍 계산 (예: 40% 시점에서 데미지 적용)
             float hitTime = clipLength * monster.AttackHitTimingRatio;
 
+            GameManager.Instance.Audio.PlaySound(SoundType.GhostAttack);
             // 기다렸다가 데미지 적용
             yield return new WaitForSeconds(hitTime);
 

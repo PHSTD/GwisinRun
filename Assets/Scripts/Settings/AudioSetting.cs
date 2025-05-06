@@ -35,6 +35,7 @@ public class AudioSetting : MonoBehaviour
     private AudioModel m_initVolume = new AudioModel(0.5f, 0.5f);
     private AudioModel m_currentVolumeDB;
     private bool m_canPlay = true;
+    private bool m_isGhostSoundPlaying;
 
     private void Start()
     {
@@ -172,7 +173,8 @@ public class AudioSetting : MonoBehaviour
                 m_SFXSource.PlayOneShot(PotionSound);
                 break;
             case SoundType.GhostAttack:
-                m_SFXSource.PlayOneShot(GhostAttackSound);
+                if (!m_isGhostSoundPlaying)
+                    StartCoroutine(PlayGhostSound());
                 break;
             case SoundType.Switch:
                 m_SFXSource.PlayOneShot(SwitchSound);
@@ -200,5 +202,13 @@ public class AudioSetting : MonoBehaviour
                 m_SFXSource.PlayOneShot(DrawerCloseSound);
                 break;
         }
+    }
+
+    IEnumerator PlayGhostSound()
+    {
+        m_SFXSource.PlayOneShot(GhostAttackSound);
+        m_isGhostSoundPlaying = true;
+        yield return new WaitForSeconds(GhostAttackSound.length + 0.2f);
+        m_isGhostSoundPlaying = false;
     }
 }
