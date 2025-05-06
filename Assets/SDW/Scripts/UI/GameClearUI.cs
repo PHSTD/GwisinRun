@@ -33,6 +33,7 @@ public class GameClearUI : MonoBehaviour
     [Header("UIs")]
     [SerializeField] private GameObject m_inventoryContainer;
     [SerializeField] private GameObject m_playerStatusUI;
+    [SerializeField] private GameObject m_interactionContainer;
     
     private void OnEnable()
     {
@@ -45,6 +46,7 @@ public class GameClearUI : MonoBehaviour
         
         m_inventoryContainer.SetActive(false);
         m_playerStatusUI.SetActive(false);
+        m_interactionContainer.SetActive(false);
         
         //todo 클리어 시간과 최단 시간이 같을 때(갱신) New 표시 여부 검토
         m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_titleSceneName));
@@ -73,6 +75,8 @@ public class GameClearUI : MonoBehaviour
         
         m_inventoryContainer.SetActive(true);
         m_playerStatusUI.SetActive(true);
+        m_interactionContainer.SetActive(true);
+        
         m_currentTimeContainer.SetActive(true);
     }
 }

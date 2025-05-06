@@ -238,6 +238,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2252712381065407161, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+      propertyPath: m_sceneName
+      value: TitleScene
+      objectReference: {fileID: 0}
     - target: {fileID: 2537249466936952979, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -90
@@ -263,9 +267,17 @@ PrefabInstance:
       value: Game Level Ratio
       objectReference: {fileID: 0}
     - target: {fileID: 3172566906378675616, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+      propertyPath: m_levelSceneName
+      value: LevelOne
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172566906378675616, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
       propertyPath: m_blackBackground
       value: 
       objectReference: {fileID: 1681374933697982832}
+    - target: {fileID: 4255047433610054818, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4389762950132500192, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -401,6 +413,10 @@ PrefabInstance:
     - target: {fileID: 5358892138369619188, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679789416273291893, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+      propertyPath: m_levelSceneName
+      value: LevelOne
       objectReference: {fileID: 0}
     - target: {fileID: 5679789416273291893, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
       propertyPath: m_blackBackground

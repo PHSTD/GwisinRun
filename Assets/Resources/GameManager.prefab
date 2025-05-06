@@ -553,8 +553,8 @@ MonoBehaviour:
   m_mainCameraProfile: {fileID: 11400000, guid: c2338d74b747c024496fd9e71b5e1212, type: 2}
   m_postProcessLayer: {fileID: 0}
   m_mainCameraVolume: {fileID: 210198052111592102}
-  m_idleDistortion: 40
-  m_runDistortion: -40
+  m_idleDistortion: 50
+  m_runDistortion: -50
 --- !u!114 &-7768665555755020762
 MonoBehaviour:
   m_ObjectHideFlags: 0
