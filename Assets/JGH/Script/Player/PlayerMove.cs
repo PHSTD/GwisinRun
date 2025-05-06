@@ -38,6 +38,10 @@ public class PlayerMove : MonoBehaviour
     private PlayerHealth m_playerHealth;
     private PlayerController m_playerController;
     private PlayerMoveState m_previousMoveState;
+    
+    // 넉백
+    private Vector3 m_knockbackVelocity = Vector3.zero;
+    private float m_knockbackTimer = 0f;
 
     void Start()
     {
@@ -73,9 +77,25 @@ public class PlayerMove : MonoBehaviour
         Jump();
         SitPlayer();
     }
+    
+    public void ApplyKnockback(Vector3 direction, float power, float duration)
+    {
+        m_knockbackVelocity = direction.normalized * power;
+        m_knockbackTimer = duration;
+    }
 
     void Move()
     {
+        if (m_knockbackTimer > 0f)
+        {
+            m_knockbackTimer -= Time.deltaTime;
+
+            // 넉백 처리 (CharacterController 사용)
+            m_playerController.PlayerCont.Move(m_knockbackVelocity * Time.deltaTime);
+
+            return; // 이동 중단
+        }
+        
         Vector2 moveInput = GameManager.Instance.Input.MoveInput;
         float moveX = moveInput.x;
         float moveZ = moveInput.y;

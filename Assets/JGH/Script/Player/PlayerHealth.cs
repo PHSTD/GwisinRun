@@ -66,6 +66,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount)
     {
+        
+    }
+
+    public void TakeDamage(int amount, Transform attacker)
+    {
         CurrentHealth -= amount;
         
         string Message = CurrentHealth <= 0 ?
@@ -77,12 +82,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             CurrentHealth = 0;
             m_playerController.Die();
+            return;
         }
 
-    }
-
-    public void TakeDamage(int amount, Transform attacker)
-    {
+        if (attacker != null)
+        {
+            Vector3 knockbackDir = (transform.position - attacker.position).normalized;
+            GetComponent<PlayerMove>()?.ApplyKnockback(knockbackDir, 8f, 0.25f);
+        }
     }
 
     public int StaminaPlus()
