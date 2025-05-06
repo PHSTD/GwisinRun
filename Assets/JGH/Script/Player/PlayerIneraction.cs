@@ -60,7 +60,10 @@ public class PlayerIneraction : MonoBehaviour
         {
             if (m_detectedObject.GetComponent<IsLockedDoor>() != null && m_detectedObject.GetComponent<IsLockedDoor>().IsLocked())
             {
-                m_interactionPopupText.text = "잠긴 문입니다. 열쇠를 찾아주세요.";
+                if(GameManager.Instance.Inventory.FindKey())
+                    m_interactionPopupText.text = $"열쇠를 보유하고 있습니다. 문을 열려면 [{interactionKey}]를 누르세요.";
+                else
+                    m_interactionPopupText.text = "잠긴 문입니다. 열쇠를 찾아주세요.";
                 m_ineractionPanel.SetActive(true);
             }
             else
@@ -69,6 +72,7 @@ public class PlayerIneraction : MonoBehaviour
                 m_ineractionPanel.SetActive(true);
             }
         }
+        
     }
 
     void InteractWithObject()

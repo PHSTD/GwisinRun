@@ -16,9 +16,11 @@ public class GraphicsSetting : MonoBehaviour
     [SerializeField] private PostProcessLayer m_postProcessLayer;
     [SerializeField] private PostProcessVolume m_mainCameraVolume;
     [SerializeField] private float m_idleDistortion = 40f;
-    [SerializeField] private float m_runDistortion = -30f;
+    [SerializeField] private float m_runDistortion = -40f;
     
     private LensDistortion m_lensDistortion;
+    private bool m_canChangeDistortion = true;
+    private Coroutine m_distortionCoroutine = null;
     
     
     private GraphicsModel m_defaultSetting;
@@ -136,32 +138,38 @@ public class GraphicsSetting : MonoBehaviour
 
     public void RunDistortion()
     {
-        if (m_lensDistortion != null)
-        {
-            StartCoroutine(ChangeDistortion(true));
-        }
+        if (m_lensDistortion == null)
+            return;
+
+        if (m_distortionCoroutine != null)
+            return;
+        m_distortionCoroutine = StartCoroutine(ChangeDistortion(true));
     }
 
     public void IdleAndWalkDistortion()
     {
-        if (m_lensDistortion != null)
-        {
-            StartCoroutine(ChangeDistortion(false));
-        }
+        if (m_lensDistortion == null)
+            return;
+        
+        if (m_distortionCoroutine != null)
+            return;
+        
+        m_distortionCoroutine = StartCoroutine(ChangeDistortion(false));
     }
     
     private IEnumerator ChangeDistortion(bool isRun)
     {
-        float timer = 0f;
-        while (timer <= 2f)
+        float timer = 0;
+
+        while (timer <=2f)
         {
             yield return null;
-            timer += Time.unscaledDeltaTime * 3f;
+            timer += Time.deltaTime * 13f;
             
-            // Fade In과 Fade Out 효과
             m_lensDistortion.intensity.value =
-                isRun ? Mathf.Lerp(m_lensDistortion.intensity.value, m_runDistortion, timer)
-                    : Mathf.Lerp(m_lensDistortion.intensity.value, m_idleDistortion,timer);
+                isRun ? Mathf.Lerp(m_idleDistortion, m_runDistortion, timer)
+                    : Mathf.Lerp(m_runDistortion, m_idleDistortion,timer);
         }
+        m_distortionCoroutine = null;
     }
 }
