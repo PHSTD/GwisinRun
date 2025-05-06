@@ -89,6 +89,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             Vector3 knockbackDir = (transform.position - attacker.position).normalized;
             GetComponent<PlayerMove>()?.ApplyKnockback(knockbackDir, 8f, 0.25f);
+            FindObjectOfType<PlayerMoveCamera>()?.LookAtTemporarily(attacker, 1.5f);
         }
     }
 
