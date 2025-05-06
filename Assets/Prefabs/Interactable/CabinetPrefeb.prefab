@@ -124,6 +124,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1301931132563326, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7461513203090437940}
+    - targetCorrespondingSourceObject: {fileID: 1301931132563326, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6754821863983712808}
     - targetCorrespondingSourceObject: {fileID: 1510302688681556, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2740688019127686767}
@@ -133,7 +136,20 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1510302688681556, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7285495976332652202}
+    - targetCorrespondingSourceObject: {fileID: 1510302688681556, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9028761666555892880}
   m_SourcePrefab: {fileID: 100100000, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
+--- !u!23 &8876597600477492634 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23917397048920462, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
+  m_PrefabInstance: {fileID: 8891507276364790804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8876825438954973396 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23691686996202688, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
+  m_PrefabInstance: {fileID: 8891507276364790804}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8890205562200626026 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1301931132563326, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
@@ -172,8 +188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d85a07b5f5f83b4da8389e23fcf3952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_material1: {fileID: 2100000, guid: 314854316ec15064a8096a07db20ec91, type: 2}
-  m_material2: {fileID: 2100000, guid: b23fa0c0d0bd1bf41b603c6d40886e7c, type: 2}
 --- !u!64 &7461513203090437940
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -196,6 +210,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 9bf39e03a367f4552872d46b61909ead, type: 3}
+--- !u!114 &6754821863983712808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8890205562200626026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: 120a51c65de71ef48b3914e89022c45e, type: 2}
+  m_material2: {fileID: 2100000, guid: b23fa0c0d0bd1bf41b603c6d40886e7c, type: 2}
+  m_renderer: {fileID: 8876597600477492634}
 --- !u!1 &8890489346019081138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1590129522804646, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
@@ -239,8 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d85a07b5f5f83b4da8389e23fcf3952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_material1: {fileID: 2100000, guid: 314854316ec15064a8096a07db20ec91, type: 2}
-  m_material2: {fileID: 2100000, guid: b23fa0c0d0bd1bf41b603c6d40886e7c, type: 2}
 --- !u!95 &5577862600639257774
 Animator:
   serializedVersion: 5
@@ -284,6 +311,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 9bf39e03a367f4552872d46b61909ead, type: 3}
+--- !u!114 &9028761666555892880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8890571163903009344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: 120a51c65de71ef48b3914e89022c45e, type: 2}
+  m_material2: {fileID: 2100000, guid: b23fa0c0d0bd1bf41b603c6d40886e7c, type: 2}
+  m_renderer: {fileID: 8876825438954973396}
 --- !u!4 &8895862262641841952 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4654620376296244, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}

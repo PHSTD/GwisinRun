@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements.Experimental;
 
 public class PlayerIneraction : MonoBehaviour
 {
@@ -68,6 +69,10 @@ public class PlayerIneraction : MonoBehaviour
             }
             else
             {
+                if(m_detectedObject.GetComponent<OutlineController>() != null)
+                {
+                    m_detectedObject.GetComponent<OutlineController>().OutlineOn();
+                }
                 m_interactionPopupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
                 m_ineractionPanel.SetActive(true);
             }

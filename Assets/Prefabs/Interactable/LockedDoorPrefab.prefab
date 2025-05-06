@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 176436581558591158}
   - component: {fileID: 5717637993652886181}
   - component: {fileID: 2968447188420099011}
+  - component: {fileID: -5391943978034367203}
   m_Layer: 0
   m_Name: LockedDoorPrefab
   m_TagString: InteractableObject
@@ -376,6 +377,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b42e1b4f1e15cf4499d709ab0d4b204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5391943978034367203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6092471545679506438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: 120a51c65de71ef48b3914e89022c45e, type: 2}
+  m_material2: {fileID: 2100000, guid: b23fa0c0d0bd1bf41b603c6d40886e7c, type: 2}
+  m_renderer: {fileID: 6320031926898657070}
 --- !u!1001 &6332513410315650528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -444,6 +460,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5921306164523303176}
   m_SourcePrefab: {fileID: 100100000, guid: e16d50abe161d0141bdaafc6c3ad96fa, type: 3}
+--- !u!23 &6320031926898657070 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23882389905146574, guid: e16d50abe161d0141bdaafc6c3ad96fa, type: 3}
+  m_PrefabInstance: {fileID: 6332513410315650528}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6332640948409665260 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1007158175859468, guid: e16d50abe161d0141bdaafc6c3ad96fa, type: 3}
