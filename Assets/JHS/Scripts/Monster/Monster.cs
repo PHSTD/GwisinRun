@@ -64,9 +64,10 @@ public class Monster : MonoBehaviour
     
     
     // 애니매이션 공격 속도 관련
-    public string attackAnimationName = "attack"; // 애니메이션 이름 (Animator에 있는 이름)
-    public float attackAnimDuration = 1f; // 공격 애니메이션 길이 (기본 1초)
-    public float attackHitTimingRatio = 0.4f; // 타격 시점 (40% 지점)
+    private string attackAnimationName = "ghost_attack"; // 애니메이션 이름 (Animator에 있는 이름)
+    public string AttackAnimationName => attackAnimationName;
+    private float attackHitTimingRatio = 0.4f; // 타격 시점 (40% 지점)
+    public float AttackHitTimingRatio => attackHitTimingRatio;
     
     
     // // 탐지 주기

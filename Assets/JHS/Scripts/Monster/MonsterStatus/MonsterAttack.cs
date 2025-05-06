@@ -13,22 +13,36 @@ public class MonsterAttack : IMonsterState
     
     public IEnumerator Attack()
     {
-        while (monster.GetCurrentStateInstance() == this)
+        while (monster.GetCurrentStateInstance() == monster.GetAttackState())
         {
             if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
             {
                 yield return null;
                 continue;
             }
+            
+            // 타겟이 null이면 Search 상태로 전환
+            if (monster.CurrentTarget == null)
+            {
+                monster.ChangeState(monster.GetSearchState());
+                yield break;
+            }
+            
+            float distance = Vector3.Distance(monster.transform.position, monster.CurrentTarget.position);
+            if (distance > monster.attackRange * 1.1f)
+            {
+                monster.ChangeState(monster.GetSearchState());
+                yield break;
+            }
 
             // 애니메이션 실행
             monster.animator.SetTrigger("IsAttacking");
 
             // 애니메이션 클립 길이 자동 계산
-            float clipLength = GetAnimationClipLength(monster.animator, monster.attackAnimationName);
+            float clipLength = GetAnimationClipLength(monster.animator, monster.AttackAnimationName);
 
             // 타격 타이밍 계산 (예: 40% 시점에서 데미지 적용)
-            float hitTime = clipLength * monster.attackHitTimingRatio;
+            float hitTime = clipLength * monster.AttackHitTimingRatio;
 
             // 기다렸다가 데미지 적용
             yield return new WaitForSeconds(hitTime);
@@ -36,7 +50,6 @@ public class MonsterAttack : IMonsterState
             // 타격 판정
             if (monster.CurrentTarget != null)
             {
-                float distance = Vector3.Distance(monster.transform.position, monster.CurrentTarget.position);
                 if (distance <= monster.attackRange * 1.2f && monster.CanAttack())
                 {
                     IDamageable damageable = monster.CurrentTarget.GetComponent<IDamageable>();
@@ -48,11 +61,8 @@ public class MonsterAttack : IMonsterState
                     monster.StartAttack(); // 쿨다운 갱신
                 }
             }
-            else
-            {
-                monster.ChangeState(monster.GetSearchState());
-                yield break;
-            }
+
+            
 
             // 애니메이션 전체 재생 길이만큼 대기
             float remainingTime = clipLength - hitTime;
@@ -60,9 +70,9 @@ public class MonsterAttack : IMonsterState
                 yield return new WaitForSeconds(remainingTime);
 
             // 추가 쿨다운 대기 (원한다면 여기에 attackCooldown - clipLength 넣기)
-            float wait = Mathf.Max(0, monster.attackCooldown - clipLength);
-            if (wait > 0f)
-                yield return new WaitForSeconds(wait);
+            // float wait = Mathf.Max(0, monster.attackCooldown - clipLength);
+            // if (wait > 0f)
+                // yield return new WaitForSeconds(wait);
         }
     }
 
