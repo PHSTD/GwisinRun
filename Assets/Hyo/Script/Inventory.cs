@@ -113,6 +113,21 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
+
+    public bool FindKey()
+    {
+        for(int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == null)
+                continue;
+            
+            if (items[i].ItemName == "Key")
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     
     public void DropItem(Vector3 startPosition, Vector3 direction, float force)
     {

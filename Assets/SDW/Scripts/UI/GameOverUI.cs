@@ -26,6 +26,7 @@ public class GameOverUI : MonoBehaviour
     [Header("UIs")]
     [SerializeField] private GameObject m_inventoryContainer;
     [SerializeField] private GameObject m_playerStatusUI;
+    [SerializeField] private GameObject m_interactionContainer;
     
     private void OnEnable()
     {
@@ -37,6 +38,7 @@ public class GameOverUI : MonoBehaviour
         
         m_inventoryContainer.SetActive(false);
         m_playerStatusUI.SetActive(false);
+        m_interactionContainer.SetActive(false);
         
         m_restartButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_levelSceneName));
         m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_titleSceneName));
@@ -53,6 +55,7 @@ public class GameOverUI : MonoBehaviour
         
         m_inventoryContainer.SetActive(true);
         m_playerStatusUI.SetActive(true);
+        m_interactionContainer.SetActive(true);
         
         m_currentTimeContainer.SetActive(true);
     }

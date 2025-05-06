@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestGameClearTrigger : MonoBehaviour
+public class GameClearTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject m_gameClearPanel;
     
@@ -12,7 +12,6 @@ public class TestGameClearTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             m_gameClearPanel.SetActive(true);
-            
         }
     }
 }

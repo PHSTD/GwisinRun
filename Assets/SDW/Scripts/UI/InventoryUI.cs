@@ -14,16 +14,18 @@ public class InventoryUI : MonoBehaviour
     private Vector3 m_startPosition;
     private RectTransform m_selectedItemUIRectTransform;
     private float m_imageSpacing;
-
-    private void OnEnable()
-    {
+    
+    private void Start() {
         foreach (var itemImage in m_itemImagesUI)
         {
             itemImage.type = Image.Type.Filled;
             itemImage.preserveAspect = true;
             itemImage.gameObject.SetActive(false);
         }
+    }
 
+    private void OnEnable()
+    {
         m_selectedItemUIRectTransform = m_selectedItemUI.rectTransform;
         m_startPosition = m_selectedItemUIRectTransform.localPosition;
 
