@@ -38,8 +38,8 @@ public class GraphicsSetting : MonoBehaviour
     {
         m_defaultSetting = new GraphicsModel()
         {
-            Brightness = 1f,
-            Quality = 1,
+            Brightness = 0.5f,
+            Quality = 2,
             IsFullScreen = true
         };
     }

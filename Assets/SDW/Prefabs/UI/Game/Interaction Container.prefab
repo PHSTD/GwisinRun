@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7774567942290275222}
   - component: {fileID: 5656884862503863114}
   m_Layer: 5
-  m_Name: Item Panel
+  m_Name: Interaction Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 8707603362506900176}
   - component: {fileID: 8476163543457462303}
   m_Layer: 5
-  m_Name: Item Text
+  m_Name: Interaction Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7808363449769898221}
   m_Layer: 5
-  m_Name: Item Container
+  m_Name: Interaction Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

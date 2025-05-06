@@ -16,7 +16,7 @@ public class MainMenuUI : MonoBehaviour
         
         if (GameManager.Instance.Graphics.IsFirstTime)
         {
-            GameManager.Instance.Graphics.SetBrightness(1f);
+            GameManager.Instance.Graphics.SetBrightness(0.5f);
         }
     }
 

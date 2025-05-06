@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class GameOverUI : MonoBehaviour
 {
-    [Header("Restart")]
-    [SerializeField] private Button m_restartButton;
-    [SerializeField] private string m_levelSceneName;
-
     [Header("Main Menu")]
     [SerializeField] private Button m_mainMenuButton;
     [SerializeField] private string m_titleSceneName;
     
+    [Header("Restart")]
+    [SerializeField] private Button m_restartButton;
+    [SerializeField] private string m_levelSceneName;
+
     [Header("Exit")]
     [SerializeField] private Button m_exitButton;
     
