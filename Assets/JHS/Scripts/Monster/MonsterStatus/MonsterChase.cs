@@ -21,7 +21,7 @@ public class MonsterChase : IMonsterState
                 
                 // OnTargetDistanceChanged 이벤트가 제대로 동작하지 않을 경우를 대비한 보조 로직
                 float distanceToTarget = Vector3.Distance(monster.transform.position, target.position);
-                if (distanceToTarget <= monster.attackRange && monster.CanAttack() && !monster.IsAttacking())
+                if (distanceToTarget <= monster.attackRange && monster.CanAttack() && !monster.IsAttacking)
                 {
                     Debug.Log("ChaseRoutine detected attack range - changing to Attack state");
                     monster.ChangeState(monster.GetAttackState()); 

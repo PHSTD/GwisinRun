@@ -26,12 +26,23 @@ public class Monster : MonoBehaviour
     [Header("Combat Settings")]
     public float attackRange = 2.0f;
     // 공격속도 조절
-    public float attackCooldown = 0.5f;
+    public float attackCooldown = 1f;
     private bool isAttacking = false; // 공격 중 상태
-    private float lastAttackTime = 0f;
+    public bool IsAttacking
+    {
+        get { return isAttacking; }
+        set
+        {
+            isAttacking = value;
+        }
+    }
 
-    private string m_currentState;
-    public string GetCurrentState => m_currentState;
+    private float lastAttackTime = 0f;
+    public float LastAttackTime
+    {
+        get { return lastAttackTime; }
+        set { lastAttackTime = value; }
+    }
     //==========================================추가 5월5일
 
     private IMonsterState m_currentStateInstance;
@@ -42,11 +53,6 @@ public class Monster : MonoBehaviour
     private MonsterAttack m_monsterAttack;
     private MonsterDoorOpen m_monsterDoorOpen;
     
-    // Monster.cs에 추가
-    [Header("Door Detection")]
-    public float doorWaitTime = 5f;  // 문 앞에서 대기할 시간
-    private Transform lastDoorEntered;
-
     private Coroutine customCoroutine;
     
     public IMonsterState GetChaseState() => m_monsterChase;
@@ -93,9 +99,6 @@ public class Monster : MonoBehaviour
 
         m_monsterSearch = new MonsterSearch();
         m_monsterSearch.SetMonster(this);
-
-        // m_monsterDoorOpen = new MonsterDoorOpen();
-        // m_monsterDoorOpen.SetMonster(this);
     }
     
     //시야 반경 내에서 모든 오브젝트를 가져온뒤 플레이어만 지정해서 IsTargetVisible 호출출
@@ -129,10 +132,6 @@ public class Monster : MonoBehaviour
         if (angleToTarget > m_ViewAngle * 0.5f)
             return false;
 
-        // 시야 거리 체크
-        // if (sqrDistanceToTarget > m_ViewRadius * m_ViewRadius)
-        //     return false;
-
         // 장애물 체크 (Raycast)
         if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
         {
@@ -150,7 +149,6 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         ChangeState(m_monsterPatrol);
-        // m_currentState = "Patrol";
     }
 
     private void Update()
@@ -202,10 +200,6 @@ public class Monster : MonoBehaviour
         isAttacking = attacking;
     }
 
-    public bool IsAttacking()
-    {
-        return isAttacking;
-    }
 
     public bool CanAttack()
     {
@@ -221,19 +215,22 @@ public class Monster : MonoBehaviour
     
     public void ChangeState(IMonsterState newState)
     {
-        if (isAttacking && newState != m_monsterAttack)
+        // 현재 상태가 공격 상태이고, 새로운 상태가 공격이 아닌 경우 전환 금지
+        if (m_currentStateInstance == m_monsterAttack && isAttacking && newState != m_monsterAttack)
             return;
 
-        if (m_currentStateInstance != null)
-            m_currentStateInstance.OnExit();
+        // 현재 상태 종료
+        m_currentStateInstance?.OnExit();
 
+        // 상태 바꾸기 전 코루틴 정리
+        StopAllCoroutines();
+
+        // 상태 갱신
         m_currentStateInstance = newState;
+
+        // 새 상태 진입
         m_currentStateInstance.OnEnter();
         
-        // if (newState == m_monsterChase) m_currentState = "Chase";
-        // else if (newState == m_monsterPatrol) m_currentState = "Patrol";
-        // else if (newState == m_monsterAttack) m_currentState = "Attack";
-        // else if (newState == m_monsterSearch) m_currentState = "Search";
     }
 
     #region Coroutine Control
@@ -276,6 +273,7 @@ public class Monster : MonoBehaviour
             navMesh.SetDestination(hit.position);
         }
     }
+    
 
     public void LookAtTarget(Transform target)
     {

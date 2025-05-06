@@ -15,11 +15,11 @@ public class MonsterAttack : IMonsterState
     {
         while (monster.GetCurrentStateInstance() == this)
         {
-            
+            monster.animator.SetTrigger("IsAttacking");
             if (monster.CurrentTarget != null)
             {
                 // 반복 간격
-                yield return new WaitForSeconds(0.001f);
+                yield return new WaitForSeconds(1f);
 
                 float distance = Vector3.Distance(monster.transform.position, monster.CurrentTarget.position);
 
@@ -30,7 +30,6 @@ public class MonsterAttack : IMonsterState
                     if (damageable != null)
                     {
 
-                        monster.animator.SetTrigger("IsAttacking");
                         damageable.TakeDamage(monster.attackPower);
                     }
 
