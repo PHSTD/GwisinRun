@@ -36,8 +36,14 @@ public class OutlineController : MonoBehaviour
         return isDetected;
     }
 
-    private void OnMouseExit()
+    public bool OutlineOff()
     {
         isDetected = false;
+        return isDetected;
     }
+    
+    // private void OnMouseExit()
+    // {
+    //     isDetected = false;
+    // }
 }

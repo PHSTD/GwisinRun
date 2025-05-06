@@ -8,14 +8,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TitleScene.unity
     guid: 740c62f5e553f0b4fadd5b4948a1ad00
-  - enabled: 0
-    path: Assets/SDW/Scenes/[Merge] LevelOneScene(UITest).unity
-    guid: c20e3dca84bef994dafb910545103c53
-  - enabled: 0
-    path: Assets/Scenes/Template/[Template] LevelDesign.unity
-    guid: 497ec1a4557a88c44bfb25a46d12b852
   - enabled: 1
     path: Assets/Scenes/LevelOne.unity
     guid: b8ba67c8a55fbb1488a468c8e4303f3c
+  - enabled: 1
+    path: Assets/Scenes/LevelTwo.unity
+    guid: 45ca943df096dfd47afd270cef19505c
+  - enabled: 1
+    path: Assets/Scenes/LevelThree.unity
+    guid: 04217d3c66788834a98085f86b5ea132
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 4398f008affba3e469ccaa77a7b02b68, type: 3}
