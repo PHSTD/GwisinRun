@@ -155,12 +155,15 @@ public class Monster : MonoBehaviour
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
         {
             navMesh.isStopped = true;
+            animator.speed = 0f;
         }
         else
         {
+            navMesh.isStopped = false;
+            animator.speed = 1f; // 다시 재생
+            
             LookAtTarget(CurrentTarget);
             HandleAttackDistance(); // 또는 거리 체크 등
-            navMesh.isStopped = false;
         }
         
         Debug.Log($"[UPDATE] IsPaused={GameManager.Instance.IsPaused}, IsCleared={GameManager.Instance.IsCleared}, IsGameOver={GameManager.Instance.IsGameOver}");

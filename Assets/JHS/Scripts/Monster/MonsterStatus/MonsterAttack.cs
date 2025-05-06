@@ -1,9 +1,9 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MonsterAttack : IMonsterState 
 {
-    
     private Monster monster;
 
     public void SetMonster(Monster monster)
@@ -15,6 +15,12 @@ public class MonsterAttack : IMonsterState
     {
         while (monster.GetCurrentStateInstance() == monster.GetAttackState())
         {
+            if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            {
+                yield return null; // 다음 프레임까지 대기만
+                continue; // 아무것도 하지 않음
+            }
+            
             monster.animator.SetTrigger("IsAttacking");
             if (monster.CurrentTarget != null)
             {
