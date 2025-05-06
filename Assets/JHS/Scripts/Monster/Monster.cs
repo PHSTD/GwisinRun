@@ -121,6 +121,11 @@ public class Monster : MonoBehaviour
         return null;
     }
     
+    public void SetCurrentTarget(Transform target)
+    {
+        currentTarget = target;
+    }
+    
     private bool IsTargetVisible(Transform target)
     {
         Vector3 origin = transform.position;
@@ -163,6 +168,8 @@ public class Monster : MonoBehaviour
             HandleAttackDistance(); // 또는 거리 체크 등
             navMesh.isStopped = false;
         }
+        
+        Debug.Log($"[UPDATE] IsPaused={GameManager.Instance.IsPaused}, IsCleared={GameManager.Instance.IsCleared}, IsGameOver={GameManager.Instance.IsGameOver}");
     }
     
     private void HandleAttackDistance()
@@ -215,15 +222,18 @@ public class Monster : MonoBehaviour
     
     public void ChangeState(IMonsterState newState)
     {
+        Debug.Log($"상태 변경: {m_currentStateInstance?.GetType().Name} → {newState.GetType().Name}");
+
         // 현재 상태가 공격 상태이고, 새로운 상태가 공격이 아닌 경우 전환 금지
-        if (m_currentStateInstance == m_monsterAttack && isAttacking && newState != m_monsterAttack)
+        if (m_currentStateInstance == m_monsterAttack && isAttacking && newState != m_monsterAttack && newState != m_monsterSearch)
             return;
+        
+        // 상태 바꾸기 전 코루틴 정리
+        StopAllCoroutines();
 
         // 현재 상태 종료
         m_currentStateInstance?.OnExit();
 
-        // 상태 바꾸기 전 코루틴 정리
-        StopAllCoroutines();
 
         // 상태 갱신
         m_currentStateInstance = newState;
@@ -270,7 +280,12 @@ public class Monster : MonoBehaviour
 
         if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, searchRadius, NavMesh.AllAreas))
         {
+            Debug.Log($"[Search] 이동 위치: {hit.position}");
             navMesh.SetDestination(hit.position);
+        }
+        else
+        {
+            Debug.LogWarning("[Search] 유효한 NavMesh 위치를 찾지 못했습니다.");
         }
     }
     

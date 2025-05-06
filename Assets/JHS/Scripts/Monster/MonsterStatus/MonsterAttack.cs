@@ -13,7 +13,8 @@ public class MonsterAttack : IMonsterState
     
     public IEnumerator Attack()
     {
-        while (monster.GetCurrentStateInstance() == this)
+        Debug.Log("💥 Attack 루프 반복 중");
+        while (monster.GetCurrentStateInstance() == monster.GetAttackState())
         {
             monster.animator.SetTrigger("IsAttacking");
             if (monster.CurrentTarget != null)
@@ -22,10 +23,19 @@ public class MonsterAttack : IMonsterState
                 yield return new WaitForSeconds(1f);
 
                 float distance = Vector3.Distance(monster.transform.position, monster.CurrentTarget.position);
+                
+                if (distance > monster.attackRange * 1.5f)
+                {
+                    Debug.Log("❗ Search 상태로 이동 조건 충족");
+                    // 너무 멀어졌을 경우 Search 상태로 전환
+                    monster.ChangeState(monster.GetSearchState());
+                    Debug.Log("⚠️ yield break 직전 상태 확인: " + monster.GetCurrentStateInstance()?.GetType().Name);
+                    yield break;
+                }
 
                 if (distance <= monster.attackRange * 1.2f && monster.CanAttack())
                 {
-                    
+                    // 너무 멀어졌을 경우 Search 상태로 전환 
                     IDamageable damageable = monster.CurrentTarget.GetComponent<IDamageable>();
                     if (damageable != null)
                     {
@@ -48,7 +58,7 @@ public class MonsterAttack : IMonsterState
 
     public void OnEnter()
     {
-        Debug.Log("MonsterAttackState 시작");
+        Debug.Log(">> Attact 상태 진입");
         monster.SetAttacking(true);
         monster.StartAttack(); // 공격 시작 시간 기록
         

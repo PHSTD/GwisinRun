@@ -55,14 +55,19 @@ public class MonsterPatrol : IMonsterState
 
     public void OnEnter()
     {
-        
-        Debug.Log("MonsterPatrolState 시작.");
+        Debug.Log(">> Patrol 상태 진입");
         if(monster.walkPoints.Length <= 1)
         {
             //포인트가 없으므로 추가해야합니다.
             Debug.Log("포인트가 없으므로 추가해야합니다.");
         }
+        
+        // 빠른 이동 속도 적용
+        monster.navMesh.speed = 10.0f;
+        
         // 애니메이션 속도 빠르게
+        monster.animator.speed = 2.0f; 
+        
         monster.StartCustomCoroutine(PatrolRoutine());
     }
 
