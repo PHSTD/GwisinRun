@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MonsterPatrol : Monster, IMonsterState 
+public class MonsterPatrol : IMonsterState 
 {
     private Monster monster;
 
@@ -9,7 +9,6 @@ public class MonsterPatrol : Monster, IMonsterState
     {
         this.monster = monster;
     }
-
 
     private int currentEnemyPosition;
     float walkingPointRadius = 3; // 순찰 지점 도달 판정에 사용되는 반경
@@ -21,7 +20,7 @@ public class MonsterPatrol : Monster, IMonsterState
                 monster.transform.position) < walkingPointRadius)
         {
             // 다음 순찰 지점을 무작위로 선택
-            currentEnemyPosition = UnityEngine.Random.Range(0, monster.walkPoints.Length);
+            currentEnemyPosition = Random.Range(0, monster.walkPoints.Length);
             // 배열의 범위를 넘어선 경우 인덱스를 초기화
             if (currentEnemyPosition >= monster.walkPoints.Length)
             {
@@ -41,6 +40,7 @@ public class MonsterPatrol : Monster, IMonsterState
             if(target != null)
             {
                 monster.ChangeState(monster.GetChaseState());
+                // monster.GetCurrentState = "Chase";
             }
             
             // 패트롤 로직
@@ -55,13 +55,19 @@ public class MonsterPatrol : Monster, IMonsterState
 
     public void OnEnter()
     {
-        
-        Debug.Log("MonsterPatrolState 시작.");
+        Debug.Log(">> Patrol 상태 진입");
         if(monster.walkPoints.Length <= 1)
         {
             //포인트가 없으므로 추가해야합니다.
             Debug.Log("포인트가 없으므로 추가해야합니다.");
         }
+        
+        // 빠른 이동 속도 적용
+        monster.navMesh.speed = 10.0f;
+        
+        // 애니메이션 속도 빠르게
+        monster.animator.speed = 2.0f; 
+        
         monster.StartCustomCoroutine(PatrolRoutine());
     }
 

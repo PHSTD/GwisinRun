@@ -25,13 +25,19 @@ public class Monster : MonoBehaviour
     //===========================================================
     [Header("Combat Settings")]
     public float attackRange = 2.0f;
-    public float attackCooldown = 2.0f;
+    // 공격속도 조절
+    public float attackCooldown = 1f;
     private bool isAttacking = false; // 공격 중 상태
+    public bool IsAttacking
+    {
+        get { return isAttacking; }
+        set
+        {
+            isAttacking = value;
+        }
+    }
+
     private float lastAttackTime = 0f;
-
-    private string m_currentState;
-    public string CurrentState => m_currentState;
-
     //==========================================추가 5월5일
 
     private IMonsterState m_currentStateInstance;
@@ -40,27 +46,19 @@ public class Monster : MonoBehaviour
     private MonsterSearch m_monsterSearch;
     private MonsterPatrol m_monsterPatrol;
     private MonsterAttack m_monsterAttack;
-    private MonsterDoorOpen m_monsterDoorOpen;
     
-    // Monster.cs에 추가
-    [Header("Door Detection")]
-    public float doorWaitTime = 5f;  // 문 앞에서 대기할 시간
-    private Transform lastDoorEntered;
-
     private Coroutine customCoroutine;
     
     public IMonsterState GetChaseState() => m_monsterChase;
     public IMonsterState GetSearchState() => m_monsterSearch;
     public IMonsterState GetPatrolState() => m_monsterPatrol;
     public IMonsterState GetAttackState() => m_monsterAttack;
-    public IMonsterState GetDoorOpenState() => m_monsterDoorOpen;
-    public void SetCurrentStateString(string stateName) => m_currentState = stateName;
     
     [SerializeField] private float detectionRadius = 10f;
     [SerializeField] private LayerMask targetLayer;
     
     private Transform currentTarget;
-    public Transform CurrentTarget { get; private set; }
+    public Transform CurrentTarget { get => currentTarget; }
     
     public int attackPower = 20; // 공격력
     
@@ -71,6 +69,8 @@ public class Monster : MonoBehaviour
     [SerializeField] private LayerMask m_TargetMask;
     [SerializeField] private LayerMask m_ObstacleMask;
     
+    public IMonsterState GetCurrentStateInstance() => m_currentStateInstance;
+    
     
     // 속성 접근자 추가
     public float ViewRadius => m_ViewRadius;
@@ -79,12 +79,13 @@ public class Monster : MonoBehaviour
     
     private void Awake()
     {
-        m_monsterPatrol = GetComponent<MonsterPatrol>();
-        if (m_monsterPatrol == null) m_monsterPatrol = gameObject.AddComponent<MonsterPatrol>();
+        navMesh = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        
+        m_monsterPatrol = new MonsterPatrol();
         m_monsterPatrol.SetMonster(this);
 
-        m_monsterAttack = GetComponent<MonsterAttack>();
-        if (m_monsterAttack == null) m_monsterAttack = gameObject.AddComponent<MonsterAttack>();
+        m_monsterAttack = new MonsterAttack();
         m_monsterAttack.SetMonster(this);
 
         m_monsterChase = new MonsterChase();
@@ -92,14 +93,6 @@ public class Monster : MonoBehaviour
 
         m_monsterSearch = new MonsterSearch();
         m_monsterSearch.SetMonster(this);
-
-        m_monsterDoorOpen = new MonsterDoorOpen();
-        m_monsterDoorOpen.SetMonster(this);
-        
-        navMesh = GetComponent<NavMeshAgent>();
-        
-        animator = GetComponent<Animator>();
-        
     }
     
     //시야 반경 내에서 모든 오브젝트를 가져온뒤 플레이어만 지정해서 IsTargetVisible 호출출
@@ -114,10 +107,17 @@ public class Monster : MonoBehaviour
 
             if (IsTargetVisible(target))
             {
+                currentTarget = target; 
                 return target;
             }
         }
+        currentTarget = null;
         return null;
+    }
+    
+    public void SetCurrentTarget(Transform target)
+    {
+        currentTarget = target;
     }
     
     private bool IsTargetVisible(Transform target)
@@ -131,10 +131,6 @@ public class Monster : MonoBehaviour
         if (angleToTarget > m_ViewAngle * 0.5f)
             return false;
 
-        // 시야 거리 체크
-        // if (sqrDistanceToTarget > m_ViewRadius * m_ViewRadius)
-        //     return false;
-
         // 장애물 체크 (Raycast)
         if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
         {
@@ -145,87 +141,42 @@ public class Monster : MonoBehaviour
 
         return true;
     }
+    
     //플레이어 체크시 걸리는 레이에 문이 있다면
     //문 타겟을 가져온뒤 문 상태로 이동
     //문 데이터구조를 가져올 수 있는 함수를 만들어야 함
-    //
-
-    public Transform FindVisibleTarget(out DoorController doorController)
-    {
-        doorController = null;
-        // 시야 반경 내의 타겟 검색
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, m_ViewRadius, m_TargetMask);
-
-        foreach (var collider in targetsInViewRadius)
-        {
-            Transform target = collider.transform;
-            Vector3 origin = transform.position;
-            Vector3 dirToTarget = (target.position - origin);
-            float sqrDistanceToTarget = dirToTarget.sqrMagnitude;
-            // 시야각 체크
-            float angleToTarget = Vector3.Angle(transform.forward, dirToTarget.normalized);
-            if (angleToTarget > m_ViewAngle * 0.5f)
-                continue;
-            if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, 
-                Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))
-            {
-                // 장애물이 타겟보다 앞에 있는 경우
-                if (hit.transform != target)
-                {
-                    
-                    Transform door = hit.transform;
-                    if(door != null)
-                    {
-                          
-                        
-                        Debug.Log("문이 시야를 가로막고 있습니다: " + door);
-                    }
-                    continue;
-                }
-            }
-            //모든 체크를 통과했으면 타겟이 보인다
-            CurrentTarget = target;
-            return target;
-        }
-        CurrentTarget = null;
-        return null;
-    }
     private void Start()
     {
         ChangeState(m_monsterPatrol);
-        m_currentState = "Patrol";
     }
 
     private void Update()
     {
-        if (currentTarget != null)
-        {
-            LookAtTarget(currentTarget);
-            HandleAttackDistance(); // 또는 거리 체크 등
-        }
-        
-        LookAtTarget(currentTarget);
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
         {
             navMesh.isStopped = true;
         }
         else
         {
+            LookAtTarget(CurrentTarget);
+            HandleAttackDistance(); // 또는 거리 체크 등
             navMesh.isStopped = false;
         }
+        
+        Debug.Log($"[UPDATE] IsPaused={GameManager.Instance.IsPaused}, IsCleared={GameManager.Instance.IsCleared}, IsGameOver={GameManager.Instance.IsGameOver}");
     }
     
     private void HandleAttackDistance()
     {
-        if (currentTarget == null) return;
+        if (CurrentTarget == null) return;
 
-        float distance = Vector3.Distance(transform.position, currentTarget.position);
+        float distance = Vector3.Distance(transform.position, CurrentTarget.position);
 
-        if (!isAttacking && CanAttack() && distance <= attackRange && m_currentState == "Chase")
+        // if (!isAttacking && CanAttack() && distance <= attackRange && GetCurrentState == "Chase")
+        if (!isAttacking && CanAttack() && distance <= attackRange)
         {
             Debug.Log("▶ 공격 상태 전환 시도");
             ChangeState(m_monsterAttack);
-            m_currentState = "Attack";
         }
     }
     
@@ -244,35 +195,11 @@ public class Monster : MonoBehaviour
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
-    
-    private void DetectTarget()
-    {
-        if (currentTarget != null) return;
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, targetLayer);
-
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                currentTarget = hit.transform;
-                Debug.Log("타겟 감지됨");
-                ChangeState(m_monsterChase);
-                m_currentState = "Chase";
-                break;
-            }
-        }
-    }
-
     public void SetAttacking(bool attacking)
     {
         isAttacking = attacking;
     }
 
-    public bool IsAttacking()
-    {
-        return isAttacking;
-    }
 
     public bool CanAttack()
     {
@@ -288,65 +215,25 @@ public class Monster : MonoBehaviour
     
     public void ChangeState(IMonsterState newState)
     {
-        if (isAttacking && newState != m_monsterAttack)
+        Debug.Log($"상태 변경: {m_currentStateInstance?.GetType().Name} → {newState.GetType().Name}");
+
+        // 현재 상태가 공격 상태이고, 새로운 상태가 공격이 아닌 경우 전환 금지
+        if (m_currentStateInstance == m_monsterAttack && isAttacking && newState != m_monsterAttack && newState != m_monsterSearch)
             return;
-
-        if (m_currentStateInstance != null)
-            m_currentStateInstance.OnExit();
-
-        m_currentStateInstance = newState;
-        m_currentStateInstance.OnEnter();
-    }
-
-    private void SetState(Transform target)
-    {
-        // 공격 중에는 다른 상태로 전환되지 않도록 막음
-        if (isAttacking) return;
-
-        if (target != null)
-        {
-            ChangeState(m_monsterChase);
-            m_currentState = "Chase";
-        }
-        else
-        {
-            ChangeState(m_monsterSearch);
-            m_currentState = "Search";
-        }
-    }
-
-    private void HandleTargetLost()
-    {
-        // 공격 중에는 다른 상태로 전환되지 않도록 막음
-        if (isAttacking) return;
-
-        ChangeState(m_monsterSearch);
-        m_currentState = "Search";
-    }
-    
-    private void HandleTargetDistanceChanged(float distance)
-    {
-        // 명확한 로그 추가
-        // Debug.Log($"Distance changed: {distance}, Attack range: {attackRange}, Can attack: {CanAttack()}, Current state: {FSM.CurrentState}");
-        Debug.Log($"Distance changed: {distance}, Attack range: {attackRange}, Can attack: {CanAttack()}");
         
-        // 공격 가능 상태이고, 추적 중이며, 거리가 가까우면 공격
-        if (!isAttacking && CanAttack() && distance <= attackRange && m_currentState == "Chase")
-        {
-            Debug.Log("▶ 공격 상태 전환 시도");
-            ChangeState(m_monsterAttack);
-            m_currentState = "Attack";
-        }
+        // 상태 바꾸기 전 코루틴 정리
+        StopAllCoroutines();
 
-    }
-    
-    private void HandleLastKnownPositionUpdated(Vector3 position)
-    {
-        // 탐색 시 마지막 위치 정보 활용
-        if (CurrentState == "Search")
-        {
-            navMesh.SetDestination(position);
-        }
+        // 현재 상태 종료
+        m_currentStateInstance?.OnExit();
+
+
+        // 상태 갱신
+        m_currentStateInstance = newState;
+
+        // 새 상태 진입
+        m_currentStateInstance.OnEnter();
+        
     }
 
     #region Coroutine Control
@@ -386,9 +273,15 @@ public class Monster : MonoBehaviour
 
         if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, searchRadius, NavMesh.AllAreas))
         {
+            Debug.Log($"[Search] 이동 위치: {hit.position}");
             navMesh.SetDestination(hit.position);
         }
+        else
+        {
+            Debug.LogWarning("[Search] 유효한 NavMesh 위치를 찾지 못했습니다.");
+        }
     }
+    
 
     public void LookAtTarget(Transform target)
     {
