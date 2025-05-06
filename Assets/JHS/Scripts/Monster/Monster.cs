@@ -38,11 +38,6 @@ public class Monster : MonoBehaviour
     }
 
     private float lastAttackTime = 0f;
-    public float LastAttackTime
-    {
-        get { return lastAttackTime; }
-        set { lastAttackTime = value; }
-    }
     //==========================================추가 5월5일
 
     private IMonsterState m_currentStateInstance;

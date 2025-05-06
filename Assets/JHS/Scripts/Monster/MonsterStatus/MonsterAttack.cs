@@ -50,8 +50,6 @@ public class MonsterAttack : IMonsterState
                 monster.ChangeState(monster.GetSearchState());
                 yield break;
             }
-            
-
         }
     }
 
@@ -71,9 +69,6 @@ public class MonsterAttack : IMonsterState
     {
         Debug.Log("MonsterAttackState 종료");
         monster.SetAttacking(false); // 중요: 공격 상태 해제
-        
-        // 속도 원래대로 복구
-        // monster.animator.speed = 1.0f;
         
         monster.StopCustomCoroutine();
     }
