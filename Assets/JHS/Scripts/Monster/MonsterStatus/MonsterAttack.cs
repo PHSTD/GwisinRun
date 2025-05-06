@@ -39,7 +39,7 @@ public class MonsterAttack : IMonsterState
                     if (damageable != null)
                     {
 
-                        damageable.TakeDamage(monster.attackPower);
+                        damageable.TakeDamage(monster.attackPower, monster.transform);
                     }
 
                     monster.StartAttack(); // 쿨다운 시간 초기화

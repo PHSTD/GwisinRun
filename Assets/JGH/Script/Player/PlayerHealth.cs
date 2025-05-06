@@ -81,6 +81,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     }
 
+    public void TakeDamage(int amount, Transform attacker)
+    {
+    }
+
     public int StaminaPlus()
     {
         // 일정 시간 간격으로 스태미너 증가 처리 (0.05초마다 1씩 증가)

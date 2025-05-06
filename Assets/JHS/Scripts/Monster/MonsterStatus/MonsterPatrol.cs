@@ -63,7 +63,7 @@ public class MonsterPatrol : IMonsterState
         }
         
         // 빠른 이동 속도 적용
-        monster.navMesh.speed = 10.0f;
+        monster.navMesh.speed = 5.0f;
         
         // 애니메이션 속도 빠르게
         monster.animator.speed = 2.0f; 
