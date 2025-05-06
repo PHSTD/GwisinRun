@@ -37,15 +37,15 @@ public class PlayerHide : MonoBehaviour
     void Hide()
     {
         m_isDetected = true;
-        SetRenderers(false);
-        Debug.Log("플레이어가 숨었습니다.");
+        // SetRenderers(false);
+        // Debug.Log("플레이어가 숨었습니다.");
     }
 
     void Unhide()
     {
         m_isDetected = false;
-        SetRenderers(true);
-        Debug.Log("플레이어가 다시 나타났습니다.");
+        // SetRenderers(true);
+        // Debug.Log("플레이어가 다시 나타났습니다.");
     }
 
     void SetRenderers(bool visible)
