@@ -115,6 +115,23 @@ public class Monster : MonoBehaviour
 
             if (IsTargetVisible(target))
             {
+                PlayerHide hide = target.GetComponent<PlayerHide>();
+
+                // 숨은 상태인데 상태가 Patrol 또는 Search인 경우 무시
+                if (hide != null && hide.IsDetected)
+                {
+                    var currentState = GetCurrentStateInstance();
+
+                    if (currentState != m_monsterAttack && currentState != m_monsterChase)
+                    {
+                        Debug.Log("숨은 플레이어는 인식 못함 (Patrol/Search 상태)");
+                        continue; // 찾지 못한 것처럼 넘어감
+                    }
+                }
+
+                // 인식 성공
+                
+                
                 currentTarget = target; 
                 return target;
             }
@@ -150,9 +167,6 @@ public class Monster : MonoBehaviour
         return true;
     }
     
-    //플레이어 체크시 걸리는 레이에 문이 있다면
-    //문 타겟을 가져온뒤 문 상태로 이동
-    //문 데이터구조를 가져올 수 있는 함수를 만들어야 함
     private void Start()
     {
         ChangeState(m_monsterPatrol);
@@ -310,6 +324,5 @@ public class Monster : MonoBehaviour
                 Time.deltaTime * rotationSpeed); // 회전 속도 조절
         }
     }
-    
     
 }
