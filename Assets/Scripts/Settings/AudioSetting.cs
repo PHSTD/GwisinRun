@@ -196,8 +196,8 @@ public class AudioSetting : MonoBehaviour
                 m_SFXSource.PlayOneShot(DrawerOpenSound);
                 break;
             case SoundType.DrawerClose:
-                m_SFXSource.PlayOneShot(DrawerOpenSound);
-                // m_SFXSource.PlayOneShot(DrawerCloseSound);
+                // m_SFXSource.PlayOneShot(DrawerOpenSound);
+                m_SFXSource.PlayOneShot(DrawerCloseSound);
                 break;
         }
     }
