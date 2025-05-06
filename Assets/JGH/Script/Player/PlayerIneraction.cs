@@ -16,8 +16,9 @@ public class PlayerIneraction : MonoBehaviour
     private Coroutine m_interactionCoroutine;
     private GameObject m_detectedObject;
     
-    [SerializeField] GameObject m_panel;
-    [SerializeField] private TMP_Text m_popupText;
+    [Header("Interaction UI")]
+    [SerializeField] GameObject m_ineractionPanel;
+    [SerializeField] private TMP_Text m_interactionPopupText;
 
     
     void Update()
@@ -44,28 +45,28 @@ public class PlayerIneraction : MonoBehaviour
     {
         if (m_detectedObject == null)
         {
-            m_panel.SetActive(false);
+            m_ineractionPanel.SetActive(false);
             return;
         }
         
         var interactionKey = PlayerPrefs.GetString("Interaction");
         if (m_detectedObject.CompareTag("Item"))
         {
-            m_popupText.text = $"아이템을 얻으려면 [{interactionKey}]를 누르세요.";
-            m_panel.SetActive(true);
+            m_interactionPopupText.text = $"아이템을 얻으려면 [{interactionKey}]를 누르세요.";
+            m_ineractionPanel.SetActive(true);
         }
 
         else if (m_detectedObject.CompareTag("InteractableObject"))
         {
             if (m_detectedObject.GetComponent<IsLockedDoor>() != null && m_detectedObject.GetComponent<IsLockedDoor>().IsLocked())
             {
-                m_popupText.text = "잠긴 문입니다. 열쇠를 찾아주세요.";
-                m_panel.SetActive(true);
+                m_interactionPopupText.text = "잠긴 문입니다. 열쇠를 찾아주세요.";
+                m_ineractionPanel.SetActive(true);
             }
             else
             {
-                m_popupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
-                m_panel.SetActive(true);
+                m_interactionPopupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
+                m_ineractionPanel.SetActive(true);
             }
         }
     }
