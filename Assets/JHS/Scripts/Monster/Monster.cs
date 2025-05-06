@@ -26,7 +26,7 @@ public class Monster : MonoBehaviour
     [Header("Combat Settings")]
     public float attackRange = 2.0f;
     // 공격속도 조절
-    public float attackCooldown = 1f;
+    public float attackCooldown = 2f;
     private bool isAttacking = false; // 공격 중 상태
     public bool IsAttacking
     {
@@ -61,6 +61,13 @@ public class Monster : MonoBehaviour
     public Transform CurrentTarget { get => currentTarget; }
     
     public int attackPower = 20; // 공격력
+    
+    
+    // 애니매이션 공격 속도 관련
+    public string attackAnimationName = "attack"; // 애니메이션 이름 (Animator에 있는 이름)
+    public float attackAnimDuration = 1f; // 공격 애니메이션 길이 (기본 1초)
+    public float attackHitTimingRatio = 0.4f; // 타격 시점 (40% 지점)
+    
     
     // // 탐지 주기
     [SerializeField] private float m_DetectionDelay = 0.5f;
@@ -127,9 +134,9 @@ public class Monster : MonoBehaviour
         float sqrDistanceToTarget = dirToTarget.sqrMagnitude;
 
         // 시야각 체크
-        float angleToTarget = Vector3.Angle(transform.forward, dirToTarget.normalized);
-        if (angleToTarget > m_ViewAngle * 0.5f)
-            return false;
+        // float angleToTarget = Vector3.Angle(transform.forward, dirToTarget.normalized);
+        // if (angleToTarget > m_ViewAngle * 0.5f)
+            // return false;
 
         // 장애물 체크 (Raycast)
         if (Physics.Raycast(origin, dirToTarget.normalized, out RaycastHit hit, Mathf.Sqrt(sqrDistanceToTarget), m_ObstacleMask))

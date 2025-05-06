@@ -60,5 +60,5 @@ public class MonsterChase : IMonsterState
     public void OnUpdate()
     {
     }
-    
+
 }

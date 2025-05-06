@@ -75,4 +75,5 @@ public class MonsterSearch : IMonsterState
     public void OnUpdate()
     {
     }
+
 }

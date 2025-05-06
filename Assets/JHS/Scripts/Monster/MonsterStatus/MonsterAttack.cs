@@ -13,42 +13,39 @@ public class MonsterAttack : IMonsterState
     
     public IEnumerator Attack()
     {
-        while (monster.GetCurrentStateInstance() == monster.GetAttackState())
+        while (monster.GetCurrentStateInstance() == this)
         {
             if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
             {
-                yield return null; // 다음 프레임까지 대기만
-                continue; // 아무것도 하지 않음
+                yield return null;
+                continue;
             }
-            
+
+            // 애니메이션 실행
             monster.animator.SetTrigger("IsAttacking");
+
+            // 애니메이션 클립 길이 자동 계산
+            float clipLength = GetAnimationClipLength(monster.animator, monster.attackAnimationName);
+
+            // 타격 타이밍 계산 (예: 40% 시점에서 데미지 적용)
+            float hitTime = clipLength * monster.attackHitTimingRatio;
+
+            // 기다렸다가 데미지 적용
+            yield return new WaitForSeconds(hitTime);
+
+            // 타격 판정
             if (monster.CurrentTarget != null)
             {
-                // 반복 간격
-                yield return new WaitForSeconds(1f);
-
                 float distance = Vector3.Distance(monster.transform.position, monster.CurrentTarget.position);
-                
-                if (distance > monster.attackRange * 1.5f)
-                {
-                    Debug.Log("Search 상태로 이동 조건 충족");
-                    // 너무 멀어졌을 경우 Search 상태로 전환
-                    monster.ChangeState(monster.GetSearchState());
-                    Debug.Log("yield break 직전 상태 확인: " + monster.GetCurrentStateInstance()?.GetType().Name);
-                    yield break;
-                }
-
                 if (distance <= monster.attackRange * 1.2f && monster.CanAttack())
                 {
-                    // 너무 멀어졌을 경우 Search 상태로 전환 
                     IDamageable damageable = monster.CurrentTarget.GetComponent<IDamageable>();
                     if (damageable != null)
                     {
-
                         damageable.TakeDamage(monster.attackPower, monster.transform);
                     }
 
-                    monster.StartAttack(); // 쿨다운 시간 초기화
+                    monster.StartAttack(); // 쿨다운 갱신
                 }
             }
             else
@@ -56,8 +53,35 @@ public class MonsterAttack : IMonsterState
                 monster.ChangeState(monster.GetSearchState());
                 yield break;
             }
+
+            // 애니메이션 전체 재생 길이만큼 대기
+            float remainingTime = clipLength - hitTime;
+            if (remainingTime > 0)
+                yield return new WaitForSeconds(remainingTime);
+
+            // 추가 쿨다운 대기 (원한다면 여기에 attackCooldown - clipLength 넣기)
+            float wait = Mathf.Max(0, monster.attackCooldown - clipLength);
+            if (wait > 0f)
+                yield return new WaitForSeconds(wait);
         }
     }
+
+    
+    private float GetAnimationClipLength(Animator animator, string clipName)
+    {
+        if (animator.runtimeAnimatorController == null)
+            return 1f; // 기본값
+
+        foreach (var clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == clipName)
+                return clip.length;
+        }
+
+        Debug.LogWarning($"Attack 애니메이션 '{clipName}' 찾을 수 없음. 기본값 사용.");
+        return 1f; // 기본 fallback
+    }
+
 
     public void OnEnter()
     {
@@ -82,4 +106,5 @@ public class MonsterAttack : IMonsterState
     public void OnUpdate()
     {
     }
+
 }
