@@ -41,7 +41,7 @@ public class GraphicsSetting : MonoBehaviour
         {
             Brightness = 0.5f,
             Quality = 2,
-            IsFullScreen = true
+            IsFullScreen = Screen.fullScreen
         };
     }
 

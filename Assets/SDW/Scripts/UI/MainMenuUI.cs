@@ -11,13 +11,17 @@ public class MainMenuUI : MonoBehaviour
 
     private void Start()
     {
-        m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
         Cursor.lockState = CursorLockMode.None;
         
         if (GameManager.Instance.Graphics.IsFirstTime)
         {
             GameManager.Instance.Graphics.SetBrightness(0.5f);
         }
+    }
+
+    private void OnEnable()
+    {
+        m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
     }
 
     private void OnDisable()
