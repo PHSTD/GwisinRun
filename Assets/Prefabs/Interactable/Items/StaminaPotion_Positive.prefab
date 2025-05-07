@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 88759443602192920}
   - component: {fileID: 1164777473693747874}
   - component: {fileID: 7349076363703145637}
+  - component: {fileID: 6593423151368194985}
   m_Layer: 0
   m_Name: StaminaPotion_Positive
   m_TagString: Item
@@ -102,6 +103,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &6593423151368194985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811346897222869627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: e4f418a18b804f87a364a935f5632aef, type: 2}
+  m_material2: {fileID: 2100000, guid: 7b9ddd7c8d9449642b95b68bb61ea004, type: 2}
+  m_renderer: {fileID: 1284892844694264151}
 --- !u!1001 &1284892844692426737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166,5 +182,10 @@ PrefabInstance:
 --- !u!4 &1284892844692231991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 465094, guid: 26cc087b299f42a4a1923da599fe03cc, type: 3}
+  m_PrefabInstance: {fileID: 1284892844692426737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1284892844694264151 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2365094, guid: 26cc087b299f42a4a1923da599fe03cc, type: 3}
   m_PrefabInstance: {fileID: 1284892844692426737}
   m_PrefabAsset: {fileID: 0}

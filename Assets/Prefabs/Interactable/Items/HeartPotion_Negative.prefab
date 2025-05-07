@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6633203616360792252}
   - component: {fileID: 6047509247357258233}
   - component: {fileID: -2435656243783525700}
+  - component: {fileID: 5016864038111265959}
   m_Layer: 0
   m_Name: HeartPotion_Negative
   m_TagString: Item
@@ -102,6 +103,21 @@ CapsuleCollider:
   m_Height: 0.29530084
   m_Direction: 1
   m_Center: {x: 0, y: 0.10695666, z: 0.0011146665}
+--- !u!114 &5016864038111265959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942475312613698762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: e8d858f4dafd40318a65052911414e45, type: 2}
+  m_material2: {fileID: 2100000, guid: d705d89fcc87ea34ca47afd6f2b6fcd7, type: 2}
+  m_renderer: {fileID: 4979506582300880120}
 --- !u!1001 &4979506582302793036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -159,6 +175,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa89c406a964d7780afb86370e3860d, type: 3}
+--- !u!23 &4979506582300880120 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2355636, guid: aaa89c406a964d7780afb86370e3860d, type: 3}
+  m_PrefabInstance: {fileID: 4979506582302793036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4979506582303154428 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 441776, guid: aaa89c406a964d7780afb86370e3860d, type: 3}
