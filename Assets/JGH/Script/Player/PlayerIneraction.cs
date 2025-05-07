@@ -58,9 +58,13 @@ public class PlayerIneraction : MonoBehaviour
         var interactionKey = PlayerPrefs.GetString("Interaction");
         if (m_detectedObject.CompareTag("Item"))
         {
+            if (m_detectedObject.GetComponent<OutlineController>() != null)
+            {
+                m_detectedObject.GetComponent<OutlineController>().OutlineOn();
+            }
             m_interactionPopupText.text = $"아이템을 얻으려면 [{interactionKey}]를 누르세요.";
             m_ineractionPanel.SetActive(true);
-            m_previousDetectedObject = m_detectedObject;
+            m_previousDetectedObject = m_detectedObject;            
         }
 
         else if (m_detectedObject.CompareTag("InteractableObject"))
