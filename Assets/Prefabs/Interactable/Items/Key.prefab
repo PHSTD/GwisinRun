@@ -58,7 +58,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -96,8 +96,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.16372383, y: 0.09329915, z: 0.20781636}
-  m_Center: {x: -0.003249348, y: 0.0030759573, z: -0.002887369}
+  m_Size: {x: 0.16372383, y: 0.10709509, z: 0.20781682}
+  m_Center: {x: -0.003249348, y: -0.011609957, z: -0.002887369}
 --- !u!1001 &6225459344237566753
 PrefabInstance:
   m_ObjectHideFlags: 0

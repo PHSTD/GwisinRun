@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -52,7 +53,6 @@ public class Inventory : MonoBehaviour
     {
         if (m_itemCount >= maxSlots)
         {
-            Debug.Log("?¸ë²¤??ë¦¬ê? ê°??? ì°¼ì?µë????.");
             return false;
         }
 
@@ -63,6 +63,7 @@ public class Inventory : MonoBehaviour
             
             items[i] = item;
             item.gameObject.SetActive(false);
+            
             OnAddItem?.Invoke(i, items[i]);
             m_itemCount++;
             GameManager.Instance.Audio.PlaySound(SoundType.GetItem);

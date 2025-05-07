@@ -66,7 +66,8 @@ public class PauseMenuUI : MonoBehaviour
         m_itemContainer.SetActive(true);
         m_playerStatusUI.SetActive(true);
         
-        m_inputSetting.LoadBinding();
+        if(m_inputSetting != null)
+            m_inputSetting.LoadBinding();
         
         GameManager.Instance.IsPaused = false;
         

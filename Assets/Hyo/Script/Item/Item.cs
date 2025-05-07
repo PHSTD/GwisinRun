@@ -38,6 +38,12 @@ public class Item : MonoBehaviour, IInteractable
         {
             //todo 추후 UI에 추가할지 고민
             Debug.Log("인벤토리가 가득 찼습니다.");
+            return;
+        }
+
+        if (m_type == ItemType.Key)
+        {
+            m_rigidbody.isKinematic = false;
         }
     }
 
