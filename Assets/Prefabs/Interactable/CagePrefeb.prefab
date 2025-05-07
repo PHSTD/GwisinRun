@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bars_02
       objectReference: {fileID: 0}
+    - target: {fileID: 151064, guid: dc557fa48ca9489fa23e710efee55e6c, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 451064, guid: dc557fa48ca9489fa23e710efee55e6c, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.6

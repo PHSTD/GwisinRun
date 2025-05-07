@@ -245,7 +245,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 22e4dd17f81b9054a82e363ac4b7eb13, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 4fdab96ed2fec7d4cb8228b41191623e, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &207266873
 PrefabInstance:
@@ -4270,6 +4270,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_straight_v2
       objectReference: {fileID: 0}
+    - target: {fileID: 1644970041824016, guid: 00a33d1ffb56cf242b313ddcd9a593a4, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4770282119488858, guid: 00a33d1ffb56cf242b313ddcd9a593a4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.994001
@@ -4368,6 +4372,10 @@ PrefabInstance:
     - target: {fileID: 19588385245968726, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_TagString
       value: Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
+      propertyPath: m_ViewAngle
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ViewRadius
@@ -4788,6 +4796,10 @@ PrefabInstance:
     - target: {fileID: 19588385245968726, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_TagString
       value: Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
+      propertyPath: m_ViewAngle
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ViewRadius

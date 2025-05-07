@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5297199488495749300}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 7547107685589608013}
   - component: {fileID: 2193241306843552576}
   - component: {fileID: 2638413395312091089}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: floor_4x4 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3187425849212125860}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 2491149544425728058}
   - component: {fileID: 642740816024830853}
   - component: {fileID: 6149129126548370484}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ceiling_4x4 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,6 +466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 2909917755114816071, guid: e900952272f297e4786161a4a9468056, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -589,6 +593,10 @@ PrefabInstance:
     - target: {fileID: 2909917755114816071, guid: e900952272f297e4786161a4a9468056, type: 3}
       propertyPath: m_Name
       value: Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2909917755114816071, guid: e900952272f297e4786161a4a9468056, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

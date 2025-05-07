@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 5717637993652886181}
   - component: {fileID: 2968447188420099011}
   - component: {fileID: -5391943978034367203}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LockedDoorPrefab
   m_TagString: InteractableObject
   m_Icon: {fileID: 0}

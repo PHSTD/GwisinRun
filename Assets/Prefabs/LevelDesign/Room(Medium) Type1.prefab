@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2225949660769407436}
   - component: {fileID: 3982323744978231832}
   - component: {fileID: 8617388563235484594}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ceiling_4x4 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7009931014231819345}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8357076562216785417}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -804,6 +804,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: floor_4x4
       objectReference: {fileID: 0}
+    - target: {fileID: 5137619140913960073, guid: 6be8bb2982e92f240950c81b8c892b0b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -825,6 +829,10 @@ PrefabInstance:
     - target: {fileID: 1760892806589072, guid: 2433075ea1e7d074a8100fde12d2add8, type: 3}
       propertyPath: m_Name
       value: rug_small_v2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760892806589072, guid: 2433075ea1e7d074a8100fde12d2add8, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4860781927497588, guid: 2433075ea1e7d074a8100fde12d2add8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1073,6 +1081,10 @@ PrefabInstance:
     - target: {fileID: 1371844672888426, guid: 43f2511990d92e04aa0f4db394e50d99, type: 3}
       propertyPath: m_Name
       value: curtain_v1c
+      objectReference: {fileID: 0}
+    - target: {fileID: 1371844672888426, guid: 43f2511990d92e04aa0f4db394e50d99, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4580674401272874, guid: 43f2511990d92e04aa0f4db394e50d99, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1355,6 +1367,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: shelf_2x1_v1
       objectReference: {fileID: 0}
+    - target: {fileID: 1676065428034860, guid: ecf09c342c541354583f1bc31de4e1fd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4995121718788386, guid: ecf09c342c541354583f1bc31de4e1fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.0529594
@@ -1634,6 +1650,10 @@ PrefabInstance:
     - target: {fileID: 1590129522804646, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
       propertyPath: m_Name
       value: cabinet
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590129522804646, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4654620376296244, guid: 5dbd6d8f7f89a4342bf47562b629074f, type: 3}
       propertyPath: m_LocalPosition.x

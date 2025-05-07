@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4230019009784483273}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShelfPrefab_1x1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

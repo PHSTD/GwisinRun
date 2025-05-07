@@ -25,7 +25,6 @@ public class PlayerMoveCamera : MonoBehaviour
     private PlayerController m_playerController;
     private PlayerMove m_playerMove;
     
-    
     // 공격 받으면 공격한 몬스터한데 시선 고정
     private Coroutine m_focusRoutine;
 
@@ -60,6 +59,7 @@ public class PlayerMoveCamera : MonoBehaviour
 
         m_focusRoutine = StartCoroutine(FocusRoutine(target, duration));
     }
+    
     private IEnumerator FocusRoutine(Transform target, float duration)
     {
         float timer = 0f;
@@ -77,6 +77,12 @@ public class PlayerMoveCamera : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
+
+        Vector3 euler = transform.eulerAngles;
+        euler.x = 0f;
+        euler.z = 0f;
+
+        transform.eulerAngles = euler;
 
         m_focusRoutine = null;
     }
@@ -101,6 +107,10 @@ public class PlayerMoveCamera : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        
+        Vector3 euler = transform.eulerAngles;
+        euler.x = 0f;
+        euler.z = 0f;
 
         m_cameraTransform.localPosition = originalPos;
     }
