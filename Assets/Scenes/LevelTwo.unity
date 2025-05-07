@@ -7284,6 +7284,10 @@ PrefabInstance:
       value: Switch
       objectReference: {fileID: 0}
     - target: {fileID: 7153842504909668905, guid: be16c7e2326be4f468222eba96521db6, type: 3}
+      propertyPath: m_objectAnimator.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7153842504909668905, guid: be16c7e2326be4f468222eba96521db6, type: 3}
       propertyPath: m_objectAnimator.Array.data[0]
       value: 
       objectReference: {fileID: 625468032}
