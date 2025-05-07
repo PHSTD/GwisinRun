@@ -77,7 +77,7 @@ public class PlayerHide : MonoBehaviour
         if (other.CompareTag("HideObject")) // 책상에 "Cover" 태그가 있어야 함
         {
             isInCoverZone = true;
-            Debug.Log("▶ 책상 진입: EnterCover");
+            // Debug.Log("▶ 책상 진입: EnterCover");
             EnterCover();
         }
     }
@@ -87,7 +87,7 @@ public class PlayerHide : MonoBehaviour
         if (other.CompareTag("HideObject"))
         {
             isInCoverZone = false;
-            Debug.Log("⏹ 책상 벗어남: ExitCover");
+            // Debug.Log("⏹ 책상 벗어남: ExitCover");
             ExitCover();
         }
     }
