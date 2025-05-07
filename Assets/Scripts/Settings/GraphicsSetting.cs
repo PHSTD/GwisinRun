@@ -31,6 +31,7 @@ public class GraphicsSetting : MonoBehaviour
     private AutoExposure m_mainCameraExposure;
     
     private Resolution[] m_resolutions;
+    private List<Resolution> m_filteredResolutions = new List<Resolution>();
 
     private bool m_isFirstTime = true;
     public bool IsFirstTime => m_isFirstTime;
@@ -87,7 +88,7 @@ public class GraphicsSetting : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
-        var resolution = m_resolutions[resolutionIndex];
+        var resolution = m_filteredResolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
@@ -110,8 +111,7 @@ public class GraphicsSetting : MonoBehaviour
         QualitySettings.SetQualityLevel(m_setting.Quality);
         Screen.fullScreen = m_setting.IsFullScreen;
     }
-
-
+    
     public List<string> GetResolution(out int index)
     {
         m_resolutions = Screen.resolutions;
@@ -121,13 +121,19 @@ public class GraphicsSetting : MonoBehaviour
         int currentResolutionIndex = 0;
         for (int i = 0; i < m_resolutions.Length; i++)
         {
-            string option = $"{m_resolutions[i].width} x {m_resolutions[i].height} {m_resolutions[i].refreshRateRatio}Hz";
-
-            options.Add(option);
-
-            if (m_resolutions[i].width == Screen.width && m_resolutions[i].height == Screen.height)
+            float aspectRatio = (float)m_resolutions[i].width / m_resolutions[i].height;
+            
+            if (aspectRatio >= 1.777f)
             {
-                currentResolutionIndex = i;
+                string option = $"{m_resolutions[i].width} x {m_resolutions[i].height} {m_resolutions[i].refreshRateRatio}Hz";
+    
+                options.Add(option);
+                m_filteredResolutions.Add(m_resolutions[i]);
+    
+                if (m_resolutions[i].width == Screen.width && m_resolutions[i].height == Screen.height)
+                {
+                    currentResolutionIndex = options.Count - 1;
+                }
             }
         }
 
