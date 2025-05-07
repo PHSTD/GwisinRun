@@ -7,6 +7,9 @@
 - **타깃 플랫폼:** PC (Unity)
 - **게임 특징:** 탐색 + 생존 기반의 가벼운 공포 체험
 
+## 게임 소개 영상
+[![Vidoe](https://personal.riosong.kro.kr/blog/content/media/2025/05/---------_thumb.jpg)](https://personal.riosong.kro.kr/blog/content/media/2025/05/Play.mp4)
+
 ## 컨벤션
 
 ### 코드 컨벤션 - [Unity C# 가이드 기준](https://unity.com/kr/resources/c-sharp-style-guide-unity-6)
