@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4104045583703162952}
   - component: {fileID: 2148412931608642204}
   - component: {fileID: 2950229983103874783}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ceiling_4x4 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5381434966432483421}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2792821214057363951}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1074,6 +1074,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: shelf_1x1_v1
       objectReference: {fileID: 0}
+    - target: {fileID: 1162327524747472, guid: 4a53f974381037f4b80f1721a0b12486, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4233235220381606, guid: 4a53f974381037f4b80f1721a0b12486, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.559
@@ -1548,6 +1552,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4322732111904851184, guid: 56bf7566c3b225e4890423b175ebcc55, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1733,6 +1741,10 @@ PrefabInstance:
     - target: {fileID: 5137619140913960073, guid: 6be8bb2982e92f240950c81b8c892b0b, type: 3}
       propertyPath: m_Name
       value: floor_4x4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137619140913960073, guid: 6be8bb2982e92f240950c81b8c892b0b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

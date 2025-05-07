@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3613270040093196378}
   - component: {fileID: 5725525429485383262}
   - component: {fileID: 1553465845646460367}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: floor_2x2 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5240290447817610434}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 1189157126845124669}
   - component: {fileID: 4030126176866984886}
   - component: {fileID: 5899151791962683122}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ceiling_4x4 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6807606433687021446}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,6 +684,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: floor_broken_v1
       objectReference: {fileID: 0}
+    - target: {fileID: 1034207903010276, guid: bbca4f47b10b82c439a44ee8c93b6d03, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4017816171456448, guid: bbca4f47b10b82c439a44ee8c93b6d03, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -962,6 +966,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: floor_broken_v2
       objectReference: {fileID: 0}
+    - target: {fileID: 1666842534060148, guid: 9f13f09d75b9cb248b1b9c2a1e937ab1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4737313744855354, guid: 9f13f09d75b9cb248b1b9c2a1e937ab1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -1094,6 +1102,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4322732111904851184, guid: 56bf7566c3b225e4890423b175ebcc55, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1177,6 +1189,10 @@ PrefabInstance:
     - target: {fileID: 1778894776638834, guid: abc468afc79f23049b91add9df990dc3, type: 3}
       propertyPath: m_Name
       value: floor_broken_v3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778894776638834, guid: abc468afc79f23049b91add9df990dc3, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4509485119230574, guid: abc468afc79f23049b91add9df990dc3, type: 3}
       propertyPath: m_LocalPosition.x

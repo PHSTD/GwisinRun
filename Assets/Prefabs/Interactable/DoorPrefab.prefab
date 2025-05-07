@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 3261548398279309006}
   - component: {fileID: 2067200432776801443}
   - component: {fileID: 4891439569541336657}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DoorPrefab
   m_TagString: InteractableObject
   m_Icon: {fileID: 0}
