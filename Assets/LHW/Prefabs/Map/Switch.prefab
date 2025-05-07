@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2781ee5b355bcf44ea207df3974dc59b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_objectAnimator: []
+  m_objectAnimator:
+  - {fileID: 0}
+  - {fileID: 0}
   m_button: {fileID: 5242037038135862410}
 --- !u!65 &6109315857313133536
 BoxCollider:
