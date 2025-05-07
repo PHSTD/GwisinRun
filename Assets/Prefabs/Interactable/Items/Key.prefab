@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8782647370765925956}
   - component: {fileID: 2722128084666090830}
   - component: {fileID: 2094726419153438610}
+  - component: {fileID: 8006186471287264912}
   m_Layer: 0
   m_Name: Key
   m_TagString: Item
@@ -98,6 +99,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.16372383, y: 0.10709509, z: 0.20781682}
   m_Center: {x: -0.003249348, y: -0.011609957, z: -0.002887369}
+--- !u!114 &8006186471287264912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969602440291251902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: 1cb6e7b29e2201b4a8e60f48cebdc6a5, type: 2}
+  m_material2: {fileID: 2100000, guid: c001d7a601a23ef4a91ccacab3cbd764, type: 2}
+  m_renderer: {fileID: 2070612983578186171}
 --- !u!1001 &6225459344237566753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -171,5 +187,10 @@ PrefabInstance:
 --- !u!4 &934329062831336148 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6526315228073308661, guid: d6faaa09d4a5ac94fa40b00ee1c30ef7, type: 3}
+  m_PrefabInstance: {fileID: 6225459344237566753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2070612983578186171 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5393357162365307546, guid: d6faaa09d4a5ac94fa40b00ee1c30ef7, type: 3}
   m_PrefabInstance: {fileID: 6225459344237566753}
   m_PrefabAsset: {fileID: 0}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8166110666635724866}
   - component: {fileID: 7153842504909668905}
   - component: {fileID: 6109315857313133536}
+  - component: {fileID: 5508290471544176566}
   m_Layer: 0
   m_Name: Switch
   m_TagString: InteractableObject
@@ -48,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_objectAnimator:
   - {fileID: 0}
-  - {fileID: 0}
   m_button: {fileID: 5242037038135862410}
 --- !u!65 &6109315857313133536
 BoxCollider:
@@ -71,6 +71,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1.3092489}
   m_Center: {x: 0, y: 0, z: -0.58941585}
+--- !u!114 &5508290471544176566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530654805304250639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2421a7dff911942ab14a94a9b6b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_material1: {fileID: 2100000, guid: 5eefb440611e3cf4ab44bd7a6ea4947a, type: 2}
+  m_material2: {fileID: 2100000, guid: c9bf91c6a97ee584d979e9c733266354, type: 2}
+  m_renderer: {fileID: 484083790087457976}
 --- !u!1 &4360679294747394230
 GameObject:
   m_ObjectHideFlags: 0
