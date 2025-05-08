@@ -22,13 +22,13 @@ public class InventoryUI : MonoBehaviour
             itemImage.preserveAspect = true;
             itemImage.gameObject.SetActive(false);
         }
+        m_selectedItemUIRectTransform = m_selectedItemUI.rectTransform;
+        m_startPosition = m_selectedItemUIRectTransform.localPosition;
+
     }
 
     private void OnEnable()
     {
-        m_selectedItemUIRectTransform = m_selectedItemUI.rectTransform;
-        m_startPosition = m_selectedItemUIRectTransform.localPosition;
-
         m_imageSpacing = m_InventoryGridContainer.spacing.x + m_itemImagesUI[0].rectTransform.rect.width + 10;
         
         GameManager.Instance.Inventory.OnSelectedItemChanged.AddListener(DisplaySelectedItemImage);
