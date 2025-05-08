@@ -873,6 +873,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56bf7566c3b225e4890423b175ebcc55, type: 3}
+--- !u!1001 &140114788
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -26.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 480179081224063754, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1636520560210339904, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_gameOverPanel
+      value: 
+      objectReference: {fileID: 929268325}
+    - target: {fileID: 3283136347958473602, guid: fad475616b29307459a0f593709cdc98, type: 3}
+      propertyPath: m_Name
+      value: DeadZone
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fad475616b29307459a0f593709cdc98, type: 3}
 --- !u!4 &146864165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3172837452674400779, guid: 56bf7566c3b225e4890423b175ebcc55, type: 3}
@@ -11173,3 +11234,4 @@ SceneRoots:
   - {fileID: 1367349025}
   - {fileID: 2126047813}
   - {fileID: 1408049586}
+  - {fileID: 140114788}
