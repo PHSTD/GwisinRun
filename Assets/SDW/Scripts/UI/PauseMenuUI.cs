@@ -9,6 +9,10 @@ public class PauseMenuUI : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button m_exitButton;
     [SerializeField] private Button m_mainMenuButton;
+    
+    [Header("Restart")]
+    [SerializeField] private Button m_restartButton;
+    [SerializeField] private string m_levelSceneName;
 
     [Header("Title Scene Name")]
     [SerializeField] private string m_sceneName;
@@ -49,6 +53,8 @@ public class PauseMenuUI : MonoBehaviour
         
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
         m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_sceneName));
+        m_restartButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_levelSceneName));
+        m_restartButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_levelSceneName));
     }
 
     public void Close()

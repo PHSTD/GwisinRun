@@ -14107,6 +14107,10 @@ PrefabInstance:
       propertyPath: m_inputSetting
       value: 
       objectReference: {fileID: 8702323296657820662}
+    - target: {fileID: 8260937154588026355, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
+      propertyPath: m_levelSceneName
+      value: LevelThree
+      objectReference: {fileID: 0}
     - target: {fileID: 8664566719321656631, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
       propertyPath: m_IsActive
       value: 0

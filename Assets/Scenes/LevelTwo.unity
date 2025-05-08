@@ -7934,6 +7934,10 @@ PrefabInstance:
       propertyPath: m_inputSetting
       value: 
       objectReference: {fileID: 961509878}
+    - target: {fileID: 8260937154588026355, guid: 3cf0632ef8e261945bc6897b8a583d60, type: 3}
+      propertyPath: m_levelSceneName
+      value: LevelTwo
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
