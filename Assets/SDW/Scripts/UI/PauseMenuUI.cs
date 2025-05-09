@@ -61,6 +61,7 @@ public class PauseMenuUI : MonoBehaviour
     {
         m_exitButton.onClick.RemoveAllListeners();
         m_mainMenuButton.onClick.RemoveAllListeners();
+        m_restartButton.onClick.RemoveAllListeners();
         
         m_settingsMenu.SetActive(false);
         m_soundsSettingDialog.SetActive(false);

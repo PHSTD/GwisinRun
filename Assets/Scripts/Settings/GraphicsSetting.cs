@@ -53,10 +53,6 @@ public class GraphicsSetting : MonoBehaviour
 
         m_postProcessLayer = Camera.main.GetComponent<PostProcessLayer>();
         m_mainCameraVolume.profile.TryGetSettings(out m_lensDistortion);
-
-        // SetBrightness(m_defaultSetting.Brightness);
-        // SetFullScreen(m_defaultSetting.IsFullScreen);
-        // SetQuality(m_defaultSetting.Quaility);
     }
     
     

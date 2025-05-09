@@ -618,10 +618,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3398888024582078962, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3784057503009690464, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 735466967}
+    - target: {fileID: 6590156522156218032, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6685987219210436330, guid: d24398b74fb5a54439a172e27467dc38, type: 3}
       propertyPath: m_Pivot.x
       value: 0
