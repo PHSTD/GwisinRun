@@ -56,6 +56,8 @@ public class Item : MonoBehaviour, IInteractable
 
     private void OnDisable()
     {
+        if (m_rigidbody.isKinematic == true)
+            return;
         m_rigidbody.velocity = Vector3.zero;
         m_rigidbody.angularVelocity = Vector3.zero;
     }

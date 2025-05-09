@@ -4220,17 +4220,6 @@ Transform:
   - {fileID: 1249829643}
   m_Father: {fileID: 1618078892}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1714676041 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5491169472677697319, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
-  m_PrefabInstance: {fileID: 1814487976}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3d7049106d3ead429f24f8045d9ba88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1740457407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4321,7 +4310,7 @@ PrefabInstance:
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: fieldOfViewSystem
       value: 
-      objectReference: {fileID: 1714676041}
+      objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: walkPoints.Array.size
       value: 3
@@ -4394,7 +4383,8 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5491169472677697319, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -4479,11 +4469,25 @@ MonoBehaviour:
   searchRadius: 5
   searchMoveCount: 3
   stateTickDelay: 0.2
-  fieldOfViewSystem: {fileID: 1815363174}
   navMesh: {fileID: 1815363176}
   rotationSpeed: 5
   attackRange: 2
   attackCooldown: 2
+  detectionRadius: 10
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackPower: 20
+  attackAnimationName: ghost_attack
+  m_DetectionDelay: 1
+  m_ViewRadius: 5
+  m_ViewAngle: 360
+  m_TargetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &1815363176
 NavMeshAgent:
   m_ObjectHideFlags: 0
